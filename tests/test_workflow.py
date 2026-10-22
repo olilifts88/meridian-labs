@@ -5,6 +5,7 @@ from pathlib import Path
 
 from workflow_portfolio.domain import Draft, Evidence, InputError, check_candidate
 from workflow_portfolio.evals import evaluate_cases
+from workflow_portfolio.journey import run_journey
 from workflow_portfolio.service import review, submit
 from workflow_portfolio.store import Store, fingerprint
 
@@ -29,6 +30,21 @@ class WorkflowTests(unittest.TestCase):
         decision = submit(fixture("beta_csv_bad"), self.store)
         self.assertEqual(decision.state, "blocked")
         self.assertEqual([f.code for f in decision.findings], ["audience_mismatch"])
+
+    def test_change_report_to_corrected_draft_keeps_one_record(self):
+        outcomes = run_journey(fixture("release_journey"), self.store)
+        self.assertEqual([item["state"] for item in outcomes], ["blocked", "ready_to_publish"])
+        self.assertEqual(outcomes[0]["record_id"], outcomes[1]["record_id"])
+        self.assertEqual(outcomes[0]["findings"], ["audience_mismatch"])
+        self.assertEqual(self.store.summary(), {"ready_to_publish": 1})
+        self.assertEqual([event["event_type"] for event in self.store.events()], ["submitted", "revised"])
+
+    def test_change_report_cannot_use_draft_to_set_its_audience(self):
+        data = fixture("release_journey")
+        data["report"]["candidates"][0]["availability"]["cohorts"] = []
+        with self.assertRaises(InputError):
+            run_journey(data, self.store)
+        self.assertEqual(self.store.summary(), {})
 
     def test_corrected_draft_reuses_record_and_keeps_history(self):
         bad = submit(fixture("beta_csv_bad"), self.store)

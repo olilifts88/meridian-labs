@@ -27,9 +27,9 @@
 
 **Proof:** one saved-case suite runs both paths and reports any difference by case and stage.
 
-## 4. Add ChatGPT-backed drafting and operating evidence
+## 4. Complete OpenAI-backed drafting and operating evidence
 
-- Add an OpenAI adapter for structured drafting and model-based evaluation, with a fake adapter for ordinary CI.
+- The structured-drafting adapter is implemented and fake-tested. Verify an opt-in live call in a separate test project before claiming hosted behaviour, then add model-based evaluation behind the same boundary.
 - Version the public-safe skills, prompts, source snapshots, rubrics and saved examples.
 - Keep deterministic identity, tenant availability and review checks separate from model judgement.
 - Show the operating loop: a failure is recorded, the guidance or source is corrected, and both the failed case and earlier passing cases are retested.

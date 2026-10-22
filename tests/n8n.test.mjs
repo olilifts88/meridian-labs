@@ -15,6 +15,11 @@ const prepareCandidates = (report) => JSON.parse(JSON.stringify(runInNewContext(
   `(() => { ${candidateCode} })()`,
   { $input: { all: () => [{ json: report }] } }
 )[0].json));
+const reviewCode = readFileSync(join(process.cwd(), '.n8n', 'candidate-review-callback', 'code', 'normalize-review-action.js'), 'utf8');
+const normalizeReview = (payload) => JSON.parse(JSON.stringify(runInNewContext(
+  `(() => { ${reviewCode} })()`,
+  { $input: { all: () => [{ json: payload }] } }
+)[0].json));
 
 test('the exported workflow embeds every mapped Code-node file', () => {
   const source = JSON.parse(readFileSync(join(folder, 'workflow.json'), 'utf8'));
@@ -85,4 +90,29 @@ test('candidate relay rejects an untrusted source and escapes message text', () 
   report.candidates[0].summary = 'Avoid <@someone> & verify the audience';
   const result = prepareCandidates(report);
   assert.match(result.review_card_preview.blocks[1].text.text, /&lt;@someone&gt; &amp; verify/);
+});
+
+test('the connected journey gives the relay the same two PRs and pilot scope used by the draft checks', () => {
+  const journey = JSON.parse(readFileSync(join(process.cwd(), 'examples', 'release_journey.json'), 'utf8'));
+  const preview = prepareCandidates(journey.report);
+  assert.equal(preview.accepted.length, 1);
+  const candidate = journey.report.candidates[0];
+  assert.deepEqual(preview.accepted[0].prs, candidate.prs);
+  assert.deepEqual(preview.accepted[0].availability.cohorts, candidate.availability.cohorts);
+  assert.deepEqual(journey.drafts[0].citations, [candidate.prs[0]]);
+});
+
+test('review callback converts the fictional button into the saved command', () => {
+  const payload = JSON.parse(readFileSync(join(process.cwd(), 'examples', 'candidate_review_action.json'), 'utf8'));
+  const expected = JSON.parse(readFileSync(join(process.cwd(), 'examples', 'candidate_review_command.json'), 'utf8'));
+  assert.deepEqual(normalizeReview(payload), expected);
+});
+
+test('review callback rejects unknown buttons and malformed reviewer identity', () => {
+  const payload = JSON.parse(readFileSync(join(process.cwd(), 'examples', 'candidate_review_action.json'), 'utf8'));
+  payload.body.payload.actions[0].action_id = 'candidate_publish';
+  assert.throws(() => normalizeReview(payload), /Unknown review action/);
+  payload.body.payload.actions[0].action_id = 'candidate_announced';
+  payload.body.payload.user.id = '<@someone>';
+  assert.throws(() => normalizeReview(payload), /Invalid reviewer/);
 });

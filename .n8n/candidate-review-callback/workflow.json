@@ -1,0 +1,40 @@
+{
+  "name": "Meridian Labs — Candidate review callback (offline preview)",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "meridian-labs-candidate-review-demo",
+        "options": {}
+      },
+      "id": "ad04c957-27cf-4dfe-859a-1a18ec14d31d",
+      "name": "Review Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [240, 300]
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": ""
+      },
+      "id": "18caab40-4535-4077-b7b5-c855ff0abbb5",
+      "name": "Normalize Review Action",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [500, 300]
+    }
+  ],
+  "connections": {
+    "Review Webhook": {
+      "main": [[{"node": "Normalize Review Action", "type": "main", "index": 0}]]
+    }
+  },
+  "settings": {"executionOrder": "v1"},
+  "active": false,
+  "pinData": {},
+  "tags": [],
+  "_code": {
+    "Normalize Review Action": "code/normalize-review-action.js"
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "name": "Meridian Labs — Candidate review callback (offline preview)",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "meridian-labs-candidate-review-demo",
+        "options": {}
+      },
+      "id": "ad04c957-27cf-4dfe-859a-1a18ec14d31d",
+      "name": "Review Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        240,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "// Shape check only. A real Slack callback also needs signature verification\n// before n8n receives it. This workflow never writes a decision or publishes.\nconst items = $input.all();\nif (items.length !== 1) throw new Error('Expected one review callback');\nconst envelope = items[0].json.body ?? items[0].json;\nlet payload = envelope.payload ?? envelope;\nif (typeof payload === 'string') {\n  if (payload.length > 10000) throw new Error('Review payload is too large');\n  try { payload = JSON.parse(payload); } catch { throw new Error('Invalid review payload'); }\n}\nif (!payload || payload.type !== 'block_actions' || !Array.isArray(payload.actions) || payload.actions.length !== 1) {\n  throw new Error('Expected one button action');\n}\nconst action = payload.actions[0];\nconst decisions = {\n  candidate_announced: 'announced',\n  candidate_deferred: 'deferred',\n  candidate_declined: 'declined'\n};\nif (!Object.hasOwn(decisions, action.action_id)) throw new Error('Unknown review action');\nif (typeof action.value !== 'string' || !/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(action.value)) {\n  throw new Error('Invalid candidate key');\n}\nif (typeof payload.user?.id !== 'string' || !/^[A-Z0-9_]{2,40}$/.test(payload.user.id)) {\n  throw new Error('Invalid reviewer');\n}\nif (typeof action.action_ts !== 'string' || !/^[0-9]{10,16}\\.[0-9]{1,8}$/.test(action.action_ts)) {\n  throw new Error('Invalid action timestamp');\n}\nreturn [{ json: {\n  event_id: `${payload.user.id}:${action.action_ts}`,\n  feature_key: action.value,\n  decision: decisions[action.action_id],\n  reviewer: payload.user.id,\n  applied: false\n} }];\n"
+      },
+      "id": "18caab40-4535-4077-b7b5-c855ff0abbb5",
+      "name": "Normalize Review Action",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        500,
+        300
+      ]
+    }
+  ],
+  "connections": {
+    "Review Webhook": {
+      "main": [
+        [
+          {
+            "node": "Normalize Review Action",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "active": false,
+  "pinData": {},
+  "tags": []
+}

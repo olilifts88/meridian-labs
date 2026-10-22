@@ -1,0 +1,39 @@
+{
+  "report": {
+    "source": "meridian-labs-example",
+    "seen_keys": [],
+    "candidates": [
+      {
+        "feature_key": "csv-export-pilot",
+        "title": "CSV export",
+        "summary": "Pilot customers can export report results to CSV.",
+        "prs": ["https://example.invalid/prs/41", "https://example.invalid/prs/42"],
+        "source_urls": ["https://example.invalid/spec/csv-export"],
+        "availability": { "stage": "beta", "cohorts": ["pilot_group_east", "pilot_group_west"] },
+        "engineer": "engineer-demo"
+      }
+    ]
+  },
+  "drafts": [
+    {
+      "kind": "release_note",
+      "headline": "Export your results to CSV",
+      "body": "CSV export is now available to all customers.",
+      "feature": "CSV export",
+      "stage": "beta",
+      "audiences": ["all_customers"],
+      "citations": ["https://example.invalid/prs/41"],
+      "model": "fictional_model_a"
+    },
+    {
+      "kind": "release_note",
+      "headline": "Export your results to CSV in the pilot",
+      "body": "CSV export is available to the two pilot groups. Open a report and choose Export.",
+      "feature": "CSV export",
+      "stage": "beta",
+      "audiences": ["pilot_group_east", "pilot_group_west"],
+      "citations": ["https://example.invalid/prs/41", "https://example.invalid/spec/csv-export"],
+      "model": "fictional_model_a"
+    }
+  ]
+}

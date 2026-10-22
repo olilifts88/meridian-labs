@@ -1,0 +1,15 @@
+{
+  "body": {
+    "payload": {
+      "type": "block_actions",
+      "user": {"id": "U_DEMO_REVIEWER"},
+      "actions": [
+        {
+          "action_id": "candidate_announced",
+          "value": "csv-export-pilot",
+          "action_ts": "1792692000.000001"
+        }
+      ]
+    }
+  }
+}

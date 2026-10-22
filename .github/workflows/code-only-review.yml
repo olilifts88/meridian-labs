@@ -12,6 +12,8 @@ on:
           - beta_csv_good
           - new_guide
           - release_candidates
+          - release_journey
+          - candidate_review
 
 permissions:
   contents: read
@@ -34,6 +36,14 @@ jobs:
           case "$CASE_ID" in
             release_candidates)
               node scripts/preview-candidates.mjs examples/release_candidates.json
+              ;;
+            release_journey)
+              node scripts/preview-candidates.mjs examples/release_journey.json
+              python -m workflow_portfolio journey examples/release_journey.json
+              ;;
+            candidate_review)
+              node scripts/preview-review-action.mjs examples/candidate_review_action.json
+              python -m workflow_portfolio candidate-review-demo
               ;;
             beta_csv_bad|beta_csv_good|new_guide)
               python -m workflow_portfolio submit "examples/$CASE_ID.json" --db "$RUNNER_TEMP/meridian-labs.sqlite3"

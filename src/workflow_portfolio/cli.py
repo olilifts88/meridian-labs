@@ -2,13 +2,17 @@
 
 import argparse
 import json
+import os
 import sys
 import tempfile
 from pathlib import Path
 from typing import Any
 
 from .domain import InputError
+from .candidate_review import CandidateReviewStore
 from .evals import evaluate_cases
+from .journey import evidence_from_report, run_journey
+from .openai_adapter import OpenAIDrafter
 from .service import review, submit
 from .store import Store
 
@@ -45,10 +49,59 @@ def main() -> int:
     report_cmd.add_argument("--db", required=True)
     sub.add_parser("demo", help="Run the synthetic workflow end to end")
     sub.add_parser("benchmark", help="Compare saved outputs on matched cases")
+    journey_cmd = sub.add_parser("journey", help="Run a fictional change report through draft checks")
+    journey_cmd.add_argument("fixture", type=Path)
+    sub.add_parser("candidate-review-demo", help="Save a fictional candidate and one review decision")
+    draft_cmd = sub.add_parser("draft-openai", help="Optional live draft using fictional evidence only")
+    draft_cmd.add_argument("fixture", type=Path)
+    draft_cmd.add_argument("--model", required=True)
     args = parser.parse_args()
     try:
         if args.command == "benchmark":
             print(json.dumps(evaluate_cases(_load(ROOT / "examples" / "benchmark.json")), indent=2))
+            return 0
+        if args.command == "journey":
+            with tempfile.TemporaryDirectory() as directory:
+                store = Store(str(Path(directory) / "journey.sqlite3"))
+                try:
+                    print(json.dumps({"outcomes": run_journey(_load(args.fixture), store),
+                                      "saved_states": store.summary(), "audit_events": len(store.events())}, indent=2))
+                finally:
+                    store.close()
+            return 0
+        if args.command == "candidate-review-demo":
+            report = _load(ROOT / "examples" / "release_candidates.json")
+            command = _load(ROOT / "examples" / "candidate_review_command.json")
+            with tempfile.TemporaryDirectory() as directory:
+                store = CandidateReviewStore(str(Path(directory) / "candidates.sqlite3"))
+                try:
+                    store.register(report["candidates"][0])
+                    first = store.decide(command)
+                    retry = store.decide(command)
+                    print(json.dumps({"first": first, "retry": retry,
+                                      "records": store.records(), "events": store.events()}, indent=2))
+                finally:
+                    store.close()
+            return 0
+        if args.command == "draft-openai":
+            case = _load(args.fixture)
+            evidence = evidence_from_report(case.get("report"))
+            source_excerpt = case["report"]["candidates"][0]["summary"]
+            draft = OpenAIDrafter(os.environ.get("OPENAI_API_KEY", ""), args.model).draft(
+                evidence, "Write a useful release note for eligible customers", source_excerpt
+            )
+            with tempfile.TemporaryDirectory() as directory:
+                store = Store(str(Path(directory) / "draft.sqlite3"))
+                try:
+                    decision = submit({"evidence": {
+                        "change_id": evidence.change_id, "feature": evidence.feature,
+                        "content_kind": evidence.content_kind, "stage": evidence.stage,
+                        "audiences": sorted(evidence.audiences), "pr_urls": list(evidence.pr_urls),
+                        "source_urls": list(evidence.source_urls),
+                    }, "draft": draft}, store)
+                    print(json.dumps({"draft": draft, "decision": _decision_dict(decision)}, indent=2))
+                finally:
+                    store.close()
             return 0
         if args.command == "demo":
             with tempfile.TemporaryDirectory() as directory:

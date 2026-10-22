@@ -10,6 +10,8 @@ I built this independent, runnable example to show how I approach an AI workflow
 
 If you have five minutes, [follow the guided tour](docs/portfolio-tour.md). It explains the example, points to the parts I built and shows the decisions the demo makes. You can run the whole path offline with `python3 -m workflow_portfolio demo`.
 
+For the first **connected product-change example**, [follow the release journey](docs/release-journey.md). Its two offline commands use the same fictional report to show the n8n relay shape and the code-only source checks.
+
 | What to inspect | Where |
 | --- | --- |
 | Source facts, draft claims and the rules that compare them | [`domain.py`](src/workflow_portfolio/domain.py) |
@@ -18,10 +20,13 @@ If you have five minutes, [follow the guided tour](docs/portfolio-tour.md). It e
 | Matched-case model comparison | [`evals.py`](src/workflow_portfolio/evals.py) |
 | The same audience check on an n8n canvas | [Importable workflow](exports/n8n/release-note-review.json), [reviewable source](.n8n/release-note-review/workflow.json) and [n8n tour](docs/n8n.md) |
 | A source-shaped release candidate relay | [n8n workflow](.n8n/release-candidate-relay/workflow.json), [code-only preview](scripts/preview-candidates.mjs) and [walkthrough](docs/release-candidate-relay.md) |
+| A candidate decision and safe retry | [n8n callback parser](.n8n/candidate-review-callback/workflow.json), [local decision store](src/workflow_portfolio/candidate_review.py) and [walkthrough](docs/candidate-review.md) |
+| A product report followed by wrong and corrected release notes | [Shared fictional case](examples/release_journey.json), [code-only journey](src/workflow_portfolio/journey.py) and [walkthrough](docs/release-journey.md) |
+| Optional OpenAI structured drafting | [Adapter](src/workflow_portfolio/openai_adapter.py), [source-backed skill](skills/release-note-drafting.md) and [run guide](docs/openai-drafting.md) |
 | Public-safe task guidance | [Release-note skill](skills/release-note-drafting.md) and [knowledge-gap skill](skills/knowledge-gap-triage.md) |
 | The behaviour I checked | [`tests/test_workflow.py`](tests/test_workflow.py) |
 
-The repo currently has **two inspectable versions of one audience check**: an offline Python service and an inactive n8n workflow with its Code nodes in separate files. The Python version also has persistence, idempotency, review transitions and matched-case evaluation. A second, [source-shaped relay](docs/release-candidate-relay.md) accepts a fictional change report, groups PRs, skips repeated candidates and prepares a review card. A [manual GitHub Action](.github/workflows/code-only-review.yml) runs saved examples without n8n or external writes. The n8n canvases do not yet carry the full release journey. [Opt-in n8n tools](docs/n8n-deployment.md) can preview deployment and read one workflow into a Git-ignored local folder; neither has been tried against n8n Cloud. There is no nightly GitHub mirror yet. New model integrations will use OpenAI. This build does not call a live model, read a customer's tenant or publish content. [The portfolio map](docs/portfolio-map.md) explains how the complete n8n and GitHub-only paths will fit together.
+The repo currently has **two inspectable versions of one audience check**: an offline Python service and an inactive n8n workflow with its Code nodes in separate files. The Python version also has persistence, idempotency, review transitions and matched-case evaluation. A second, [source-shaped relay](docs/release-candidate-relay.md) accepts a fictional change report, groups PRs, skips repeated candidates and prepares a review card. An inactive [callback parser](docs/candidate-review.md) shows the review command; a separate local store saves it and handles retries. A [manual GitHub Action](.github/workflows/code-only-review.yml) runs saved examples without n8n or external writes. The n8n canvases do not yet carry the full release journey. [Opt-in n8n tools](docs/n8n-deployment.md) can preview deployment and read one workflow into a Git-ignored local folder; neither has been tried against n8n Cloud. There is no nightly GitHub mirror yet. An [optional OpenAI drafting adapter](docs/openai-drafting.md) is implemented and fake-tested; no live model call has been verified. The offline build does not read a customer's tenant or publish content. [The portfolio map](docs/portfolio-map.md) explains how the complete n8n and GitHub-only paths will fit together.
 
 ## Why this example
 
@@ -48,6 +53,7 @@ Requires Python 3.9 or newer. No network access or third-party packages are need
 ```bash
 python3 -m workflow_portfolio demo
 python3 -m workflow_portfolio benchmark
+python3 -m workflow_portfolio journey examples/release_journey.json
 python3 -m unittest discover -s tests -v
 ```
 
