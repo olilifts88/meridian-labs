@@ -8,11 +8,11 @@ The source record determines the change ID, content kind and audience. The draft
 
 ## 2. Rebuild the n8n version in this repo
 
-Keep the importable workflow structure and each Code node in a readable `.js` file. Add a round-trip check that proves the files are injected into the right nodes without changing their code. Add optional GitHub-to-n8n deployment and allowlisted nightly n8n-to-GitHub mirror tooling, but leave both disabled until deliberately configured. Use synthetic workflow IDs, URLs and data throughout.
+The first importable n8n workflow, readable Code-node files and export check are now in the repo. They use only synthetic cases and make no external calls. Next, add optional GitHub-to-n8n deployment and allowlisted nightly n8n-to-GitHub mirror tooling. Both must remain disabled until deliberately configured.
 
 ## 3. Add the relevant skills
 
-Review the task guidance that supports this workflow. Put public-safe, self-contained copies of the useful skills in `skills/`, with versioned examples and tests where practical. Link to private Notion pages only as optional source references, because an interviewer may not have access. Use OpenAI for any new model integration; do not carry over older provider-specific instructions.
+Two public-safe, self-contained portfolio skills now show drafting and knowledge-gap triage. Expand these with versioned cases and tests where useful. Private Notion pages are optional references because an interviewer may not have access. Use OpenAI for any new model integration; do not carry over older provider-specific instructions.
 
 ## 4. Put identity before tools
 
@@ -32,4 +32,4 @@ Grow the saved-case set to cover correctness, audience, source grounding and use
 
 ## 8. Prepare a public release
 
-Review every file and Git commit for company material and secrets. Choose the public name, Git author identity and license. Run the tests, inspect the packaged artifact, then create the GitHub repository. No source code or internal data from an employer belongs here.
+The first clean commit is in a private GitHub repository. Before making it public, review every file and Git commit for company material and secrets, choose the public name and license, run the tests and inspect the packaged artifact. No source code or internal data from an employer belongs here.

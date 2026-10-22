@@ -14,9 +14,11 @@ If you have five minutes, [follow the guided tour](docs/portfolio-tour.md). It e
 | Block, review and ready-for-delivery decisions | [`service.py`](src/workflow_portfolio/service.py) |
 | One record per change and an audit trail | [`store.py`](src/workflow_portfolio/store.py) |
 | Matched-case model comparison | [`evals.py`](src/workflow_portfolio/evals.py) |
+| The same audience check on an n8n canvas | [Importable workflow](.n8n/release-note-review/workflow.json) and [n8n tour](docs/n8n.md) |
+| Public-safe task guidance | [Release-note skill](skills/release-note-drafting.md) and [knowledge-gap skill](skills/knowledge-gap-triage.md) |
 | The behaviour I checked | [`tests/test_workflow.py`](tests/test_workflow.py) |
 
-This is the **first, code-only slice** of the portfolio. The next slice will add the matching n8n workflow, its extracted Code-node files, validation scripts, and optional deploy and nightly-mirror tooling. Both versions will live in this repo and use the same fictional scenario. Nothing will deploy to n8n Cloud or mirror a live workspace unless I configure and enable it. Relevant skills will have public-safe copies here; private Notion skills can be linked for people who have access. New model integrations will use OpenAI. This current build does not call a live model, read a customer's tenant or publish content. [The rebuild plan](docs/rebuild-plan.md) tracks the remaining work.
+The repo now has **two inspectable versions** of the audience check: an offline Python service and an inactive n8n workflow with its Code nodes in separate files. The n8n flow shows the canvas and source check; the Python version adds persistence, idempotency, review transitions and matched-case evaluation. Optional deploy and nightly-mirror tooling are still to be built. Nothing deploys to n8n Cloud or mirrors a live workspace. New model integrations will use OpenAI. This build does not call a live model, read a customer's tenant or publish content. [The rebuild plan](docs/rebuild-plan.md) tracks the remaining work.
 
 ## Why this example
 
@@ -56,6 +58,8 @@ python3 -m workflow_portfolio report --db /tmp/ai-workflow-demo.sqlite3
 ```
 
 The CLI imports from `src/` through a small local launcher. For normal package installation, run `python3 -m pip install -e .` in a virtual environment.
+
+To inspect the n8n version, open [the workflow export](.n8n/release-note-review/workflow.json) or import it into a separate test workspace. With Node 20 or newer, `npm run n8n:build` rebuilds that JSON from its [Code-node sources](.n8n/release-note-review/code/), and `npm run n8n:check && npm run test:n8n` verifies it. The workflow is inactive and its outputs stay within the run.
 
 ## What it demonstrates
 

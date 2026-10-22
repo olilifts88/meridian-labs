@@ -1,0 +1,5 @@
+{
+  "Load Synthetic Cases": "code/load-synthetic-cases.js",
+  "Check Against Evidence": "code/check-against-evidence.js",
+  "Prepare Decision Summary": "code/prepare-decision-summary.js"
+}

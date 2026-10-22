@@ -1,0 +1,11 @@
+{
+  "name": "ai-workflow-portfolio-n8n",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "n8n:build": "node scripts/build-n8n.mjs",
+    "n8n:check": "node scripts/build-n8n.mjs --check",
+    "test:n8n": "node --test tests/n8n.test.mjs"
+  }
+}
