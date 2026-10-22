@@ -1,0 +1,23 @@
+{
+  "source": "meridian-labs-example",
+  "window_end_utc": "2026-10-22T18:00:00Z",
+  "seen_keys": ["feature:old-report"],
+  "candidates": [
+    {
+      "feature_key": "csv-export-pilot",
+      "title": "CSV export for pilot customers",
+      "summary": "Pilot teams can export their saved analysis as a CSV file.",
+      "availability": {"stage": "beta", "cohorts": ["Pilot North", "Pilot South"]},
+      "prs": ["https://example.invalid/prs/41", "https://example.invalid/prs/42"],
+      "engineer": "Alex"
+    },
+    {
+      "feature_key": "old-report",
+      "title": "Previously suggested report update",
+      "summary": "This change was included in an earlier report.",
+      "availability": {"stage": "ga", "cohorts": []},
+      "prs": ["https://example.invalid/prs/21"],
+      "engineer": "Sam"
+    }
+  ]
+}

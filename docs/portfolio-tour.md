@@ -24,7 +24,13 @@ python3 -m workflow_portfolio benchmark
 
 Both fictional model outputs face the same saved cases. The report shows which case each model passed, where each failed and whether token usage was supplied. A missing token count stays unknown. This is a repeatable evaluation example, not a claim that two live models were called or that the phrase check proves writing quality.
 
-## 3. See how I checked it
+## 3. Inspect the n8n and GitHub-only paths
+
+The [release candidate relay](release-candidate-relay.md) follows the original **webhook → Code node** shape. Its fictional report groups two PRs into one candidate and skips a previously suggested feature. Run it without n8n using `node scripts/preview-candidates.mjs examples/release_candidates.json`, or inspect its [generated n8n export](../exports/n8n/release-candidate-relay.json). The output is a review-card preview. It does not send Slack messages or save Notion rows.
+
+The [release-note audience check](n8n.md) has an inactive n8n canvas and a separate Python service. The [manual GitHub Action](../.github/workflows/code-only-review.yml) can run either saved example without a hosted n8n workspace. Its code-only path is still narrower than the full release journey described in the [portfolio map](portfolio-map.md).
+
+## 4. See how I checked it
 
 Run:
 
@@ -32,7 +38,7 @@ Run:
 python3 -m unittest discover -s tests -v
 ```
 
-The tests cover the wrong audience, a corrected draft, duplicate requests, missing evidence, a new guide's review gate and matched benchmark cases. They show what this offline build does. They do not establish the security or reliability of a live service.
+The Python tests cover the wrong audience, a corrected draft, duplicate requests, missing evidence, a new guide's review gate and matched benchmark cases. Run `node --test tests/n8n.test.mjs` to check n8n export round-trips, grouped PRs, repeated candidates and the message preview. These checks show what this offline build does. They do not establish the security or reliability of a live service.
 
 ## The next engineering step
 

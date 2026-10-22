@@ -3,14 +3,14 @@ requires = ["setuptools>=61"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "ai-workflow-portfolio"
+name = "meridian-labs"
 version = "0.1.0"
 description = "Fictional, source-backed AI workflow operations reference"
 requires-python = ">=3.9"
 readme = "README.md"
 
 [project.scripts]
-ai-workflow = "workflow_portfolio.cli:main"
+meridian-labs = "workflow_portfolio.cli:main"
 
 [tool.setuptools]
 package-dir = {"" = "src"}

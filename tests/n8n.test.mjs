@@ -3,20 +3,35 @@ import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { test } from 'node:test';
 import { runInNewContext } from 'node:vm';
+import { hydrateWorkflow, splitWorkflow } from '../scripts/n8n-lib.mjs';
 
 const folder = join(process.cwd(), '.n8n', 'release-note-review');
 const readCode = (name) => readFileSync(join(folder, 'code', name), 'utf8');
 const execute = (name, input = []) => runInNewContext(`(() => { ${readCode(name)} })()`, {
   $input: { all: () => input }
 });
+const candidateCode = readFileSync(join(process.cwd(), '.n8n', 'release-candidate-relay', 'code', 'prepare-candidate-review.js'), 'utf8');
+const prepareCandidates = (report) => JSON.parse(JSON.stringify(runInNewContext(
+  `(() => { ${candidateCode} })()`,
+  { $input: { all: () => [{ json: report }] } }
+)[0].json));
 
 test('the exported workflow embeds every mapped Code-node file', () => {
-  const workflow = JSON.parse(readFileSync(join(folder, 'workflow.json'), 'utf8'));
-  const mapping = JSON.parse(readFileSync(join(folder, 'code-map.json'), 'utf8'));
-  assert.equal(workflow.active, false);
-  for (const node of workflow.nodes.filter((item) => item.type === 'n8n-nodes-base.code')) {
-    assert.equal(node.parameters.jsCode, readCode(mapping[node.name].slice(5)));
+  const source = JSON.parse(readFileSync(join(folder, 'workflow.json'), 'utf8'));
+  const exported = JSON.parse(readFileSync(join(process.cwd(), 'exports', 'n8n', 'release-note-review.json'), 'utf8'));
+  assert.equal(source.active, false);
+  assert.deepEqual(exported, hydrateWorkflow(source, folder));
+  assert.equal(Object.hasOwn(exported, '_code'), false);
+  for (const node of exported.nodes.filter((item) => item.type === 'n8n-nodes-base.code')) {
+    assert.equal(node.parameters.jsCode, readCode(source._code[node.name].slice(5)));
   }
+});
+
+test('a flat n8n export splits and hydrates without changing its content', () => {
+  const exported = JSON.parse(readFileSync(join(process.cwd(), 'exports', 'n8n', 'release-note-review.json'), 'utf8'));
+  const { source, files } = splitWorkflow(exported);
+  const hydrated = hydrateWorkflow(source, folder, (file) => files[`code/${file.split('/').at(-1)}`]);
+  assert.deepEqual(hydrated, exported);
 });
 
 test('the wrong audience is blocked and the accurate beta note can proceed', () => {
@@ -47,4 +62,27 @@ test('an unknown citation fails closed', () => {
   candidate.json.draft.citations = ['https://example.invalid/unverified'];
   const checked = execute('check-against-evidence.js', [candidate]);
   assert.deepEqual(Array.from(checked[0].json.findings), ['unsupported_citation', 'missing_pr_evidence']);
+});
+
+test('candidate relay groups PRs, previews review actions and skips a repeated feature', () => {
+  const report = JSON.parse(readFileSync(join(process.cwd(), 'examples', 'release_candidates.json'), 'utf8'));
+  const first = prepareCandidates(report);
+  assert.equal(first.delivery_enabled, false);
+  assert.deepEqual(first.accepted.map((item) => item.feature_key), ['csv-export-pilot']);
+  assert.deepEqual(first.accepted[0].prs, ['https://example.invalid/prs/41', 'https://example.invalid/prs/42']);
+  assert.deepEqual(first.repeated, ['old-report']);
+  assert.deepEqual(first.review_card_preview.blocks[2].elements.map((button) => button.action_id), [
+    'candidate_announced', 'candidate_deferred', 'candidate_declined'
+  ]);
+  const second = prepareCandidates({ ...report, seen_keys: first.next_seen_keys });
+  assert.equal(second.accepted.length, 0);
+  assert.deepEqual(second.repeated, ['csv-export-pilot', 'old-report']);
+});
+
+test('candidate relay rejects an untrusted source and escapes message text', () => {
+  const report = JSON.parse(readFileSync(join(process.cwd(), 'examples', 'release_candidates.json'), 'utf8'));
+  assert.throws(() => prepareCandidates({ ...report, source: 'other-system' }), /Unexpected report source/);
+  report.candidates[0].summary = 'Avoid <@someone> & verify the audience';
+  const result = prepareCandidates(report);
+  assert.match(result.review_card_preview.blocks[1].text.text, /&lt;@someone&gt; &amp; verify/);
 });

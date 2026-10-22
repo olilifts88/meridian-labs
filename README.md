@@ -1,6 +1,8 @@
-# Governed AI workflow | Oli's portfolio build
+![Meridian Labs: source to decision](assets/meridian-labs-banner.svg)
 
-I built this independent, runnable example to show how I approach an AI workflow from source evidence through quality checks, review and evaluation. A draft release note can sound convincing while promising a feature to people who cannot use it. This workflow catches that error, records the decision and shows how I would compare candidate models on the same saved cases.
+# Meridian Labs | AI workflow portfolio
+
+I built this independent, runnable example to show how I approach an AI workflow from source evidence through quality checks, review and evaluation. A draft release note can sound convincing while promising a feature to people who cannot use it. This first slice catches that error and records the decision. It is the starting point for a larger, source-shaped portfolio build, not the whole release workflow. [The portfolio map](docs/portfolio-map.md) shows the original system's structure, what this repo currently proves, and what comes next.
 
 **Everything in the examples is synthetic.** This is a new portfolio implementation. It does not contain or connect to an employer's systems, source code, customer data or credentials.
 
@@ -14,11 +16,12 @@ If you have five minutes, [follow the guided tour](docs/portfolio-tour.md). It e
 | Block, review and ready-for-delivery decisions | [`service.py`](src/workflow_portfolio/service.py) |
 | One record per change and an audit trail | [`store.py`](src/workflow_portfolio/store.py) |
 | Matched-case model comparison | [`evals.py`](src/workflow_portfolio/evals.py) |
-| The same audience check on an n8n canvas | [Importable workflow](.n8n/release-note-review/workflow.json) and [n8n tour](docs/n8n.md) |
+| The same audience check on an n8n canvas | [Importable workflow](exports/n8n/release-note-review.json), [reviewable source](.n8n/release-note-review/workflow.json) and [n8n tour](docs/n8n.md) |
+| A source-shaped release candidate relay | [n8n workflow](.n8n/release-candidate-relay/workflow.json), [code-only preview](scripts/preview-candidates.mjs) and [walkthrough](docs/release-candidate-relay.md) |
 | Public-safe task guidance | [Release-note skill](skills/release-note-drafting.md) and [knowledge-gap skill](skills/knowledge-gap-triage.md) |
 | The behaviour I checked | [`tests/test_workflow.py`](tests/test_workflow.py) |
 
-The repo now has **two inspectable versions** of the audience check: an offline Python service and an inactive n8n workflow with its Code nodes in separate files. The n8n flow shows the canvas and source check; the Python version adds persistence, idempotency, review transitions and matched-case evaluation. Optional deploy and nightly-mirror tooling are still to be built. Nothing deploys to n8n Cloud or mirrors a live workspace. New model integrations will use OpenAI. This build does not call a live model, read a customer's tenant or publish content. [The rebuild plan](docs/rebuild-plan.md) tracks the remaining work.
+The repo currently has **two inspectable versions of one audience check**: an offline Python service and an inactive n8n workflow with its Code nodes in separate files. The Python version also has persistence, idempotency, review transitions and matched-case evaluation. A second, [source-shaped relay](docs/release-candidate-relay.md) accepts a fictional change report, groups PRs, skips repeated candidates and prepares a review card. A [manual GitHub Action](.github/workflows/code-only-review.yml) runs saved examples without n8n or external writes. The n8n canvases do not yet carry the full release journey. [Opt-in n8n tools](docs/n8n-deployment.md) can preview deployment and read one workflow into a Git-ignored local folder; neither has been tried against n8n Cloud. There is no nightly GitHub mirror yet. New model integrations will use OpenAI. This build does not call a live model, read a customer's tenant or publish content. [The portfolio map](docs/portfolio-map.md) explains how the complete n8n and GitHub-only paths will fit together.
 
 ## Why this example
 
@@ -53,13 +56,13 @@ python3 -m unittest discover -s tests -v
 To inspect one candidate:
 
 ```bash
-python3 -m workflow_portfolio submit examples/beta_csv_bad.json --db /tmp/ai-workflow-demo.sqlite3
-python3 -m workflow_portfolio report --db /tmp/ai-workflow-demo.sqlite3
+python3 -m workflow_portfolio submit examples/beta_csv_bad.json --db /tmp/meridian-labs-demo.sqlite3
+python3 -m workflow_portfolio report --db /tmp/meridian-labs-demo.sqlite3
 ```
 
 The CLI imports from `src/` through a small local launcher. For normal package installation, run `python3 -m pip install -e .` in a virtual environment.
 
-To inspect the n8n version, open [the workflow export](.n8n/release-note-review/workflow.json) or import it into a separate test workspace. With Node 20 or newer, `npm run n8n:build` rebuilds that JSON from its [Code-node sources](.n8n/release-note-review/code/), and `npm run n8n:check && npm run test:n8n` verifies it. The workflow is inactive and its outputs stay within the run.
+To inspect the n8n version, open [the generated workflow export](exports/n8n/release-note-review.json) or import it into a separate test workspace. With Node 20 or newer, `npm run n8n:build` rebuilds that export from the [reviewable workflow source](.n8n/release-note-review/workflow.json) and [Code-node files](.n8n/release-note-review/code/), and `npm run n8n:check && npm run test:n8n` verifies it. The workflow is inactive and its outputs stay within the run.
 
 ## What it demonstrates
 

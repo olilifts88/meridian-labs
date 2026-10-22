@@ -1,0 +1,53 @@
+{
+  "name": "Meridian Labs — Release candidate relay (offline preview)",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "meridian-labs-release-candidates-demo",
+        "options": {}
+      },
+      "id": "1144db34-737b-44ac-9d10-7b7c0365c230",
+      "name": "Candidate Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        240,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "// Pure, offline preparation. No Slack, Notion, GitHub or model calls occur here.\nconst items = $input.all();\nif (items.length !== 1) throw new Error('Expected one release report');\nconst report = items[0].json.body ?? items[0].json;\nif (report.source !== 'meridian-labs-example') throw new Error('Unexpected report source');\nif (!Array.isArray(report.candidates) || report.candidates.length > 20) {\n  throw new Error('Expected up to 20 candidates');\n}\nif (!Array.isArray(report.seen_keys) || report.seen_keys.length > 500 || report.seen_keys.some((key) => typeof key !== 'string')) {\n  throw new Error('Expected bounded seen_keys array');\n}\n\nconst seen = new Set(report.seen_keys);\nconst accepted = [];\nconst repeated = [];\nconst changeKey = (featureKey) => `feature:${featureKey}`;\nconst prKey = (url) => `pr:${url}`;\nconst isExamplePr = (url) => /^https:\\/\\/example\\.invalid\\/prs\\/[1-9][0-9]*$/.test(url);\nconst escapeSlack = (text) => String(text).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');\n\nfor (const candidate of report.candidates) {\n  if (typeof candidate.feature_key !== 'string' || !/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(candidate.feature_key)) {\n    throw new Error('Candidate needs a stable feature_key');\n  }\n  if (typeof candidate.title !== 'string' || !candidate.title.trim() || candidate.title.length > 150) throw new Error('Candidate needs a short title');\n  if (typeof candidate.summary !== 'string' || !candidate.summary.trim() || candidate.summary.length > 500) throw new Error('Candidate needs a short summary');\n  if (!Array.isArray(candidate.prs) || !candidate.prs.length || candidate.prs.length > 5 || candidate.prs.some((url) => !isExamplePr(url))) {\n    throw new Error('Candidate needs fictional PR evidence');\n  }\n  if (!candidate.availability || !['beta', 'ga'].includes(candidate.availability.stage)) {\n    throw new Error('Candidate needs confirmed availability');\n  }\n  const cohorts = candidate.availability.cohorts;\n  if (!Array.isArray(cohorts) || cohorts.length > 5 || cohorts.some((name) => typeof name !== 'string' || !name.trim() || name.length > 60) || (candidate.availability.stage === 'beta' && !cohorts.length) || (candidate.availability.stage === 'ga' && cohorts.length)) {\n    throw new Error('Beta availability needs named cohorts');\n  }\n  const prs = [...new Set(candidate.prs)];\n  const keys = [changeKey(candidate.feature_key), ...prs.map(prKey)];\n  if (keys.some((key) => seen.has(key))) {\n    repeated.push(candidate.feature_key);\n    continue;\n  }\n  for (const key of keys) seen.add(key);\n  accepted.push({\n    feature_key: candidate.feature_key,\n    title: candidate.title.trim(),\n    summary: candidate.summary.trim(),\n    prs,\n    availability: { stage: candidate.availability.stage, cohorts },\n    engineer: typeof candidate.engineer === 'string' && candidate.engineer.trim()\n      ? candidate.engineer.trim().slice(0, 100)\n      : 'Unassigned'\n  });\n}\n\nconst blocks = [{ type: 'header', text: { type: 'plain_text', text: 'Release candidates · preview' } }];\nfor (const candidate of accepted) {\n  const audience = candidate.availability.stage === 'ga'\n    ? 'All customers'\n    : `Beta: ${candidate.availability.cohorts.join(', ')}`;\n  blocks.push({\n    type: 'section',\n    text: { type: 'mrkdwn', text: `*${escapeSlack(candidate.title)}*\\n${escapeSlack(candidate.summary)}\\n*Availability:* ${escapeSlack(audience)}\\n*Engineer:* ${escapeSlack(candidate.engineer)}\\n*PRs:* ${candidate.prs.join(' · ')}` }\n  });\n  blocks.push({\n    type: 'actions',\n    elements: [\n      ['Mark announced', 'announced'],\n      ['Do later', 'deferred'],\n      ['Not suitable', 'declined']\n    ].map(([label, decision]) => ({\n      type: 'button',\n      text: { type: 'plain_text', text: label },\n      action_id: `candidate_${decision}`,\n      value: candidate.feature_key\n    }))\n  });\n}\nif (!accepted.length) {\n  blocks.push({ type: 'section', text: { type: 'mrkdwn', text: 'No new candidates in this report.' } });\n}\n\nreturn [{ json: {\n  accepted,\n  repeated,\n  next_seen_keys: [...seen].sort(),\n  review_card_preview: { blocks },\n  delivery_enabled: false\n} }];\n"
+      },
+      "id": "75fd99d9-6075-40cb-a075-b611c74fc9d7",
+      "name": "Prepare Candidate Review",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        500,
+        300
+      ]
+    }
+  ],
+  "connections": {
+    "Candidate Webhook": {
+      "main": [
+        [
+          {
+            "node": "Prepare Candidate Review",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "active": false,
+  "pinData": {},
+  "tags": []
+}

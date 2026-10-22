@@ -1,5 +1,18 @@
 # Architecture and decisions
 
+Meridian Labs keeps two ways to run the same kind of work in one repository: an n8n canvas with separate Code-node files, and scripts or GitHub Actions that do not need n8n. The first audience check exists in both forms but only the code-only version has durable records and review transitions. The separate candidate relay currently prepares a preview in both environments; it does not yet persist state or send a card. [The portfolio map](portfolio-map.md) marks those gaps before anyone treats the examples as a complete release system.
+
+```mermaid
+flowchart LR
+    A[Fictional product evidence] --> B[Candidate relay preview]
+    B --> C[Draft and audience check]
+    C --> D[Decision and audit record]
+    D --> E[Saved evaluation cases]
+    N[n8n source and generated export] -. runs preview logic .-> B
+    G[GitHub Action and local scripts] -. runs code-only examples .-> B
+    G -. runs policy service .-> C
+```
+
 The reference uses four boundaries:
 
 1. **Evidence:** a product change has a stable ID, content kind, PR links, release stage and exact permitted audiences. The evidence adapter would fetch this from trusted systems in a real deployment. The draft cannot define its own review policy.

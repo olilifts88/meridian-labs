@@ -1,0 +1,40 @@
+{
+  "name": "Meridian Labs — Release candidate relay (offline preview)",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "meridian-labs-release-candidates-demo",
+        "options": {}
+      },
+      "id": "1144db34-737b-44ac-9d10-7b7c0365c230",
+      "name": "Candidate Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [240, 300]
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": ""
+      },
+      "id": "75fd99d9-6075-40cb-a075-b611c74fc9d7",
+      "name": "Prepare Candidate Review",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [500, 300]
+    }
+  ],
+  "connections": {
+    "Candidate Webhook": {
+      "main": [[{"node": "Prepare Candidate Review", "type": "main", "index": 0}]]
+    }
+  },
+  "settings": {"executionOrder": "v1"},
+  "active": false,
+  "pinData": {},
+  "tags": [],
+  "_code": {
+    "Prepare Candidate Review": "code/prepare-candidate-review.js"
+  }
+}

@@ -1,0 +1,99 @@
+{
+  "name": "Release note audience check (portfolio demo)",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "6ab6734e-f24e-4264-a84d-75257f02b33c",
+      "name": "Manual Trigger",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        240,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "// Two fictional drafts of the same change: one promises too much, one is accurate.\nconst evidence = {\n  change_id: 'feature-101',\n  feature: 'CSV export',\n  content_kind: 'release_note',\n  stage: 'beta',\n  audiences: ['pilot_group_east', 'pilot_group_west'],\n  pr_urls: [\n    'https://example.invalid/pr/101',\n    'https://example.invalid/pr/102'\n  ],\n  source_urls: ['https://example.invalid/spec/csv-export']\n};\n\nconst shared = {\n  kind: 'release_note',\n  feature: 'CSV export',\n  stage: 'beta',\n  citations: ['https://example.invalid/pr/101'],\n  model: 'model_alpha'\n};\n\nreturn [\n  {\n    json: {\n      case_id: 'beta_csv_bad',\n      evidence,\n      draft: {\n        ...shared,\n        headline: 'Export your results to CSV',\n        body: 'CSV export is available to all customers. Open a report and select Export.',\n        audiences: ['all_customers']\n      }\n    }\n  },\n  {\n    json: {\n      case_id: 'beta_csv_good',\n      evidence,\n      draft: {\n        ...shared,\n        headline: 'Export your results to CSV in the pilot',\n        body: 'CSV export is available to the pilot groups. Open a report and select Export.',\n        audiences: ['pilot_group_east', 'pilot_group_west'],\n        citations: ['https://example.invalid/pr/101', 'https://example.invalid/spec/csv-export']\n      }\n    }\n  }\n];\n"
+      },
+      "id": "8c8dc988-19a0-4a77-a28a-48dd379b6c7a",
+      "name": "Load Synthetic Cases",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        480,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "// Deterministic checks before anyone treats an AI draft as a publishable note.\nconst requiredText = (value) => typeof value === 'string' && value.trim().length > 0;\nconst stringList = (value) => Array.isArray(value) && value.length > 0 && value.every(requiredText);\nconst sameSet = (a, b) => a.length === b.length && new Set(a).size === new Set(b).size && a.every((x) => b.includes(x));\n\nreturn $input.all().map((item) => {\n  const candidate = item.json || {};\n  const evidence = candidate.evidence || {};\n  const draft = candidate.draft || {};\n  const findings = [];\n\n  if (!requiredText(candidate.case_id) || !requiredText(evidence.change_id) ||\n      !requiredText(evidence.feature) || !requiredText(evidence.content_kind) ||\n      !requiredText(evidence.stage) || !stringList(evidence.audiences) ||\n      !stringList(evidence.pr_urls) || !stringList(evidence.source_urls) ||\n      !requiredText(draft.kind) || !requiredText(draft.feature) ||\n      !requiredText(draft.stage) || !requiredText(draft.model) ||\n      !requiredText(draft.headline) || !requiredText(draft.body) ||\n      !stringList(draft.audiences) || !stringList(draft.citations)) {\n    findings.push('invalid_input');\n  } else {\n    if (!['beta', 'ga'].includes(evidence.stage) ||\n        !['release_note', 'guide_update', 'new_guide'].includes(evidence.content_kind) ||\n        !['release_note', 'guide_update', 'new_guide'].includes(draft.kind)) {\n      findings.push('invalid_input');\n    }\n    if (draft.feature !== evidence.feature) findings.push('feature_mismatch');\n    if (draft.kind !== evidence.content_kind) findings.push('content_kind_mismatch');\n    if (draft.stage !== evidence.stage) findings.push('stage_mismatch');\n    if (!sameSet(draft.audiences, evidence.audiences)) findings.push('audience_mismatch');\n    if (evidence.stage === 'beta' && evidence.audiences.includes('all_customers')) findings.push('invalid_beta_scope');\n    if (evidence.stage === 'ga' && !sameSet(evidence.audiences, ['all_customers'])) findings.push('invalid_ga_scope');\n    const allowed = new Set([...evidence.pr_urls, ...evidence.source_urls]);\n    if (draft.citations.some((url) => !allowed.has(url))) findings.push('unsupported_citation');\n    if (!draft.citations.some((url) => evidence.pr_urls.includes(url))) findings.push('missing_pr_evidence');\n  }\n\n  return {\n    json: {\n      case_id: candidate.case_id || 'invalid-case',\n      change_id: evidence.change_id || null,\n      content_kind: evidence.content_kind || null,\n      confirmed_audiences: stringList(evidence.audiences) ? evidence.audiences : [],\n      draft_audiences: stringList(draft.audiences) ? draft.audiences : [],\n      source_prs: stringList(evidence.pr_urls) ? evidence.pr_urls : [],\n      findings,\n      decision: findings.length ? 'blocked' : (evidence.content_kind === 'new_guide' ? 'engineer_review' : 'ready_for_delivery')\n    }\n  };\n});\n"
+      },
+      "id": "638a4669-bcae-48fd-bc18-a2293753c8f5",
+      "name": "Check Against Evidence",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        720,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "// A compact output for an operator. This demo deliberately sends no messages.\nreturn $input.all().map(({ json }) => ({\n  json: {\n    case_id: json.case_id,\n    change_id: json.change_id,\n    decision: json.decision,\n    reason: json.findings.length ? json.findings.join(', ') : 'source checks passed',\n    audience: json.confirmed_audiences,\n    review_owner: json.decision === 'engineer_review' ? 'configured_engineer' : null,\n    delivery_enabled: false\n  }\n}));\n"
+      },
+      "id": "f75ed50d-e156-490c-a055-c0712b96e7df",
+      "name": "Prepare Decision Summary",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        960,
+        300
+      ]
+    }
+  ],
+  "connections": {
+    "Manual Trigger": {
+      "main": [
+        [
+          {
+            "node": "Load Synthetic Cases",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Load Synthetic Cases": {
+      "main": [
+        [
+          {
+            "node": "Check Against Evidence",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Against Evidence": {
+      "main": [
+        [
+          {
+            "node": "Prepare Decision Summary",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "active": false,
+  "pinData": {},
+  "tags": []
+}

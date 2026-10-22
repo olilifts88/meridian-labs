@@ -1,35 +1,50 @@
 # Rebuild plan
 
-The goal is one GitHub repo containing two inspectable versions of the same workflow: the n8n orchestration and a code-only implementation. The current code is an offline reference. Each stage below has a visible proof before the next one begins.
+[The portfolio map](portfolio-map.md) compares the earlier system with this repository and shows the intended GitHub layout. This plan is the build sequence. The current audience-check examples are a safe scaffold; they are not yet a faithful end-to-end port.
 
-## 1. Make the core decisions honest
+## 1. Rebuild the repository mechanics
 
-The source record determines the change ID, content kind and audience. The draft proposes wording; it cannot lower a review requirement. A growing group of PRs still belongs to one change. Passing checks means **ready for delivery**, not published. The unit tests and demo cover this stage.
+- Use one folder per n8n workflow: `workflow.json` for the canvas and separate `code/*.js` files for Code nodes.
+- Add general split, hydrate and round-trip checks. Make CI catch missing code files, stale exports and accidental credentials.
+- Keep deploy and read-only mirror jobs manual and disabled until deliberately configured. The deploy command now previews offline and requires an explicit inactive target for a live write. A separate mirror command only saves a reviewed local preview; nightly GitHub sync is still to be built. A commit alone must not contact n8n Cloud.
 
-## 2. Rebuild the n8n version in this repo
+**Proof:** every example workflow can be assembled, imported as an export and round-tripped without losing its node graph.
 
-The first importable n8n workflow, readable Code-node files and export check are now in the repo. They use only synthetic cases and make no external calls. Next, add optional GitHub-to-n8n deployment and allowlisted nightly n8n-to-GitHub mirror tooling. Both must remain disabled until deliberately configured.
+## 2. Complete the documentation and release example
 
-## 3. Add the relevant skills
+- Recreate the distinct stages found in the source: product-change analysis, candidate relay, engineer notification, review callback, documentation-gap proposal, and publication.
+- Keep the source distinctions visible. Joining the separate stages into a single portfolio journey is a new design choice.
+- Give each change one stable identity, attach several PRs when needed, and retain the confirmed audience from source evidence.
+- Use fictional records and local adapter fakes for GitHub, Notion, Slack and publication.
 
-Two public-safe, self-contained portfolio skills now show drafting and knowledge-gap triage. Expand these with versioned cases and tests where useful. Private Notion pages are optional references because an interviewer may not have access. Use OpenAI for any new model integration; do not carry over older provider-specific instructions.
+**Proof:** normal, wrong-audience, duplicate, new-guide review, rejected-review and failed-delivery cases produce the expected records and no duplicate external write.
 
-## 4. Put identity before tools
+## 3. Match the GitHub-only version
 
-Add an authenticated actor and a scoped evidence reader. A caller must be allowed to read a source before it can enter model context, and a delivery adapter must check the audience again before writing. Test cross-tenant reads, missing scopes and revoked access. The current JSON fixtures are not an authentication system.
+- Run the same inputs through code and GitHub Actions without n8n. Keep the model and external systems behind adapters.
+- Compare the complete decisions and state changes of both paths, not just the current audience-check result.
+- Keep the code-only path runnable offline; make its scheduled and live external actions opt-in.
 
-## 5. Add a real generation boundary
+**Proof:** one saved-case suite runs both paths and reports any difference by case and stage.
 
-Create an OpenAI model adapter that returns a structured draft with source references. Keep prompts and model settings versioned. Save the source snapshot and output so a failed case can be replayed. Use a fake adapter in CI; run a live API test only with explicit credentials and a cost limit.
+## 4. Add ChatGPT-backed drafting and operating evidence
 
-## 6. Deliver reliably
+- Add an OpenAI adapter for structured drafting and model-based evaluation, with a fake adapter for ordinary CI.
+- Version the public-safe skills, prompts, source snapshots, rubrics and saved examples.
+- Keep deterministic identity, tenant availability and review checks separate from model judgement.
+- Show the operating loop: a failure is recorded, the guidance or source is corrected, and both the failed case and earlier passing cases are retested.
 
-Put approved content in a transactional outbox, then let a separate worker send it to a configured destination. Save the provider receipt, retry transient failures, and use the stable change ID as the idempotency key. Test failed delivery and a retry that does not publish twice.
+**Proof:** an offline evaluation report explains the wrong result, the change made and whether the fix regressed another case. A live API run is optional and separately labelled.
 
-## 7. Evaluate and operate it
+## 5. Expand the portfolio and prepare sharing
 
-Grow the saved-case set to cover correctness, audience, source grounding and useful task completion. Compare model candidates on the same cases and source snapshots. Missing token usage must stay unknown, not zero. Add logs, alerts, retention rules and a runbook before calling the service production-ready.
+- Add a call-to-CRM review example and a security-answer approval example using the same repository conventions.
+- Keep any legal example bounded and fictional; the earlier legal engine is a separate, much larger system.
+- Write a five-minute tour, setup instructions and a clear status marker for every capability: implemented and tested, implemented but not live-tested, or planned.
+- Review the files and complete Git history for employer material and secrets before making the repository public.
 
-## 8. Prepare a public release
+**Proof:** a reviewer can understand each example from the README, run the offline suite, inspect both implementation paths and see exactly what has and has not been verified.
 
-The first clean commit is in a private GitHub repository. Before making it public, review every file and Git commit for company material and secrets, choose the public name and license, run the tests and inspect the packaged artifact. No source code or internal data from an employer belongs here.
+## Release gate
+
+The portfolio is ready to share publicly only after the fictional-data review, offline checks, current Git history review and five-minute walkthrough pass. Production-ready is a separate claim requiring authenticated source access, tenant-scoped reads and writes, delivery receipts, retries, monitoring, retention rules and a hosted end-to-end test. None of those claims follows from an importable n8n export alone.
