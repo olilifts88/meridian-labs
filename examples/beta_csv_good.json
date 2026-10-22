@@ -1,0 +1,21 @@
+{
+  "evidence": {
+    "change_id": "feature-101",
+    "feature": "CSV export",
+    "content_kind": "release_note",
+    "stage": "beta",
+    "audiences": ["pilot_group_east", "pilot_group_west"],
+    "pr_urls": ["https://example.invalid/pr/101", "https://example.invalid/pr/102"],
+    "source_urls": ["https://example.invalid/spec/csv-export"]
+  },
+  "draft": {
+    "kind": "release_note",
+    "headline": "Export your results to CSV in the pilot",
+    "body": "CSV export is available to the pilot groups. Open a report and select Export.",
+    "feature": "CSV export",
+    "stage": "beta",
+    "audiences": ["pilot_group_east", "pilot_group_west"],
+    "citations": ["https://example.invalid/pr/101", "https://example.invalid/spec/csv-export"],
+    "model": "model_alpha"
+  }
+}

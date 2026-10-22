@@ -1,0 +1,84 @@
+[
+  {
+    "case_id": "beta-csv-audience",
+    "evidence": {
+      "change_id": "feature-101",
+      "feature": "CSV export",
+      "content_kind": "release_note",
+      "stage": "beta",
+      "audiences": ["pilot_group_east", "pilot_group_west"],
+      "pr_urls": ["https://example.invalid/pr/101"],
+      "source_urls": ["https://example.invalid/spec/csv-export"]
+    },
+    "required_phrases": ["pilot"],
+    "responses": [
+      {
+        "tokens": 148,
+        "draft": {
+          "kind": "release_note",
+          "headline": "CSV export is here",
+          "body": "All customers can use CSV export from the report screen.",
+          "feature": "CSV export",
+          "stage": "beta",
+          "audiences": ["all_customers"],
+          "citations": ["https://example.invalid/pr/101"],
+          "model": "model_alpha"
+        }
+      },
+      {
+        "tokens": 171,
+        "draft": {
+          "kind": "release_note",
+          "headline": "CSV export pilot",
+          "body": "The pilot groups can export results from the report screen.",
+          "feature": "CSV export",
+          "stage": "beta",
+          "audiences": ["pilot_group_east", "pilot_group_west"],
+          "citations": ["https://example.invalid/pr/101"],
+          "model": "model_beta"
+        }
+      }
+    ]
+  },
+  {
+    "case_id": "ga-saved-report",
+    "evidence": {
+      "change_id": "feature-201",
+      "feature": "Saved reports",
+      "content_kind": "release_note",
+      "stage": "ga",
+      "audiences": ["all_customers"],
+      "pr_urls": ["https://example.invalid/pr/201"],
+      "source_urls": ["https://example.invalid/spec/saved-reports"]
+    },
+    "required_phrases": ["return"],
+    "responses": [
+      {
+        "tokens": 136,
+        "draft": {
+          "kind": "release_note",
+          "headline": "Saved reports",
+          "body": "All customers can save a report and return to it later.",
+          "feature": "Saved reports",
+          "stage": "ga",
+          "audiences": ["all_customers"],
+          "citations": ["https://example.invalid/pr/201"],
+          "model": "model_alpha"
+        }
+      },
+      {
+        "tokens": 159,
+        "draft": {
+          "kind": "release_note",
+          "headline": "Saved reports",
+          "body": "All customers can save a report and return to it later.",
+          "feature": "Saved reports",
+          "stage": "ga",
+          "audiences": ["all_customers"],
+          "citations": ["https://example.invalid/pr/201"],
+          "model": "model_beta"
+        }
+      }
+    ]
+  }
+]
