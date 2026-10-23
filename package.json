@@ -11,6 +11,7 @@
     "n8n:mirror": "node scripts/n8n-mirror.mjs",
     "candidates:preview": "node scripts/preview-candidates.mjs",
     "candidate-review:preview": "node scripts/preview-review-action.mjs",
-    "test:n8n": "node --test tests/n8n.test.mjs tests/n8n-deploy.test.mjs tests/n8n-mirror.test.mjs"
+    "test:n8n": "node --test tests/n8n.test.mjs tests/n8n-deploy.test.mjs tests/n8n-mirror.test.mjs",
+    "test:eval": "node --test tests/calibration-feedback.test.cjs"
   }
 }

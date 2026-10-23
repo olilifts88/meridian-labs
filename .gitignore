@@ -10,3 +10,18 @@ __pycache__/
 dist/
 build/
 local-mirror/
+
+# Account data and local telemetry are never portfolio inputs.
+private-data/
+local-telemetry/
+usage-reports/
+*.jsonl.zst
+state_*.sqlite
+state_*.sqlite-*
+.auth/
+*.jsonl
+!examples/usage/response.jsonl
+*.sqlite
+*.sqlite-*
+auth.json
+*.pem

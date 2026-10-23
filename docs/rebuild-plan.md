@@ -1,4 +1,4 @@
-# Rebuild plan
+# Implementation plan
 
 [The portfolio map](portfolio-map.md) compares the earlier system with this repository and shows the intended GitHub layout. This plan is the build sequence. The current audience-check examples are a safe scaffold; they are not yet a faithful end-to-end port.
 
@@ -48,3 +48,7 @@
 ## Release gate
 
 The portfolio is ready to share publicly only after the fictional-data review, offline checks, current Git history review and five-minute walkthrough pass. Production-ready is a separate claim requiring authenticated source access, tenant-scoped reads and writes, delivery receipts, retries, monitoring, retention rules and a hosted end-to-end test. None of those claims follows from an importable n8n export alone.
+
+## Usage and evaluation foundation
+
+Offline measurement, valuation and calibration modules are now present and fixture-tested. Next work should connect them through explicit adapters rather than duplicate accounting logic. The executable router, scheduled collector/uploader and automated LLM judge remain planned. See [usage-and-evaluation.md](usage-and-evaluation.md).

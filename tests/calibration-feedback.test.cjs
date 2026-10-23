@@ -1,0 +1,12 @@
+const test = require('node:test');
+const assert = require('node:assert/strict');
+const {applyCalibrationFeedback: apply} = require('../src/evaluation/calibration-feedback.cjs');
+const sample = () => ({revision:'r1',cases:[{id:'case-1',human_label:null}]});
+const feedback = () => ({id:'review-1',revision:'r1',decisions:[{case_id:'case-1',kind:'label',label:'Pass',statement:'Meets the agreed source check'}]});
+test('label recorded without changing source assessment',()=>{const s=sample(); const r=apply(s,feedback()); assert.equal(r.sample.cases[0].human_label,'Pass');assert.equal(s.cases[0].human_label,null)});
+test('same receipt is idempotent',()=>{const r=apply(sample(),feedback());assert.equal(apply(r.sample,feedback()).status,'Already recorded')});
+test('stale feedback remains pending',()=>{const f=feedback();f.revision='old';assert.equal(apply(sample(),f).status,'Pending')});
+test('qualitative agreement never fabricates label',()=>{const f=feedback();f.decisions=[{case_id:'case-1',kind:'qualitative',statement:'I agree with the explanation'}];const r=apply(sample(),f);assert.equal(r.sample.cases[0].human_label,null)});
+test('conflicting human label remains intact',()=>{const s=sample();s.cases[0].human_label='Needs improvement';assert.equal(apply(s,feedback()).status,'Pending')});
+test('changed receipt cannot overwrite',()=>{const r=apply(sample(),feedback());const f=feedback();f.decisions[0].statement='Changed';assert.equal(apply(r.sample,f).status,'Pending')});
+test('unknown case cannot be approved',()=>{const f=feedback();f.decisions[0].case_id='missing';assert.equal(apply(sample(),f).status,'Pending')});

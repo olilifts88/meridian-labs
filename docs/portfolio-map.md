@@ -1,6 +1,6 @@
 # Portfolio map
 
-This repository is being rebuilt from a September 2026 snapshot of a larger internal automation system. It is an independent implementation with fictional organisations, customers and data. The snapshot informs the architecture; it is not imported here. The current repository is an early, runnable slice, **not** a complete port of that system.
+This repository is building a portfolio of AI agents, workflows and their supporting infrastructure. A September 2026 snapshot of a larger automation system informs the workflow architecture. It is an independent implementation with fictional organisations, customers and data. The snapshot informs the architecture; it is not imported here. The current repository is an early, runnable slice, **not** a complete port of that system.
 
 ## What the original system contained
 
@@ -21,7 +21,7 @@ The internal web apps and company knowledge corpus are context for that system, 
 
 The source distinguishes **announcement candidates**, **release-note broadcast**, and **documentation maintenance** as separate workflows. Some source notes describe trials or proposals rather than a single live, connected publishing path. The portfolio can connect these stages into one understandable example, but that connection is a new design choice and must be labelled as such. It should not be presented as an exact copy of one existing workflow.
 
-## Where the first portfolio slice diverged
+## Current implementation and remaining gaps
 
 | Capability | Earlier system | In this repository now | Required change |
 | --- | --- | --- | --- |
@@ -57,6 +57,10 @@ The n8n path and code-only path will consume the same contracts and saved cases.
 OpenAI will provide model-backed drafting and evaluation through a replaceable adapter. A separate deterministic layer will check identity, audience, source links, duplicate changes and review requirements. The model can suggest content; it cannot set its own permission or approval policy. Saved examples will show useful output, wrong audience, missing evidence, duplicate delivery, review rejection and a correction that does not break earlier good cases.
 
 Changing the old provider to OpenAI is a real integration change, not a word replacement. Prompts, response parsing, error handling and evaluation cases must be checked against the new adapter before any model-backed path is treated as working. Personal Notion skills can inform public-safe skill files, but private Notion URLs are not a substitute for files an interviewer can read.
+
+## Usage and evaluation modules now included
+
+The repository now includes plain/compressed log reading, explicit execution bindings, deduplication, coverage checks, illustrative token valuation and revision-bound human feedback. See [usage-and-evaluation.md](usage-and-evaluation.md). These are offline components; connected upload, schedules, dashboard maintenance, model dispatch and an automatic LLM judge are not included.
 
 ## Build order and proof
 

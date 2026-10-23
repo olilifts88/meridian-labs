@@ -1,86 +1,62 @@
-![Meridian Labs: source to decision](assets/meridian-labs-banner.svg)
+![Meridian Labs](assets/meridian-labs-banner.svg)
 
-# Meridian Labs | AI workflow portfolio
+# Meridian Labs | AI Agents, Workflows & Infrastructure
 
-I built this independent, runnable example to show how I approach an AI workflow from source evidence through quality checks, review and evaluation. A draft release note can sound convincing while promising a feature to people who cannot use it. This first slice catches that error and records the decision. It is the starting point for a larger, source-shaped portfolio build, not the whole release workflow. [The portfolio map](docs/portfolio-map.md) shows the original system's structure, what this repo currently proves, and what comes next.
+Building AI agents and automated workflows, supported by model routing, LLM evaluations, usage tracking and cost controls. This repository brings together the code, architecture, tests and operating guidance behind these systems.
 
-**Everything in the examples is synthetic.** This is a new portfolio implementation. It does not contain or connect to an employer's systems, source code, customer data or credentials.
+The implemented examples currently cover workflow validation and review, task-level usage measurement, token-cost estimation and evaluation feedback. Model routing and additional agent workflows are the next components. All included examples use fictional data and run offline by default.
 
-## Start here
+## What you can inspect
 
-If you have five minutes, [follow the guided tour](docs/portfolio-tour.md). It explains the example, points to the parts I built and shows the decisions the demo makes. You can run the whole path offline with `python3 -m workflow_portfolio demo`.
+| Area | Implemented here | Status and next step |
+| --- | --- | --- |
+| **AI workflows** | Python/SQLite review service; n8n validation, candidate relay and callback examples | Offline implementations and tests; complete hosted triggers, notifications and delivery remain planned |
+| **AI agents** | Task guidance and a structured OpenAI drafting adapter | Adapter tested with a fake transport; live model execution and multi-agent orchestration not verified |
+| **Model routing** | Architecture and implementation direction | Executable skill/tier router, route snapshot and dispatch traces planned; a model parameter is not a router |
+| **Usage measurement** | Read-only plain/Zstandard log adapter; explicit coordinator/worker/retry bindings; response deduplication and coverage checks | Offline fixture-tested; explicit source path required; no cloud/mobile usage feed |
+| **Token-cost estimates** | Decimal arithmetic, cached-token handling, illustrative rate card and weekly/model summaries | Offline fixture-tested; example rates are fictional; supply verified model-specific rates for real estimates |
+| **LLM evaluations** | Matched saved-output comparison, human-feedback calibration and replay protection | Offline fixture-tested; no automatic LLM judge or production quality guarantee |
+| **Infrastructure** | CI, workflow export validation, SQLite state/audit trails, guarded deploy/mirror helpers | Offline checks implemented; hosted deployment/mirror execution and automatic reporting integration remain unverified |
 
-For the first **connected product-change example**, [follow the release journey](docs/release-journey.md). Its two offline commands use the same fictional report to show the n8n relay shape and the code-only source checks.
+**Implemented** means the code is present. **Offline-tested** means fictional fixtures exercise it. Neither means a hosted integration has been verified. Each guide names the remaining execution boundaries.
 
-| What to inspect | Where |
-| --- | --- |
-| Source facts, draft claims and the rules that compare them | [`domain.py`](src/workflow_portfolio/domain.py) |
-| Block, review and ready-for-delivery decisions | [`service.py`](src/workflow_portfolio/service.py) |
-| One record per change and an audit trail | [`store.py`](src/workflow_portfolio/store.py) |
-| Matched-case model comparison | [`evals.py`](src/workflow_portfolio/evals.py) |
-| The same audience check on an n8n canvas | [Importable workflow](exports/n8n/release-note-review.json), [reviewable source](.n8n/release-note-review/workflow.json) and [n8n tour](docs/n8n.md) |
-| A source-shaped release candidate relay | [n8n workflow](.n8n/release-candidate-relay/workflow.json), [code-only preview](scripts/preview-candidates.mjs) and [walkthrough](docs/release-candidate-relay.md) |
-| A candidate decision and safe retry | [n8n callback parser](.n8n/candidate-review-callback/workflow.json), [local decision store](src/workflow_portfolio/candidate_review.py) and [walkthrough](docs/candidate-review.md) |
-| A product report followed by wrong and corrected release notes | [Shared fictional case](examples/release_journey.json), [code-only journey](src/workflow_portfolio/journey.py) and [walkthrough](docs/release-journey.md) |
-| Optional OpenAI structured drafting | [Adapter](src/workflow_portfolio/openai_adapter.py), [source-backed skill](skills/release-note-drafting.md) and [run guide](docs/openai-drafting.md) |
-| Public-safe task guidance | [Release-note skill](skills/release-note-drafting.md) and [knowledge-gap skill](skills/knowledge-gap-triage.md) |
-| The behaviour I checked | [`tests/test_workflow.py`](tests/test_workflow.py) |
+## Try it in five minutes
 
-The repo currently has **two inspectable versions of one audience check**: an offline Python service and an inactive n8n workflow with its Code nodes in separate files. The Python version also has persistence, idempotency, review transitions and matched-case evaluation. A second, [source-shaped relay](docs/release-candidate-relay.md) accepts a fictional change report, groups PRs, skips repeated candidates and prepares a review card. An inactive [callback parser](docs/candidate-review.md) shows the review command; a separate local store saves it and handles retries. A [manual GitHub Action](.github/workflows/code-only-review.yml) runs saved examples without n8n or external writes. The n8n canvases do not yet carry the full release journey. [Opt-in n8n tools](docs/n8n-deployment.md) can preview deployment and read one workflow into a Git-ignored local folder; neither has been tried against n8n Cloud. There is no nightly GitHub mirror yet. An [optional OpenAI drafting adapter](docs/openai-drafting.md) is implemented and fake-tested; no live model call has been verified. The offline build does not read a customer's tenant or publish content. [The portfolio map](docs/portfolio-map.md) explains how the complete n8n and GitHub-only paths will fit together.
-
-## Why this example
-
-An AI draft can read well and still tell the wrong customers that a feature is available. The example uses a beta CSV export release note. The source says it is enabled for a pilot cohort; the bad draft says all customers can use it. The workflow blocks that mismatch before publication, records why, and keeps the source and draft together for review. This is one narrow workflow inside the broader pattern of source-backed agents, evaluation, review, and improvement.
-
-```mermaid
-flowchart LR
-    A[Product evidence] --> B[Draft candidate]
-    B --> C[Deterministic checks]
-    C -->|Failure| D[Blocked + audit event]
-    C -->|Routine content passes| E[Ready for delivery]
-    C -->|New guide passes| F[Engineer review]
-    F -->|Approved| E
-    F -->|Rejected| D
-    E --> G[Saved eval cases + benchmark report]
-    D --> G
-    G --> H[Change guidance, then retest]
-```
-
-## Run it
-
-Requires Python 3.9 or newer. No network access or third-party packages are needed.
+Python 3.9+ runs the core demos. Node 24+ is required for compressed-log and JavaScript checks. No model credentials or network access are needed for these commands.
 
 ```bash
 python3 -m workflow_portfolio demo
 python3 -m workflow_portfolio benchmark
-python3 -m workflow_portfolio journey examples/release_journey.json
+python3 -m workflow_portfolio.usage.demo
 python3 -m unittest discover -s tests -v
+node --test tests/calibration-feedback.test.cjs
+npm run n8n:check
+npm run test:n8n
 ```
 
-`demo` creates a temporary SQLite database, processes three fictional candidates, and prints the resulting decisions and audit trail. `benchmark` scores two fictional model outputs against the **same** saved cases. Neither command calls a model or publishes anything externally. **Ready for delivery is a decision state, not proof of publication.**
+- **Workflow demo:** blocks a draft that claims the wrong audience can use a feature, saves the review decision and keeps an audit trail.
+- **Benchmark:** compares fictional model outputs on identical cases; these are illustrative results, not real model rankings.
+- **Usage demo:** reads a synthetic task with a duplicated response and reports **120 tokens once**, plus a clearly labelled illustrative cost.
 
-To inspect one candidate:
+## Engineering you can review
 
-```bash
-python3 -m workflow_portfolio submit examples/beta_csv_bad.json --db /tmp/meridian-labs-demo.sqlite3
-python3 -m workflow_portfolio report --db /tmp/meridian-labs-demo.sqlite3
-```
+| Capability | Code and evidence |
+| --- | --- |
+| Deterministic workflow checks and approval state | [Domain rules](src/workflow_portfolio/domain.py), [service](src/workflow_portfolio/service.py), [SQLite store](src/workflow_portfolio/store.py) |
+| Whole-task response accounting | [Measurement](src/workflow_portfolio/usage/measure_run.py), [reader](src/workflow_portfolio/usage/jsonl_reader.py), [tests](tests/test_usage_measurement.py) |
+| Estimated token value | [Cost module](src/workflow_portfolio/usage/token_cost.py), [fictional rates](src/workflow_portfolio/usage/example-rate-card.json), [tests](tests/test_usage_costs.py) |
+| Evaluation and calibration | [Matched cases](src/workflow_portfolio/evals.py), [feedback module](src/evaluation/calibration-feedback.cjs), [tests](tests/calibration-feedback.test.cjs) |
+| Inspectable n8n workflows | [Source workflows](.n8n/), [importable exports](exports/n8n/), [assembly tools](scripts/build-n8n.mjs) |
+| Automated verification | [CI](.github/workflows/ci.yml), [manual offline workflow](.github/workflows/code-only-review.yml) |
 
-The CLI imports from `src/` through a small local launcher. For normal package installation, run `python3 -m pip install -e .` in a virtual environment.
+The usage layer counts each session/response once, keeps cached and reasoning tokens within their parent totals, and distinguishes complete task coverage from a measured subtotal. Human feedback is bound to a case and revision; an AI assessment never supplies a human approval.
 
-To inspect the n8n version, open [the generated workflow export](exports/n8n/release-note-review.json) or import it into a separate test workspace. With Node 20 or newer, `npm run n8n:build` rebuilds that export from the [reviewable workflow source](.n8n/release-note-review/workflow.json) and [Code-node files](.n8n/release-note-review/code/), and `npm run n8n:check && npm run test:n8n` verifies it. The workflow is inactive and its outputs stay within the run.
+## Read next
 
-## What it demonstrates
+- [Usage and evaluation guide](docs/usage-and-evaluation.md): runnable example, data contracts, limitations and recovery.
+- [Workflow tour](docs/portfolio-tour.md) and [release journey](docs/release-journey.md): the first concrete business workflow.
+- [System map](docs/portfolio-map.md): knowledge operations, calls/CRM, security, legal and platform workflow families.
+- [Architecture](docs/architecture.md) and [implementation plan](docs/rebuild-plan.md): current design and next components.
+- [Deployment boundaries](docs/n8n-deployment.md) and [security](docs/security.md): external execution and operational controls.
 
-- **Source-backed generation boundary:** product evidence and draft output are separate typed inputs. The model can be swapped without changing the publication rules.
-- **Access and quality controls:** the audience in a draft must match the confirmed rollout scope, required source links must be present, and the change must have a stable source ID.
-- **Idempotency:** a stable change ID keeps one record when another PR joins a feature. A separate PR-link index rejects attempts to attach the same PR to another change.
-- **Selective review:** the trusted source, not the generated draft, defines whether content is a new guide. Routine content can become ready for delivery after checks; a brand-new guide requires an engineer decision. Every transition is auditable.
-- **Evaluation and benchmarking:** saved examples require every candidate model to answer the same cases, show each failure by case and report token coverage. Missing usage stays unknown. The benchmark data is illustrative.
-- **Failure handling:** malformed inputs fail closed, SQLite writes are transactional, and error messages do not print input payloads.
-
-## Boundaries before a real deployment
-
-This repository is a **shareable reference implementation**, not a live service. A deployment would need authenticated adapters for GitHub, the content store and notifications; a real model client; rate limits and retries; tenant-scoped authorization at every read and write; operational monitoring; and a reviewed data-retention policy. The deterministic checks are only one part of quality: a human or separately validated evaluator still needs to judge clarity and factual usefulness.
-
-See [architecture.md](docs/architecture.md) for the decision path, [rebuild-plan.md](docs/rebuild-plan.md) for the next implementation stages, and [security.md](docs/security.md) for the release checklist.
+No automatic route selection, cloud-wide usage capture, live model benchmark, cost saving or production deployment is claimed from the offline demos.
