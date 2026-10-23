@@ -2,6 +2,8 @@
 
 ## What works
 
+The new direct-first planner and thin prompt-hook helper are documented in [Cross-device operation](cross-device-operation.md). They separate appropriate direct execution from verified delegation; neither installs universal ChatGPT interception.
+
 A connected Notion fetch can now be compiled into a versioned local policy. The summary pilot reads the Active skill's three Model Choice properties, version and body effort table. It selects the Low route and runs a bounded, read-only text task through the installed Codex CLI using an existing ChatGPT sign-in. No API key is required or used.
 
 ```mermaid

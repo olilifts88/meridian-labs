@@ -12,7 +12,7 @@ The implemented examples currently cover workflow validation and review, task-le
 | --- | --- | --- |
 | **AI workflows** | Python/SQLite review service; n8n validation, candidate relay and callback examples | Offline implementations and tests; complete hosted triggers, notifications and delivery remain planned |
 | **AI agents** | Task guidance and a structured OpenAI drafting adapter | Adapter tested with a fake transport; live model execution and multi-agent orchestration not verified |
-| **Model routing** | Rules-first selector, Notion export compiler and subscription-only local Codex runner | Live summary pilot passed; automatic all-session routing and a live classifier remain planned |
+| **Model routing** | Direct-first execution planner, rules-first selector, Notion export compiler and subscription-only local Codex runner | Live summary and direct-request acceptance passed; universal all-session enforcement and a live classifier remain planned |
 | **Usage measurement** | Read-only plain/Zstandard log adapter; explicit coordinator/worker/retry bindings; response deduplication and coverage checks | Offline fixture-tested; explicit source path required; no cloud/mobile usage feed |
 | **Token-cost estimates** | Decimal arithmetic, cached-token handling, illustrative rate card and weekly/model summaries | Offline fixture-tested; example rates are fictional; supply verified model-specific rates for real estimates |
 | **LLM evaluations** | Matched saved-output comparison, human-feedback calibration and replay protection | Offline fixture-tested; no automatic LLM judge or production quality guarantee |
@@ -53,6 +53,9 @@ The usage layer counts each session/response once, keeps cached and reasoning to
 
 ## Read next
 
+- [Cross-device operation](docs/cross-device-operation.md): simple execution paths and one acceptance matrix.
+- [Provider portability](docs/provider-portability.md): implemented OpenAI adapter and planned Claude mapping.
+- [Operational evidence](docs/operational-evidence.md): what the examples prove and how to measure real impact.
 - [Model routing](docs/model-routing.md): local subscription pilot, offline preview and execution boundaries.
 - [Usage and evaluation guide](docs/usage-and-evaluation.md): runnable example, data contracts, limitations and recovery.
 - [Workflow tour](docs/portfolio-tour.md) and [release journey](docs/release-journey.md): the first concrete business workflow.
@@ -60,4 +63,4 @@ The usage layer counts each session/response once, keeps cached and reasoning to
 - [Architecture](docs/architecture.md) and [implementation plan](docs/rebuild-plan.md): current design and next components.
 - [Deployment boundaries](docs/n8n-deployment.md) and [security](docs/security.md): external execution and operational controls.
 
-No automatic routing of ordinary ChatGPT chats, cloud-wide usage capture, live model benchmark, cost saving or production deployment is claimed. Local dispatch evidence is limited to the documented summary pilot.
+No automatic routing of ordinary ChatGPT chats, cloud-wide usage capture, live model benchmark, cost saving or production deployment is claimed. The documented acceptance checks separate direct execution, explicit dispatch and unverified cross-device adoption.
