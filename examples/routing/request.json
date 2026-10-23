@@ -1,0 +1,5 @@
+{
+  "text": "Summarise this fictional project update in two sentences.",
+  "task_kind": "summarise_saved_text",
+  "requires_write": false
+}

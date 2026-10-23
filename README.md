@@ -4,7 +4,7 @@
 
 Building AI agents and automated workflows, supported by model routing, LLM evaluations, usage tracking and cost controls. This repository brings together the code, architecture, tests and operating guidance behind these systems.
 
-The implemented examples currently cover workflow validation and review, task-level usage measurement, token-cost estimation and evaluation feedback. Model routing and additional agent workflows are the next components. All included examples use fictional data and run offline by default.
+The implemented examples currently cover workflow validation and review, task-level usage measurement, token-cost estimation and evaluation feedback. The router includes a tested local Codex summary pilot using existing ChatGPT authentication; broader routing and additional agent workflows remain planned. All included examples use fictional data and run offline by default.
 
 ## What you can inspect
 
@@ -12,7 +12,7 @@ The implemented examples currently cover workflow validation and review, task-le
 | --- | --- | --- |
 | **AI workflows** | Python/SQLite review service; n8n validation, candidate relay and callback examples | Offline implementations and tests; complete hosted triggers, notifications and delivery remain planned |
 | **AI agents** | Task guidance and a structured OpenAI drafting adapter | Adapter tested with a fake transport; live model execution and multi-agent orchestration not verified |
-| **Model routing** | Architecture and implementation direction | Executable skill/tier router, route snapshot and dispatch traces planned; a model parameter is not a router |
+| **Model routing** | Rules-first selector, Notion export compiler and subscription-only local Codex runner | Live summary pilot passed; automatic all-session routing and a live classifier remain planned |
 | **Usage measurement** | Read-only plain/Zstandard log adapter; explicit coordinator/worker/retry bindings; response deduplication and coverage checks | Offline fixture-tested; explicit source path required; no cloud/mobile usage feed |
 | **Token-cost estimates** | Decimal arithmetic, cached-token handling, illustrative rate card and weekly/model summaries | Offline fixture-tested; example rates are fictional; supply verified model-specific rates for real estimates |
 | **LLM evaluations** | Matched saved-output comparison, human-feedback calibration and replay protection | Offline fixture-tested; no automatic LLM judge or production quality guarantee |
@@ -53,10 +53,11 @@ The usage layer counts each session/response once, keeps cached and reasoning to
 
 ## Read next
 
+- [Model routing](docs/model-routing.md): local subscription pilot, offline preview and execution boundaries.
 - [Usage and evaluation guide](docs/usage-and-evaluation.md): runnable example, data contracts, limitations and recovery.
 - [Workflow tour](docs/portfolio-tour.md) and [release journey](docs/release-journey.md): the first concrete business workflow.
 - [System map](docs/portfolio-map.md): knowledge operations, calls/CRM, security, legal and platform workflow families.
 - [Architecture](docs/architecture.md) and [implementation plan](docs/rebuild-plan.md): current design and next components.
 - [Deployment boundaries](docs/n8n-deployment.md) and [security](docs/security.md): external execution and operational controls.
 
-No automatic route selection, cloud-wide usage capture, live model benchmark, cost saving or production deployment is claimed from the offline demos.
+No automatic routing of ordinary ChatGPT chats, cloud-wide usage capture, live model benchmark, cost saving or production deployment is claimed. Local dispatch evidence is limited to the documented summary pilot.

@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "revision": "fictional-routing-v1",
+  "source": "synthetic-example-not-live-notion-policy",
+  "skills": {
+    "summarisation": {
+      "version": "example-v1",
+      "active": true,
+      "routes": {
+        "Low": {
+          "enabled": true,
+          "model": "gpt-6-luna",
+          "effort": "high"
+        },
+        "Medium": {
+          "enabled": true,
+          "model": "gpt-6.1-sol",
+          "effort": "medium"
+        },
+        "High": {
+          "enabled": true,
+          "model": "gpt-6-astra",
+          "effort": "low"
+        }
+      }
+    },
+    "analysis": {
+      "version": "example-v1",
+      "active": true,
+      "routes": {
+        "Low": {
+          "enabled": true,
+          "model": "gpt-6-luna",
+          "effort": "high"
+        },
+        "Medium": {
+          "enabled": true,
+          "model": "gpt-6.1-sol",
+          "effort": "medium"
+        },
+        "High": {
+          "enabled": true,
+          "model": "gpt-6-astra",
+          "effort": "low"
+        }
+      }
+    }
+  }
+}

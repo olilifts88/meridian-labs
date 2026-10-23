@@ -1,0 +1,11 @@
+{
+  "gpt-6-luna": [
+    "high"
+  ],
+  "gpt-6.1-sol": [
+    "medium"
+  ],
+  "gpt-6-astra": [
+    "low"
+  ]
+}
