@@ -1,0 +1,13 @@
+{
+  "fictional":true,
+  "as_of":"2026-10-26",
+  "packages":[
+    {"name":"demo-web","version":"1.4.0","ecosystem":"npm","detected_on":"2026-10-15"},
+    {"name":"demo-worker","version":"2.1.0","ecosystem":"PyPI","detected_on":"2026-10-25"},
+    {"name":"demo-utils","version":"3.0.0","ecosystem":"npm","detected_on":"2026-10-26"}
+  ],
+  "advisories":[
+    {"id":"x_MERIDIAN-0001","package":{"name":"demo-web","ecosystem":"npm"},"versions":["1.4.0"],"severity":"HIGH","summary":"Fictional request-validation weakness","fixed_versions":["1.4.2"],"source_id":"advisory-snapshot"},
+    {"id":"x_MERIDIAN-0002","package":{"name":"demo-worker","ecosystem":"PyPI"},"versions":["2.1.0"],"severity":"CRITICAL","summary":"Fictional unsafe archive handling","fixed_versions":[],"source_id":"advisory-snapshot"}
+  ]
+}

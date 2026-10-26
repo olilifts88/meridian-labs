@@ -20,7 +20,10 @@ class Decision:
 
 # The caller supplies a trusted task kind. User text is not a permission grant.
 RULES = {'summarise_saved_text': ('summarisation', 'Low'),
-         'compare_saved_evidence': ('analysis', 'Medium')}
+         'compare_saved_evidence': ('analysis', 'Medium'),
+         'review_release_output': ('analysis', 'Low'),
+         'review_new_release_output': ('analysis', 'Medium'),
+         'review_security_output': ('analysis', 'Medium')}
 TIERS = {'Low', 'Medium', 'High'}
 
 def validate_policy(policy, capabilities):

@@ -1,0 +1,111 @@
+{
+  "captured_on": "2026-10-26",
+  "scope": "Recorded local fictional-input subscription reviews during implementation; offline checkout checks are recorded separately.",
+  "policy_source": "Notion skill-model-evaluation v3.6",
+  "provenance": "Summarised from completed local CLI receipts retained privately; not signed provider attestations.",
+  "identity_note": "Requested settings and accepted completion recorded. Independent backend model and effort are not exposed.",
+  "runs": [
+    {
+      "case": "release-notes",
+      "flow": "release-notes",
+      "workflow_status": "automated_release",
+      "model_review_status": "completed",
+      "assessment": {
+        "verdict": "pass",
+        "reason": "The release note matches the explicitly approved evidence for feature, beta stage, audiences, availability, and column-order behavior. No workflow_input was supplied, so there are no additional inputs or conflicts to assess.",
+        "issues": []
+      },
+      "requested_model": "gpt-6-luna",
+      "requested_effort": "low",
+      "policy_digest": "8c358bb753bfe336a51bdf520b27245989432c218e658c3925192a2f4ba82b87",
+      "request_binding": "f5a415fa69fb5f554b55021e4bd9c70548200e88dcbad75a6269f8364b9f2814",
+      "actual_model": null,
+      "actual_effort": null
+    },
+    {
+      "case": "vulnerabilities",
+      "flow": "vulnerabilities",
+      "workflow_status": "findings_need_review",
+      "model_review_status": "completed",
+      "assessment": {
+        "verdict": "pass",
+        "reason": "The output matches the approved fictional evidence and supplied workflow inputs; no unsupported claims or unflagged conflicts were found.",
+        "issues": []
+      },
+      "requested_model": "gpt-6.1-sol",
+      "requested_effort": "medium",
+      "policy_digest": "8c358bb753bfe336a51bdf520b27245989432c218e658c3925192a2f4ba82b87",
+      "request_binding": "316a7011935c57b01b29639d9d962f6ea27524ff535f70cb2303966719e6ee3c",
+      "actual_model": null,
+      "actual_effort": null
+    },
+    {
+      "case": "questionnaire",
+      "flow": "questionnaire",
+      "workflow_status": "review_required",
+      "model_review_status": "completed",
+      "assessment": {
+        "verdict": "pass",
+        "reason": "Answers match the approved fictional evidence and supplied questions. The SOC 2 evidence gap is explicitly withheld, and review remains required.",
+        "issues": []
+      },
+      "requested_model": "gpt-6.1-sol",
+      "requested_effort": "medium",
+      "policy_digest": "8c358bb753bfe336a51bdf520b27245989432c218e658c3925192a2f4ba82b87",
+      "request_binding": "7d883861284e6af614acfc55da392387788dd3c861173c9e89445694c2aec2c9",
+      "actual_model": null,
+      "actual_effort": null
+    },
+    {
+      "case": "soc2",
+      "flow": "soc2",
+      "workflow_status": "review_required",
+      "model_review_status": "completed",
+      "assessment": {
+        "verdict": "pass",
+        "reason": "The output matches the supplied evidence snapshot and control register, applies the review period and 90-day review policy correctly, and flags the missing owner, missing evidence and pending approval.",
+        "issues": []
+      },
+      "requested_model": "gpt-6.1-sol",
+      "requested_effort": "medium",
+      "policy_digest": "8c358bb753bfe336a51bdf520b27245989432c218e658c3925192a2f4ba82b87",
+      "request_binding": "b1e9936567937290f808714db68b70c6f6956b0f3c037d3611eaeff7c2937484",
+      "actual_model": null,
+      "actual_effort": null
+    },
+    {
+      "case": "new_feature",
+      "flow": "release-notes",
+      "workflow_status": "review_required",
+      "model_review_status": "completed",
+      "assessment": {
+        "verdict": "pass",
+        "reason": "The draft matches the approved fictional evidence; workflow_input is null and human review remains required.",
+        "issues": []
+      },
+      "requested_model": "gpt-6.1-sol",
+      "requested_effort": "medium",
+      "policy_digest": "8c358bb753bfe336a51bdf520b27245989432c218e658c3925192a2f4ba82b87",
+      "request_binding": "b6e96ca6be4ffeb9d3839640a6735bd783616d7d9b38c914db9a52483d232dc4",
+      "actual_model": null,
+      "actual_effort": null
+    },
+    {
+      "case": "new_document",
+      "flow": "release-notes",
+      "workflow_status": "review_required",
+      "model_review_status": "completed",
+      "assessment": {
+        "verdict": "pass",
+        "reason": "The draft matches the approved fictional evidence; workflow_input is null, and human review remains required.",
+        "issues": []
+      },
+      "requested_model": "gpt-6.1-sol",
+      "requested_effort": "medium",
+      "policy_digest": "8c358bb753bfe336a51bdf520b27245989432c218e658c3925192a2f4ba82b87",
+      "request_binding": "10de0e7256b8edcb088a3d34206c6c983eff10dd55b46be7d8eebaf0a8278825",
+      "actual_model": null,
+      "actual_effort": null
+    }
+  ]
+}

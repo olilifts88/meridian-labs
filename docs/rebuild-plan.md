@@ -38,7 +38,7 @@
 
 ## 5. Expand the portfolio and prepare sharing
 
-- Add a call-to-CRM review example and a security-answer approval example using the same repository conventions.
+- The four-flow browser showcase has [recorded local verification](verification-2026-10-26.md), including real model reviews and automated local routine releases. Keep authenticated answer approval and external submission as separate future work. Calls/CRM remains a later expansion.
 - Keep any legal example bounded and fictional; the earlier legal engine is a separate, much larger system.
 - Write a five-minute tour, setup instructions and a clear status marker for every capability: implemented and tested, implemented but not live-tested, or planned.
 - Review the files and complete Git history for employer material and secrets before making the repository public.
@@ -51,4 +51,4 @@ The portfolio is ready to share publicly only after the fictional-data review, o
 
 ## Usage and evaluation foundation
 
-Offline measurement, valuation and calibration modules are now present and fixture-tested. Next work should connect them through explicit adapters rather than duplicate accounting logic. The executable router, scheduled collector/uploader and automated LLM judge remain planned. See [usage-and-evaluation.md](usage-and-evaluation.md).
+Measurement, valuation and calibration modules are present. Consult recorded test results for their verification scope. The local routing components and reported pilot evidence are described in [model-routing.md](model-routing.md); broader routing is not established by that pilot. Scheduled collection/upload and usage-dashboard LLM assessment remain separate future integrations. The showcase now has a bounded real-model output reviewer; that does not establish those integrations. See [usage-and-evaluation.md](usage-and-evaluation.md).

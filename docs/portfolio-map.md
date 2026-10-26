@@ -21,7 +21,9 @@ The internal web apps and company knowledge corpus are context for that system, 
 
 The source distinguishes **announcement candidates**, **release-note broadcast**, and **documentation maintenance** as separate workflows. Some source notes describe trials or proposals rather than a single live, connected publishing path. The portfolio can connect these stages into one understandable example, but that connection is a new design choice and must be labelled as such. It should not be presented as an exact copy of one existing workflow.
 
-## Current implementation and remaining gaps
+## Earlier service implementation and remaining gaps
+
+This table describes the separate release service and n8n integration work. The newer [four-workflow showcase](showcase.md) adds local release delivery and real subscription model reviews; its verification is recorded separately.
 
 | Capability | Earlier system | In this repository now | Required change |
 | --- | --- | --- | --- |
@@ -29,15 +31,17 @@ The source distinguishes **announcement candidates**, **release-note broadcast**
 | Product-change intake | An upstream GitHub Action examines changes and sends a structured candidate to an n8n webhook | Manual trigger loads fictional cases | Rebuild the same input contract using a fictional product repository; keep the Action and relay separate |
 | Release relay | A short webhook workflow formats candidates, deduplicates changes, links a review record and notifies the relevant engineer | A separate two-node webhook relay now validates a fictional report, groups PRs, skips repeated candidates and prepares a review card | Add durable state, a review record, engineer notification and the callback; the current preview makes no external write |
 | Decision callback | A separate webhook handles an announcement review action and updates the record | Inactive n8n parser normalizes a fictional button click; code-only SQLite store saves the decision and treats a repeated event as a retry | Connect an authenticated callback to the store; the imported n8n canvas currently only emits a command and makes no write |
-| Documentation feedback | Questions and product evidence feed a scheduled proposal flow; applying a proposed fix is a separate step | A written knowledge-gap skill only | Build capture, proposal, review and apply as executable paths |
+| Documentation feedback | Questions and product evidence feed a scheduled proposal flow; applying a proposed fix is a separate step | Reference guidance in `docs/workflow-guidance/` only | Build capture, proposal, review and apply as executable paths |
 | Broadcast | A separate workflow prepares and posts release notes | Missing | Show a distinct publishing boundary and save delivery receipts |
 | Mirror and deployment | General GitHub-to-n8n deployment plus a read-only n8n-to-GitHub mirror | Offline deployment preview, guarded inactive-workflow create/update, and read-only single-workflow mirror preview are implemented but have not been tried against n8n Cloud | Add a reviewed GitHub mirror and hosted tests; never activate a workflow by adding files alone |
 | Code-only version | The source system mixed GitHub Actions, n8n and a separate Python legal engine | Python release-note policy demo with a database and saved cases; a manual GitHub Action runs a relay preview, callback parser, saved announcement decision and draft-check journey without n8n | Connect the callback parser to a durable hosted store and add delivery receipts, then compare complete decisions and state changes across both paths |
-| Model and skills | Older workflows used a different model provider and task guidance in several places | An optional OpenAI structured-draft adapter is fake-tested, with two public-safe example skills and saved cases; no live model call has been verified | Add versioned prompts/rubrics and hosted checks, while keeping deterministic checks outside the model |
+| Model and skills | Older workflows used a different model provider and task guidance in several places | An optional OpenAI structured-draft adapter is fake-tested, with two public-safe workflow guides and saved cases; this drafting adapter has no verified live call | Add versioned prompts/rubrics and hosted checks, while keeping deterministic checks outside the model |
 
 The current n8n and Python examples agree on two narrow audience-check cases. They do **not** yet have the same triggers, side effects, review callbacks or failure handling. That distinction stays visible until end-to-end parity tests pass.
 
-## Target GitHub layout
+## Target layout for the broader rebuild
+
+This is a future layout, not the current directory listing. `contracts/`, `adapters/` and `evals/` are proposed; current schemas, adapters and saved cases live in `src/` and `examples/`. See the [README](../README.md) for the folders available now.
 
 ```text
 .github/workflows/        CI; opt-in n8n deploy/mirror; code-only jobs
@@ -45,7 +49,7 @@ The current n8n and Python examples agree on two narrow audience-check cases. Th
 contracts/                versioned inputs, outputs and decision schemas
 src/                      code-only orchestration and shared policy modules
 adapters/                 OpenAI, GitHub, Notion and notification boundaries
-skills/                   public-safe task guidance and versions
+docs/workflow-guidance/    public-safe workflow instructions and versions
 evals/                    fictional saved cases and expected outcomes
 examples/                 fictional inputs and walkthroughs
 scripts/                  split, hydrate, validate, dry-run deploy/mirror tools
@@ -60,7 +64,7 @@ Changing the old provider to OpenAI is a real integration change, not a word rep
 
 ## Usage and evaluation modules now included
 
-The repository now includes plain/compressed log reading, explicit execution bindings, deduplication, coverage checks, illustrative token valuation and revision-bound human feedback. See [usage-and-evaluation.md](usage-and-evaluation.md). These are offline components; connected upload, schedules, dashboard maintenance, model dispatch and an automatic LLM judge are not included.
+The repository now includes plain/compressed log reading, explicit execution bindings, deduplication, coverage checks, illustrative token valuation and revision-bound human feedback. See [usage-and-evaluation.md](usage-and-evaluation.md). These usage modules are offline components; connected upload, schedules, dashboard maintenance and a usage-wide automatic LLM judge are not included. The separate showcase has an optional live output reviewer and policy-based dispatch.
 
 ## Build order and proof
 

@@ -1,6 +1,6 @@
 # Optional OpenAI drafting
 
-The offline journey uses saved, fictional drafts so tests are repeatable. [`openai_adapter.py`](../src/workflow_portfolio/openai_adapter.py) adds a separate, optional live drafting boundary. It takes the confirmed audience and linked evidence from the product report, applies the [release-note skill](../skills/release-note-drafting.md), and asks the OpenAI Responses API for a structured draft. The draft still goes through the independent deterministic checks. It cannot decide who has access or publish anything.
+The offline journey uses saved, fictional drafts so tests are repeatable. [`openai_adapter.py`](../src/workflow_portfolio/openai_adapter.py) adds a separate, optional live drafting boundary. It takes the confirmed audience and linked evidence from the product report, applies the [release-note skill](workflow-guidance/release-note-drafting.md), and asks the OpenAI Responses API for a structured draft. The draft still goes through the independent deterministic checks. It cannot decide who has access or publish anything.
 
 The adapter is restricted to `example.invalid` source links. It refuses unresolved source questions instead of filling the gap from memory. The key must be in `OPENAI_API_KEY`, and the model must be chosen explicitly. Only use this command when you intend to make a billable API request with fictional inputs:
 

@@ -1,0 +1,139 @@
+{
+  "organisation": "Northstar Demo",
+  "fictional": true,
+  "sources": [
+    {
+      "id": "product-change",
+      "title": "CSV export release specification",
+      "system": "GitHub",
+      "connection": "local fixture",
+      "live": false,
+      "scope": "public-demo",
+      "approved": true,
+      "reviewed_on": "2026-10-23",
+      "content": {
+        "change_id": "csv-export-pilot",
+        "feature": "CSV export",
+        "stage": "beta",
+        "audiences": [
+          "pilot_group_east",
+          "pilot_group_west"
+        ],
+        "summary": "CSV export now preserves the report column order.",
+        "action": "Open a report and choose Export.",
+        "pr_urls": [
+          "https://example.invalid/prs/41",
+          "https://example.invalid/prs/42"
+        ],
+        "change_category": "routine_update",
+        "availability_statement": "CSV export is available to the confirmed pilot groups."
+      }
+    },
+    {
+      "id": "security-policy",
+      "title": "Information security policy",
+      "system": "Notion",
+      "connection": "local fixture",
+      "live": false,
+      "scope": "public-demo",
+      "approved": true,
+      "reviewed_on": "2026-10-23",
+      "content": {
+        "encryption": "Customer data is encrypted in transit using TLS and at rest using managed storage encryption.",
+        "access-control": "Production access requires SSO and MFA. Access is granted by role and reviewed quarterly.",
+        "incident-response": "The security team maintains an incident response process with named owners, escalation and customer communication steps."
+      }
+    },
+    {
+      "id": "security-review",
+      "title": "Security control review",
+      "system": "Google Drive",
+      "connection": "local fixture",
+      "live": false,
+      "scope": "public-demo",
+      "approved": true,
+      "reviewed_on": "2026-10-24",
+      "content": {
+        "encryption": "Customer data is encrypted in transit using TLS and at rest using managed storage encryption.",
+        "backups": "Production backups run daily. A documented restore exercise is performed quarterly."
+      }
+    },
+    {
+      "id": "remediation-policy",
+      "title": "Dependency remediation policy",
+      "system": "Notion",
+      "connection": "local fixture",
+      "live": false,
+      "scope": "public-demo",
+      "approved": true,
+      "reviewed_on": "2026-10-23",
+      "content": {
+        "deadlines_days": {
+          "CRITICAL": 2,
+          "HIGH": 7,
+          "MODERATE": 30,
+          "LOW": 90
+        },
+        "owners": {
+          "demo-web": "Platform Engineering",
+          "demo-worker": "Workflow Engineering"
+        }
+      }
+    },
+    {
+      "id": "advisory-snapshot",
+      "title": "Fictional dependency advisory snapshot",
+      "system": "OSV-format advisory feed",
+      "connection": "local fixture",
+      "live": false,
+      "scope": "public-demo",
+      "approved": true,
+      "reviewed_on": "2026-10-26",
+      "content": {
+        "note": "Synthetic advisories for demonstrating triage. These are not real vulnerabilities."
+      }
+    },
+    {
+      "id": "soc2-evidence-register",
+      "title": "SOC 2 demonstration evidence register",
+      "system": "Evidence tracker",
+      "connection": "local fixture",
+      "live": false,
+      "scope": "public-demo",
+      "approved": true,
+      "reviewed_on": "2026-10-26",
+      "content": {
+        "evidence": [
+          {
+            "id": "access-review-oct",
+            "title": "October access review record",
+            "collected_on": "2026-10-20",
+            "reviewed_on": "2026-10-21",
+            "approved": true
+          },
+          {
+            "id": "restore-jul",
+            "title": "July restore exercise record",
+            "collected_on": "2026-07-05",
+            "reviewed_on": "2026-07-06",
+            "approved": true
+          },
+          {
+            "id": "continuity-mar",
+            "title": "March continuity exercise record",
+            "collected_on": "2026-03-10",
+            "reviewed_on": "2026-03-11",
+            "approved": true
+          },
+          {
+            "id": "change-oct",
+            "title": "October change approval sample",
+            "collected_on": "2026-10-22",
+            "reviewed_on": "2026-10-23",
+            "approved": false
+          }
+        ]
+      }
+    }
+  ]
+}

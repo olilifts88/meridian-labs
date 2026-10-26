@@ -28,7 +28,7 @@ npm run n8n:deploy -- --workflow release-candidate-relay --apply --base-url http
 
 An update refuses an active or archived workflow, duplicate names, stored execution state and existing credential references. The command checks the saved workflow after a write. New workflows stay inactive. You must inspect the import and configure credentials, webhook path and access in your own workspace before enabling anything. There is no configured Meridian Labs n8n account and no live deployment test yet.
 
-The API boundary follows [n8n's public API authentication guidance](https://docs.n8n.io/api/authentication/) and the workflow shape in the accepted source snapshot. n8n API versions and Cloud behaviour may change, so a real workspace dry run and readback are still required before relying on the live path.
+The API boundary follows [n8n's public API authentication guidance](https://docs.n8n.io/connect/n8n-api/authentication) and the workflow shape in the accepted source snapshot. n8n API versions and Cloud behaviour may change, so a real workspace dry run and readback are still required before relying on the live path.
 
 ## Read-only mirror preview
 

@@ -1,5 +1,11 @@
 # Architecture and decisions
 
+## Scope
+
+This page describes the older release service and n8n examples. The [workflow tour](portfolio-tour.md) explains the four-demo surface and its local knowledge fixtures. The showcase uses in-memory release validation. Its optional live session separately stores private model receipts and idempotent local delivery records; these are not external publication receipts. Test results must identify the execution surface they cover.
+
+## Release service and n8n examples
+
 Meridian Labs keeps two ways to run the same kind of work in one repository: an n8n canvas with separate Code-node files, and scripts or GitHub Actions that do not need n8n. The first audience check exists in both forms but only the code-only version has durable records and review transitions. The separate candidate relay currently prepares a preview in both environments; it does not yet persist state or send a card. [The portfolio map](portfolio-map.md) marks those gaps before anyone treats the examples as a complete release system.
 
 ```mermaid

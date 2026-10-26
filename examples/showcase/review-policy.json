@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "revision": "9a9effab43a2af7ae9295cb6d57fe248bf11a7a31311d9c97dc63c7a4b8d101c",
+  "source": {
+    "kind": "sanitized_notion_policy_snapshot",
+    "skill_name": "skill-model-evaluation",
+    "skill_version": "v3.6",
+    "captured_on": "2026-10-26"
+  },
+  "skills": {
+    "analysis": {
+      "active": true,
+      "version": "v3.6",
+      "routes": {
+        "Low": {
+          "enabled": true,
+          "model": "gpt-6-luna",
+          "effort": "low"
+        },
+        "Medium": {
+          "enabled": true,
+          "model": "gpt-6.1-sol",
+          "effort": "medium"
+        },
+        "High": {
+          "enabled": true,
+          "model": "gpt-6.1-sol",
+          "effort": "high"
+        }
+      }
+    }
+  }
+}

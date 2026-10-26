@@ -1,0 +1,11 @@
+{
+  "fictional":true,
+  "as_of":"2026-10-26",
+  "questions":[
+    {"id":"Q1","question":"How is customer data encrypted?","control":"encryption"},
+    {"id":"Q2","question":"How do you control production access?","control":"access-control"},
+    {"id":"Q3","question":"What is your backup and recovery process?","control":"backups"},
+    {"id":"Q4","question":"Are you SOC 2 certified?","control":"soc2-certification"},
+    {"id":"Q5","question":"What is your incident response process?","control":"incident-response"}
+  ]
+}

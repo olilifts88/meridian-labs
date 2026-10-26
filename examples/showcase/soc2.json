@@ -1,0 +1,46 @@
+{
+  "fictional": true,
+  "period_start": "2026-07-01",
+  "period_end": "2026-10-26",
+  "max_review_age_days": 90,
+  "controls": [
+    {
+      "id": "DEMO-01",
+      "title": "Review production access",
+      "owner": "IT Operations",
+      "evidence_ids": [
+        "access-review-oct"
+      ]
+    },
+    {
+      "id": "DEMO-02",
+      "title": "Exercise a backup restore",
+      "owner": "Platform Engineering",
+      "evidence_ids": [
+        "restore-jul"
+      ]
+    },
+    {
+      "id": "DEMO-03",
+      "title": "Record security training completion",
+      "owner": "",
+      "evidence_ids": []
+    },
+    {
+      "id": "DEMO-04",
+      "title": "Exercise business continuity",
+      "owner": "Operations",
+      "evidence_ids": [
+        "continuity-mar"
+      ]
+    },
+    {
+      "id": "DEMO-05",
+      "title": "Review change approval evidence",
+      "owner": "Engineering",
+      "evidence_ids": [
+        "change-oct"
+      ]
+    }
+  ]
+}

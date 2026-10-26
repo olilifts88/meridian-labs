@@ -64,7 +64,7 @@ class OpenAIDrafter:
             raise InputError("A task and source excerpt are required")
         if len(task_description) > 1000 or len(source_excerpt) > 5000:
             raise InputError("Demo task or source excerpt is too long")
-        skill = (ROOT / "skills" / "release-note-drafting.md").read_text(encoding="utf-8")
+        skill = (ROOT / "docs" / "workflow-guidance" / "release-note-drafting.md").read_text(encoding="utf-8")
         facts = {
             "change_id": evidence.change_id,
             "feature": evidence.feature,

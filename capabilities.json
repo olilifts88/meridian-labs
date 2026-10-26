@@ -1,0 +1,319 @@
+{
+  "schema_version": 1,
+  "capabilities": [
+    {
+      "id": "release-notes",
+      "claim": "Routine release automation and new-material review",
+      "files": [
+        "src/workflow_portfolio/showcase.py",
+        "examples/showcase/knowledge.json",
+        "demo.py"
+      ],
+      "symbols": {
+        "src/workflow_portfolio/showcase.py": [
+          "release_notes"
+        ]
+      },
+      "tests": [
+        "tests/test_showcase.py",
+        "tests/test_showcase_assurance.py"
+      ],
+      "test_symbols": {
+        "tests/test_showcase.py": [
+          "ShowcaseTests.test_wrong_audience_blocks_release"
+        ]
+      },
+      "entrypoint": [
+        "python3",
+        "demo.py",
+        "run",
+        "release-notes",
+        "--as-of",
+        "2026-10-26"
+      ],
+      "verification_groups": [
+        "python",
+        "scenarios"
+      ],
+      "known_gaps": [
+        "No external publisher",
+        "Template-based initial draft"
+      ],
+      "recorded_evidence": "examples/showcase/verified-runs.json"
+    },
+    {
+      "id": "vulnerabilities",
+      "claim": "Exact-version advisory triage",
+      "files": [
+        "src/workflow_portfolio/showcase.py",
+        "examples/showcase/knowledge.json",
+        "demo.py"
+      ],
+      "symbols": {
+        "src/workflow_portfolio/showcase.py": [
+          "vulnerabilities"
+        ]
+      },
+      "tests": [
+        "tests/test_showcase.py",
+        "tests/test_showcase_assurance.py"
+      ],
+      "test_symbols": {
+        "tests/test_showcase.py": [
+          "ShowcaseTests.test_vulnerability_priorities_owners_and_deadlines"
+        ]
+      },
+      "entrypoint": [
+        "python3",
+        "demo.py",
+        "run",
+        "vulnerabilities",
+        "--as-of",
+        "2026-10-26"
+      ],
+      "verification_groups": [
+        "python",
+        "scenarios"
+      ],
+      "known_gaps": [
+        "Supplied fictional advisories",
+        "No dependency discovery or live scan"
+      ],
+      "recorded_evidence": "examples/showcase/verified-runs.json"
+    },
+    {
+      "id": "questionnaire",
+      "claim": "Cited policy answers and evidence gaps",
+      "files": [
+        "src/workflow_portfolio/showcase.py",
+        "examples/showcase/knowledge.json",
+        "demo.py"
+      ],
+      "symbols": {
+        "src/workflow_portfolio/showcase.py": [
+          "questionnaire"
+        ]
+      },
+      "tests": [
+        "tests/test_showcase.py",
+        "tests/test_showcase_assurance.py"
+      ],
+      "test_symbols": {},
+      "entrypoint": [
+        "python3",
+        "demo.py",
+        "run",
+        "questionnaire",
+        "--as-of",
+        "2026-10-26"
+      ],
+      "verification_groups": [
+        "python",
+        "scenarios"
+      ],
+      "known_gaps": [
+        "Explicit control-key lookup",
+        "No semantic retrieval or customer submission"
+      ],
+      "recorded_evidence": "examples/showcase/verified-runs.json"
+    },
+    {
+      "id": "soc2",
+      "claim": "Control evidence and ownership follow-ups",
+      "files": [
+        "src/workflow_portfolio/showcase.py",
+        "examples/showcase/knowledge.json",
+        "demo.py"
+      ],
+      "symbols": {
+        "src/workflow_portfolio/showcase.py": [
+          "soc2_review"
+        ]
+      },
+      "tests": [
+        "tests/test_soc2_showcase.py",
+        "tests/test_showcase_assurance.py"
+      ],
+      "test_symbols": {
+        "tests/test_soc2_showcase.py": [
+          "SOC2ReviewTests.test_sample_distinguishes_review_ready_from_four_gap_types"
+        ]
+      },
+      "entrypoint": [
+        "python3",
+        "demo.py",
+        "run",
+        "soc2",
+        "--as-of",
+        "2026-10-26"
+      ],
+      "verification_groups": [
+        "python",
+        "scenarios"
+      ],
+      "known_gaps": [
+        "Demo controls, not authoritative criteria",
+        "No compliance verdict"
+      ],
+      "recorded_evidence": "examples/showcase/verified-runs.json"
+    },
+    {
+      "id": "output-evaluation",
+      "claim": "Independent source-based checks and corrupted-output probes",
+      "files": [
+        "src/workflow_portfolio/showcase_assurance.py",
+        "src/workflow_portfolio/showcase_evaluation.py"
+      ],
+      "symbols": {
+        "src/workflow_portfolio/showcase_assurance.py": [
+          "evaluate_output"
+        ],
+        "src/workflow_portfolio/showcase_evaluation.py": [
+          "evaluate_suite"
+        ]
+      },
+      "tests": [
+        "tests/test_showcase_assurance.py"
+      ],
+      "test_symbols": {},
+      "entrypoint": [
+        "python3",
+        "demo.py",
+        "evaluate"
+      ],
+      "verification_groups": [
+        "python",
+        "scenarios"
+      ],
+      "known_gaps": [
+        "Not a held-out model benchmark",
+        "General free-text entailment is not established by rule checks"
+      ]
+    },
+    {
+      "id": "model-routing",
+      "claim": "Policy selection and optional real subscription review",
+      "files": [
+        "src/workflow_portfolio/routing/router.py",
+        "src/workflow_portfolio/routing/local_codex.py",
+        "src/workflow_portfolio/showcase_review.py",
+        "src/workflow_portfolio/showcase_server.py",
+        "examples/showcase/review-policy.json"
+      ],
+      "symbols": {
+        "src/workflow_portfolio/routing/router.py": [
+          "select_route"
+        ],
+        "src/workflow_portfolio/routing/local_codex.py": [
+          "execute"
+        ],
+        "src/workflow_portfolio/showcase_server.py": [
+          "ModelReviewSession.apply"
+        ]
+      },
+      "tests": [
+        "tests/test_routing.py",
+        "tests/test_local_routing.py",
+        "tests/test_showcase_assurance.py"
+      ],
+      "test_symbols": {},
+      "entrypoint": [
+        "python3",
+        "demo.py",
+        "run",
+        "questionnaire",
+        "--as-of",
+        "2026-10-26"
+      ],
+      "verification_groups": [
+        "python"
+      ],
+      "known_gaps": [
+        "Own signed-in Codex required for live execution",
+        "Backend identity unexposed",
+        "Finite per-session cap is not an account-wide quota"
+      ],
+      "recorded_evidence": "examples/showcase/verified-runs.json"
+    },
+    {
+      "id": "usage-and-costs",
+      "claim": "Supplied-log accounting and illustrative token valuation",
+      "files": [
+        "src/workflow_portfolio/usage/measure_run.py",
+        "src/workflow_portfolio/usage/token_cost.py"
+      ],
+      "symbols": {
+        "src/workflow_portfolio/usage/measure_run.py": [
+          "measure"
+        ],
+        "src/workflow_portfolio/usage/token_cost.py": [
+          "estimate"
+        ]
+      },
+      "tests": [
+        "tests/test_usage_measurement.py",
+        "tests/test_usage_costs.py"
+      ],
+      "test_symbols": {},
+      "entrypoint": [
+        "python3",
+        "-m",
+        "workflow_portfolio.usage.demo"
+      ],
+      "verification_groups": [
+        "python"
+      ],
+      "known_gaps": [
+        "No cloud-wide discovery",
+        "Illustrative rates are not actual billing",
+        "No achieved savings claim"
+      ]
+    },
+    {
+      "id": "n8n-exports",
+      "claim": "Inspectable workflow sources and reproducible generated exports",
+      "files": [
+        ".n8n/release-note-review/workflow.json",
+        "exports/n8n/release-note-review.json",
+        "scripts/build-n8n.mjs"
+      ],
+      "symbols": {},
+      "tests": [
+        "tests/n8n.test.mjs",
+        "tests/n8n-deploy.test.mjs",
+        "tests/n8n-mirror.test.mjs"
+      ],
+      "test_symbols": {},
+      "entrypoint": [
+        "node",
+        "scripts/build-n8n.mjs",
+        "--check"
+      ],
+      "verification_groups": [
+        "javascript",
+        "exports"
+      ],
+      "known_gaps": [
+        "Separate inactive workflow stages",
+        "Hosted end-to-end delivery not verified"
+      ]
+    },
+    {
+      "id": "ai-performance-dashboard",
+      "status": "planned",
+      "claim": "AI Performance Dashboard \u2014 coming soon",
+      "files": [
+        "docs/ai-performance-dashboard.md"
+      ],
+      "symbols": {},
+      "tests": [],
+      "test_symbols": {},
+      "entrypoint": [],
+      "verification_groups": [],
+      "known_gaps": [
+        "Separate project with fixes in progress",
+        "Integrated collection/reporting and a runnable dashboard are not delivered by this repository"
+      ]
+    }
+  ]
+}

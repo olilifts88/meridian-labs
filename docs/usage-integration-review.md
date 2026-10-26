@@ -1,5 +1,7 @@
 # Usage and evaluation integration review
 
+This is the historical integration record for the usage components. See the [current verification record](verification-2026-10-26.md) for subsequent routing and showcase work.
+
 ## Scope
 Reusable measurement, token-valuation and calibration logic adapted into the portfolio. No live collector, scheduler, uploader or external model execution is run. Existing production tooling is untouched.
 

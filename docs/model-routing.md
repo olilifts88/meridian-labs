@@ -1,5 +1,7 @@
 # Model routing: local subscription pilot
 
+The four-workflow browser demo now uses this runner for automatic output reviews. See the [showcase setup](showcase.md) and [dated verification](verification-2026-10-26.md). The pilot below describes the underlying subscription execution boundary.
+
 ## What works
 
 The new direct-first planner and thin prompt-hook helper are documented in [Cross-device operation](cross-device-operation.md). They separate appropriate direct execution from verified delegation; neither installs universal ChatGPT interception.

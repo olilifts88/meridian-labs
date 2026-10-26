@@ -1,48 +1,62 @@
-# A five-minute tour
+# Workflow tour
 
-This repo shows one problem I care about in AI systems: an answer can read well and still send someone down a path they cannot complete. The example is a fictional release note for a beta export feature. Its source record says two pilot groups can use it. One draft incorrectly says every customer can use it.
+Start the browser demo with `python3 demo.py` from the repository folder. Open http://127.0.0.1:8765/. The [setup guide](showcase.md) explains offline mode and optional real model execution.
 
-## 1. Follow one product change
+## 1. Release notes
 
-From the repo folder, run:
+Run the routine CSV export update. Source checks verify feature, stage, audience and citations. The independent output evaluator checks the emitted draft. In live mode a policy-selected model reviews it against the approved evidence. A passing routine update is written once to the private local demo release feed. Offline mode pauses at model review.
 
-```bash
-node scripts/preview-candidates.mjs examples/release_journey.json
-python3 -m workflow_portfolio journey examples/release_journey.json
-```
+Select **New feature** or **New document** to load a distinct fictional source fixture. These paths retain human review even after a passing model assessment. Change the audience to all customers to see a deterministic block before a model call. Repeated successful runs reuse the review and delivery identity.
 
-The first command groups two PRs for a beta export into one candidate and shows the review-card preview. The second takes the same product report through the release-note checks. The first draft is **blocked** because it promises the feature to everyone. A corrected draft for the same change becomes **ready to publish**. The audit events preserve both decisions. Nothing is actually published. [The journey page](release-journey.md) explains where the two paths connect and where they remain separate.
+The showcase uses the existing release service for bounded in-memory draft validation. Its optional live session adds private durable model receipts and local delivery records. The older SQLite service has its own review transitions; `ready_to_publish` is a policy state, not proof of external publication. See [release engineering](release-workflows.md).
 
-Open [`release_journey.json`](../examples/release_journey.json) to compare the report and the two drafts. The [journey code](../src/workflow_portfolio/journey.py) takes stage and audience from the report, not the proposed draft. [`domain.py`](../src/workflow_portfolio/domain.py) checks the claims, [`service.py`](../src/workflow_portfolio/service.py) makes the decision, and [`store.py`](../src/workflow_portfolio/store.py) keeps one change record and its history. For a separate new-guide review example, run `python3 -m workflow_portfolio demo`.
+## 2. Vulnerability review
 
-## 2. See the model comparison
+The sample matches exact package, ecosystem and pinned version against supplied fictional advisories. Findings carry severity, policy-derived owners, deadlines and available fixed versions. The output evaluator checks coverage and remediation facts. An optional routed model reviews the policy, original inventory, advisory inputs and output together.
 
-Run:
+Disable the feed to see incomplete coverage rather than a clean scan. No dependency discovery, live advisory lookup, package upgrade or ticket creation occurs. A fixed version is advisory evidence, not a safety guarantee.
 
-```bash
-python3 -m workflow_portfolio benchmark
-```
+## 3. Security questionnaires
 
-Both fictional model outputs face the same saved cases. The report shows which case each model passed, where each failed and whether token usage was supplied. A missing token count stays unknown. This is a repeatable evaluation example, not a claim that two live models were called or that the phrase check proves writing quality.
+Five sample questions use explicit control keys. Four produce cited policy-text drafts; the unsupported SOC 2 question is withheld. Conflicting approved texts are also held back. The output evaluator checks question coverage, answer grounding and gap counts; live mode adds a model review against the actual question inputs and relevant policies.
 
-## 3. Inspect the n8n and GitHub-only paths
+This is transparent policy lookup, not semantic retrieval or certification verification. Every answer remains unapproved pending human review. No questionnaire is submitted.
 
-The [release candidate relay](release-candidate-relay.md) follows the original **webhook → Code node** shape. Its fictional report groups two PRs into one candidate and skips a previously suggested feature. Run it without n8n using `node scripts/preview-candidates.mjs examples/release_candidates.json`, or inspect its [generated n8n export](../exports/n8n/release-candidate-relay.json). The output is a review-card preview. It does not send Slack messages or save Notion rows.
+## 4. SOC 2 evidence review
 
-The [candidate review example](candidate-review.md) adds a separate inactive callback parser and a code-only SQLite decision store. Run `node scripts/preview-review-action.mjs examples/candidate_review_action.json` to see the normalized button event, then `python3 -m workflow_portfolio candidate-review-demo` to see one stored decision and a harmless retry. These are two offline stages; the n8n canvas does not call the Python store.
+Review five demonstration controls against an evidence register. One has evidence ready for a reviewer; four illustrate stale evidence, missing ownership/evidence, an out-of-period item and pending approval. Source checks and the evaluator verify the review rules; the optional model receives the original control register and relevant evidence.
 
-The [release-note audience check](n8n.md) has an inactive n8n canvas and a separate Python service. The [manual GitHub Action](../.github/workflows/code-only-review.yml) can run the `release_journey` case without a hosted n8n workspace. Its code-only path is still narrower than the full release journey described in the [portfolio map](portfolio-map.md).
+The 90-day sample freshness rule is a demonstration policy, not a SOC 2 requirement. Date and approval checks do not establish evidence sufficiency, control effectiveness or audit readiness.
 
-## 4. See how I checked it
+## How the knowledge connects
 
-Run:
+| Local source | Used for | Boundary |
+| --- | --- | --- |
+| Product-change and scenario snapshots | Release scope, availability, PR references and review category | No live GitHub retrieval |
+| Notion- and Drive-shaped policy records | Source-backed questionnaire drafts | Supplied policy text, not proof the control operates |
+| Advisory inputs and remediation policy | Dependency triage, owners and deadlines | Fictional snapshot matching, not live coverage |
+| Control and evidence registers | SOC 2 evidence follow-ups | Demonstration mapping, not an auditor's conclusion |
 
-```bash
-python3 -m unittest discover -s tests -v
-```
+Approval, public-demo scope and review dates filter sources before processing. Outputs carry evidence snapshots and original workflow inputs so a reviewer can inspect what was used. These local flags are filtering rules, not tenant authentication or permissions.
 
-The Python tests cover the wrong audience, a corrected draft, duplicate requests, missing evidence, a new guide's review gate, announcement-decision retries and matched benchmark cases. Run `npm run test:n8n` to check n8n export round-trips, grouped PRs, repeated candidates, the callback parser, the message preview, and guarded deployment and mirror behaviour. These checks show what this offline build does. They do not establish the security or reliability of a live service.
+## What the journey shows
 
-## The next engineering step
+The interface separates deterministic processing, policy routing, output evaluation, actual model review (or an explicit preview/skip), and the final release/review gate. A correctly blocked unsafe claim can pass the evaluator because withholding it was the expected safe behavior. A model hold cannot be overridden by a passing deterministic check.
 
-I would put identity and permissions in front of the source reader, before any customer information could enter a model's context. The optional [OpenAI adapter](openai-drafting.md) is limited to fictional sources and still needs a live test. A separate delivery worker would need to record an external receipt. The [rebuild plan](rebuild-plan.md) breaks those steps into testable stages. The current demo does not imply that a saved draft was published or that a sample audience check is full tenant security.
+Expand **Inspect complete result** for the JSON. `cached` and `model_called_this_run` distinguish reuse from a new call. Backend model identity is not invented when the runtime exposes only requested settings and completion.
+
+Continue with the [capability evidence map](capability-check.md), [verification record](verification-2026-10-26.md), [usage/evaluation](usage-and-evaluation.md) and [broader portfolio map](portfolio-map.md).
+
+## Follow a run into the code
+
+| Stage | Implementation |
+| --- | --- |
+| Inputs and source snapshots | [`examples/showcase/`](../examples/showcase/) |
+| Workflow processing | [`showcase.py`](../src/workflow_portfolio/showcase.py) |
+| Independent output checks and route selection | [`showcase_assurance.py`](../src/workflow_portfolio/showcase_assurance.py) |
+| Model review instructions and response validation | [`showcase_review.py`](../src/workflow_portfolio/showcase_review.py) |
+| Session budget, receipt reuse and local delivery | [`showcase_server.py`](../src/workflow_portfolio/showcase_server.py) |
+| Repeatable scenarios and corrupted-output checks | [`showcase_evaluation.py`](../src/workflow_portfolio/showcase_evaluation.py) |
+| Regression tests | [`test_showcase.py`](../tests/test_showcase.py), [`test_showcase_assurance.py`](../tests/test_showcase_assurance.py), [`test_soc2_showcase.py`](../tests/test_soc2_showcase.py) |
+
+Use the [capability map](capability-check.md) to locate the specific function and test behind a claim. Return to the [README folder guide](../README.md#folder-guide) for the rest of the repository.

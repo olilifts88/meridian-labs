@@ -1,0 +1,55 @@
+{
+  "fictional": true,
+  "new_feature": {
+    "id": "product-change",
+    "title": "CSV export release specification",
+    "system": "GitHub",
+    "connection": "local fixture",
+    "live": false,
+    "scope": "public-demo",
+    "approved": true,
+    "reviewed_on": "2026-10-23",
+    "content": {
+      "change_id": "scheduled-csv-export-pilot",
+      "feature": "Scheduled CSV exports",
+      "stage": "beta",
+      "audiences": [
+        "pilot_group_east",
+        "pilot_group_west"
+      ],
+      "summary": "Schedule recurring CSV exports for report results.",
+      "action": "Open a report and choose Export.",
+      "pr_urls": [
+        "https://example.invalid/prs/43"
+      ],
+      "change_category": "new_feature",
+      "availability_statement": "Scheduled CSV exports are available to the confirmed pilot groups."
+    }
+  },
+  "new_document": {
+    "id": "product-change",
+    "title": "CSV export release specification",
+    "system": "GitHub",
+    "connection": "local fixture",
+    "live": false,
+    "scope": "public-demo",
+    "approved": true,
+    "reviewed_on": "2026-10-23",
+    "content": {
+      "change_id": "csv-export-guide",
+      "feature": "CSV export guide",
+      "stage": "beta",
+      "audiences": [
+        "pilot_group_east",
+        "pilot_group_west"
+      ],
+      "summary": "The new guide explains CSV export configuration and report column ordering.",
+      "action": "Open a report and choose Export.",
+      "pr_urls": [
+        "https://example.invalid/prs/44"
+      ],
+      "change_category": "new_document",
+      "availability_statement": "The new CSV export guide is available to the confirmed pilot groups."
+    }
+  }
+}
