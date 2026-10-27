@@ -8,6 +8,8 @@ Building AI agents and automated workflows, supported by model routing, LLM eval
 
 **[Take the workflow tour](docs/portfolio-tour.md)** for a guided review of release notes, vulnerability checks, security questionnaires and SOC 2 evidence review. It explains what to try, what should happen and where the supporting code lives.
 
+**[Try the integrated release agent](docs/release-agent.md)** to see a subscription-model draft move through source checks, a second model evaluation, a review gate and a private local delivery record. The run also saves actual token usage where exposed and enforces a two-call limit.
+
 To review the repository: take the tour, run a sample, inspect its complete JSON result, then follow the implementation and test links. The [folder guide](#folder-guide) explains the repository layout.
 
 ## Run the workflows
@@ -33,16 +35,17 @@ Each run shows **Journey taken**, **Output evaluation**, **Decision trail** and 
 
 The default is offline: deterministic rules execute, and the model route is a clearly labelled preview. It does not pretend a model was called. Routine release delivery pauses at the model-review gate in this mode.
 
-Optional live mode uses the installed Codex CLI and the reviewer's own ChatGPT sign-in, with an explicit routing policy, call budget and private receipts. Actual model reviews and automated local release delivery were verified on 26 October 2026. The model reviews the source-based output; it does not create the initial template draft. Identical inputs and policy reuse a completed review. **[Setup and test paths](docs/showcase.md)** explain both modes.
+Optional live mode uses the installed Codex CLI and the reviewer's own ChatGPT sign-in, with an explicit routing policy, call budget and private receipts. The browser demo adds a model review to its initial template draft. The separate [integrated release-agent path](docs/release-agent.md) uses the model to write the initial draft as well. Identical inputs and policy reuse completed receipts. **[Setup and test paths](docs/showcase.md)** explain the browser modes.
 
 ## Inspect the engineering
 
 - **[Workflow tour](docs/portfolio-tour.md):** the four journeys, knowledge sources and review boundaries.
 - **[Capability evidence map](docs/capability-check.md):** find the implementation, tests, runnable commands, dated evidence and known gaps for a claim.
-- **[Verification record](docs/verification-2026-10-26.md):** local checks, real model observations and what was not tested.
+- **[Verification records](docs/verification-2026-10-27.md):** the integrated release-agent live test, local checks and what was not tested. The [26 October baseline](docs/verification-2026-10-26.md) covers the browser workflows.
 - **[Release engineering](docs/release-workflows.md)** and **[architecture](docs/architecture.md):** domain contracts, the older SQLite service and separate n8n stages.
 - **[Model routing](docs/model-routing.md):** policy compilation, direct-first planning and subscription execution boundaries.
 - **[Usage and evaluation](docs/usage-and-evaluation.md):** supplied-log measurement, token-cost estimation and matched saved-output comparisons.
+- **[Integrated release agent](docs/release-agent.md):** two bounded subscription calls, source checks, private usage record and local release outcome.
 - **[Workflow guidance](docs/workflow-guidance/README.md):** two scoped example guides and where they are used.
 - **[Repository security](docs/security.md)** and **[deployment boundaries](docs/n8n-deployment.md):** operational controls and optional external integrations.
 

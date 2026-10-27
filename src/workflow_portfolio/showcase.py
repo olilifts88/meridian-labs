@@ -66,7 +66,8 @@ def envelope(flow, as_of, excluded):
             'review_required': True, 'excluded_sources': excluded}
 
 
-def release_notes(sources, as_of, excluded, audience='confirmed', body=None, change_category=None):
+def release_notes(sources, as_of, excluded, audience='confirmed', body=None, change_category=None,
+                  draft_origin='supplied-text'):
     result = envelope('release-notes', as_of, excluded)
     source = sources.get('product-change')
     if source is None:
@@ -95,7 +96,7 @@ def release_notes(sources, as_of, excluded, audience='confirmed', body=None, cha
     draft = {'kind': kind, 'headline': c['feature'] + (' pilot' if c['stage'] == 'beta' else ''),
              'body': body if body is not None else default_body,
              'feature': c['feature'], 'stage': c['stage'], 'audiences': target,
-             'citations': c['pr_urls'], 'model': 'deterministic-template'}
+             'citations': c['pr_urls'], 'model': draft_origin if body is not None else 'deterministic-template'}
     evidence = dict(change_id=c['change_id'], feature=c['feature'], content_kind=kind,
                     stage=c['stage'], audiences=confirmed, pr_urls=c['pr_urls'],
                     source_urls=['fixture://product-change'])
@@ -118,7 +119,8 @@ def release_notes(sources, as_of, excluded, audience='confirmed', body=None, cha
                     draft=draft, findings=findings, citations=[citation(source)],
                     limitations=['Automated delivery depends on explicit source facts, deterministic checks and a passing model review.'],
                     audit=[{'stage': 'source check', 'outcome': 'approved local evidence'},
-                           {'stage': 'draft', 'outcome': 'template using confirmed product facts'},
+                           {'stage': 'draft', 'outcome': 'template using confirmed product facts' if body is None else
+                            draft_origin + ' using confirmed product facts'},
                            {'stage': 'validation', 'outcome': 'blocked' if blocked else 'passed structured checks'},
                            {'stage': 'retry check', 'outcome': 'same decision; no duplicate record',
                             'duplicate': duplicate.duplicate, 'event_count': len(store.events())},
@@ -320,7 +322,11 @@ def _run_workflow(flow, options=None, knowledge=None, payload=None):
         body = options.get('draft_body')
         if body is not None and (not isinstance(body, str) or not 1 <= len(body) <= 10000):
             raise InputError('Draft text must contain 1 to 10000 characters')
-        return release_notes(sources, as_of, excluded, options.get('audience', 'confirmed'), body,options.get('change_category'))
+        origin = options.get('draft_origin', 'supplied-text')
+        if origin not in ('supplied-text', 'subscription-model'):
+            raise InputError('Unknown draft origin')
+        return release_notes(sources, as_of, excluded, options.get('audience', 'confirmed'), body,
+                             options.get('change_category'), origin)
     if flow == 'vulnerabilities':
         data = payload if payload is not None else load_json(FIXTURES / 'vulnerabilities.json')
         return vulnerabilities(sources, as_of, excluded, data, options.get('feed_unavailable') is True)

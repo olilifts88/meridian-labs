@@ -2,6 +2,32 @@
   "schema_version": 1,
   "capabilities": [
     {
+      "id": "integrated-release-agent",
+      "claim": "Bounded subscription-model release draft, source checks, model review and usage record",
+      "files": [
+        "src/workflow_portfolio/release_agent.py",
+        "src/workflow_portfolio/showcase.py",
+        "src/workflow_portfolio/showcase_review.py",
+        "docs/release-agent.md"
+      ],
+      "symbols": {
+        "src/workflow_portfolio/release_agent.py": ["run_release", "usage_summary", "parse_draft"]
+      },
+      "tests": ["tests/test_release_agent.py"],
+      "test_symbols": {
+        "tests/test_release_agent.py": ["ReleaseAgentTests.test_full_path_records_both_stage_usage_and_keeps_release_local"]
+      },
+      "entrypoint": [
+        "python3", "-m", "workflow_portfolio.release_agent",
+        "--policy", "examples/showcase/review-policy.json",
+        "--capabilities", "examples/showcase/review-capabilities.json",
+        "--as-of", "2026-10-27", "--live"
+      ],
+      "verification_groups": ["python"],
+      "known_gaps": ["Fictional local source and delivery", "No account-wide cash cost limit", "Not a held-out multi-model benchmark"],
+      "recorded_evidence": "docs/release-agent.md"
+    },
+    {
       "id": "release-notes",
       "claim": "Routine release automation and new-material review",
       "files": [
