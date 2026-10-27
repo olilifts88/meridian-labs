@@ -1,6 +1,18 @@
-# Workflow tour
+# Reviewer walkthrough
 
-Start the browser demo with `python3 demo.py` from the repository folder. Open http://127.0.0.1:8765/. The [setup guide](showcase.md) explains offline mode and optional real model execution.
+Start at the [README](../README.md), then follow this path from the repository folder. It takes about ten minutes. The example data is fictional and local. The [integrated release agent](release-agent.md) writes its first draft with a model; the browser demo starts from a template and can add a model review. They are two different implementations of the same release decision.
+
+## First: a model-written release note
+
+1. Read the approved [CSV export source](../examples/showcase/knowledge.json) and note that two PRs support one beta feature for two pilot groups. A merged PR is not proof that every customer has access.
+2. With the Codex CLI signed in to your own ChatGPT account, run the [integrated release agent](release-agent.md#run-it-yourself) using `--summary`. Expect a short account of the source, model-written draft, deterministic checks, model verdict, local delivery and call count. No customer receives the note.
+3. Open the private `run-*.json` path printed by the command. In `result.draft.body`, find the exact pilot availability statement. `result.evaluation.checks` shows the source, audience and reference checks; `result.live_model_review.assessment` shows the second model's verdict. `result.delivery_record` is a local file receipt, not an external publication.
+4. Repeat the same command with the same receipt directory. Expect zero new model calls and an existing delivery record reused. This is the duplicate-run check, not another release.
+5. Follow the code in [`release_agent.py`](../src/workflow_portfolio/release_agent.py) and the focused [tests](../tests/test_release_agent.py). The [verification record](verification-2026-10-27.md) states what was actually run and which production connections remain absent.
+
+## Then: inspect the browser workflows
+
+Run `python3 demo.py` and open http://127.0.0.1:8765/. The default browser mode is offline, so its model route is a preview. Keep the terminal open and press Ctrl+C to stop. The [browser setup guide](showcase.md) explains optional live model review.
 
 ## 1. Release notes
 
@@ -45,12 +57,13 @@ The interface separates deterministic processing, policy routing, output evaluat
 
 Expand **Inspect complete result** for the JSON. `cached` and `model_called_this_run` distinguish reuse from a new call. Backend model identity is not invented when the runtime exposes only requested settings and completion.
 
-Continue with the [capability evidence map](capability-check.md), [verification record](verification-2026-10-26.md), [usage/evaluation](usage-and-evaluation.md) and [broader portfolio map](portfolio-map.md).
+Continue with the [capability evidence map](capability-check.md), [27 October integrated-agent verification](verification-2026-10-27.md), [26 October browser verification](verification-2026-10-26.md), [usage/evaluation](usage-and-evaluation.md) and [broader repository map](portfolio-map.md).
 
 ## Follow a run into the code
 
 | Stage | Implementation |
 | --- | --- |
+| Model-written release draft, checks and local record | [`release_agent.py`](../src/workflow_portfolio/release_agent.py), [`test_release_agent.py`](../tests/test_release_agent.py) |
 | Inputs and source snapshots | [`examples/showcase/`](../examples/showcase/) |
 | Workflow processing | [`showcase.py`](../src/workflow_portfolio/showcase.py) |
 | Independent output checks and route selection | [`showcase_assurance.py`](../src/workflow_portfolio/showcase_assurance.py) |

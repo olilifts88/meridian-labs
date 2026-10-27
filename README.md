@@ -6,11 +6,11 @@ Building AI agents and automated workflows, supported by model routing, LLM eval
 
 ## Start here
 
-**[Take the workflow tour](docs/portfolio-tour.md)** for a guided review of release notes, vulnerability checks, security questionnaires and SOC 2 evidence review. It explains what to try, what should happen and where the supporting code lives.
+**[Take the reviewer walkthrough](docs/portfolio-tour.md)** for a short path through the model-written release note, its checks and duplicate protection, then the four browser workflows. It explains what to try, what should happen and where the supporting code lives.
 
 **[Try the integrated release agent](docs/release-agent.md)** to see a subscription-model draft move through source checks, a second model evaluation, a review gate and a private local delivery record. The run also saves actual token usage where exposed and enforces a two-call limit.
 
-To review the repository: take the tour, run a sample, inspect its complete JSON result, then follow the implementation and test links. The [folder guide](#folder-guide) explains the repository layout.
+To review the repository: follow the walkthrough, run the release-note agent, inspect its short summary or saved JSON, then follow the implementation and test links. The [folder guide](#folder-guide) explains the repository layout.
 
 ## Run the workflows
 

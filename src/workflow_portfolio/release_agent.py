@@ -134,6 +134,33 @@ def run_release(policy, capabilities, receipts, as_of=None, category=None, live=
     return record
 
 
+def format_summary(record):
+    result = record['result']
+    draft = result.get('draft') or {}
+    review = result.get('live_model_review') or {}
+    assessment = review.get('assessment') or {}
+    delivery = result.get('delivery_record') or {}
+    usage = record['usage']
+    source = (result.get('evidence_snapshot') or [{}])[0]
+    checks = (result.get('evaluation') or {}).get('checks') or []
+    passed = sum(check.get('status') == 'pass' for check in checks)
+    lines = [
+        'Release-note agent · fictional local demonstration',
+        'Source: ' + source.get('title', 'unavailable'),
+        'Draft: ' + draft.get('body', 'not produced'),
+        'Source checks: ' + str(passed) + '/' + str(len(checks)) + ' passed',
+        'Model review: ' + assessment.get('verdict', review.get('status', 'not run')),
+        'Decision: ' + result.get('status', 'unknown') + ' (' + result.get('output_gate', 'unknown') + ')',
+        'Delivery: ' + delivery.get('destination', 'none') +
+        (' (existing record reused)' if delivery.get('duplicate') else ''),
+        'External publication: ' + ('yes' if result.get('external_writes') else 'no'),
+        'New model calls this run: ' + str(usage['calls_attempted_this_run']) +
+        '/' + str(usage['call_limit']),
+        'Full private record: ' + record['record_path'],
+    ]
+    return '\n'.join(lines)
+
+
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--policy', type=Path, required=True)
@@ -143,6 +170,7 @@ def main(argv=None):
     parser.add_argument('--category', choices=('routine_update', 'new_feature', 'new_document'))
     parser.add_argument('--live', action='store_true', help='Make at most two subscription model calls')
     parser.add_argument('--call-limit', type=int, default=2, choices=(1, 2))
+    parser.add_argument('--summary', action='store_true', help='Print a short reviewer summary; still save full JSON')
     args = parser.parse_args(argv)
     record = run_release(load_json(args.policy), load_json(args.capabilities), args.receipts,
                          args.as_of, args.category, args.live, args.call_limit)
@@ -153,7 +181,7 @@ def main(argv=None):
     with os.fdopen(os.open(str(output), os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600), 'w') as saved:
         json.dump(record, saved, indent=2)
         saved.write('\n')
-    print(json.dumps(record, indent=2))
+    print(format_summary(record) if args.summary else json.dumps(record, indent=2))
     return 0 if record['result']['output_gate'] not in ('held_by_agent_draft', 'held_by_evaluation') else 2
 
 

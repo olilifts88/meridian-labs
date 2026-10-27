@@ -4,7 +4,14 @@ This is a small, runnable example of one complete AI workflow. It uses a fiction
 
 ## Run it yourself
 
-From the repository root, install the Codex CLI if needed and sign in with your existing ChatGPT account. Check the sign-in with `codex login status`. The example policy requests `gpt-6-luna` at low effort for this routine change; your account must support that model. There is no API-key fallback.
+From the repository root, install the Codex CLI if needed and sign in with your existing ChatGPT account. Check the sign-in with `codex login status`. If you use the Codex desktop app on a Mac and `codex` is not on your PATH, you can use the app-bundled CLI in that Terminal window:
+
+```sh
+export PATH="/Applications/ChatGPT.app/Contents/Resources/codex-cli/CodexCLI.app/Contents/MacOS:$PATH"
+codex login status
+```
+
+The example policy requests `gpt-6-luna` at low effort for this routine change; your account must support that model. There is no API-key fallback.
 
 ```sh
 python3 -m workflow_portfolio.release_agent \
@@ -12,10 +19,10 @@ python3 -m workflow_portfolio.release_agent \
   --capabilities examples/showcase/review-capabilities.json \
   --receipts private-data/release-agent \
   --as-of 2026-10-27 \
-  --live
+  --live --summary
 ```
 
-The command prints the complete JSON result and saves a `run-*.json` copy under `private-data/release-agent/`. That directory is ignored by Git. Look for:
+The command prints a short reviewer summary and saves the complete `run-*.json` result under `private-data/release-agent/`. That directory is ignored by Git. Omit `--summary` if you want the complete JSON in the terminal. The summary tells you what source was used, what the agent wrote, how many explicit checks passed, the second model's verdict, the delivery destination, the new-call count and the private record path. Open the saved JSON to inspect:
 
 1. `stages`: source check, agent draft, deterministic evaluation and model review.
 2. `result.draft.body`: the model-written text. `result.draft.model` should read `subscription-model`; the quoted availability statement must match the approved source.
@@ -24,7 +31,7 @@ The command prints the complete JSON result and saves a `run-*.json` copy under 
 5. `result.delivery_record`: routine content reaches the private local feed after both checks pass. `external_publication` remains false.
 6. `usage`: stage-level token counts when the CLI exposes them, `new_call_token_totals` for this command, `receipt_token_totals` including reused results, and `calls_attempted_this_run`. The hard limit is two subscription calls per command. Cash cost is unknown, so the record does not claim a monetary saving.
 
-Run the same command again. It should use the completed private receipts, show `calls_attempted_this_run: 0` and empty `new_call_token_totals`, and mark the local delivery as a duplicate rather than adding a second release. The second run still saves its own run record. If a call fails or a receipt is uncertain, the workflow holds and does not retry automatically. Inspect the private receipt before changing inputs or starting a new run.
+Run the same command again with the same receipt directory. The summary should show zero new model calls and an existing delivery record reused. The full JSON will show `calls_attempted_this_run: 0` and empty `new_call_token_totals`. The second run still saves its own run record. If a call fails or a receipt is uncertain, the workflow holds and does not retry automatically. Inspect the private receipt before changing inputs or starting a new run.
 
 To test the source gate without making a model call, start the offline browser with `python3 demo.py`, choose **Release notes**, set the audience to **all customers**, and run the sample. The beta note is blocked. The browser demo's offline route is a preview and its default first draft is a template; use the command above to test the model-written draft.
 
