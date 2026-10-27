@@ -12,11 +12,22 @@ On Windows, use `py demo.py`. Open http://127.0.0.1:8765/ and keep the terminal 
 
 ## Five-minute walkthrough
 
-1. Choose **Release notes** and run the sample. In live mode, expect an automated local release for the two confirmed pilot groups after source checks and the model review. New features and new documents require human review. Change the audience to all customers and run again: the mismatch should block the draft.
-2. Choose **Vulnerability review** and run the sample. Expect two fictional findings, owners, remediation deadlines and available fix information. Enable the unavailable-feed option and run again: the result should be incomplete, rather than report a clean scan.
-3. Choose **Security questionnaire** and run the sample. Expect four cited answer drafts and one evidence gap for SOC 2. Disable a policy source and rerun to see which answers lose support.
-4. Choose **SOC 2 evidence review** and run the sample. Expect one control ready for a reviewer and four needing follow-up. Disable the evidence register to see all five lose their evidence. In the sample input, change evidence references or remove an owner to explore other gaps. These are demonstration controls, not a SOC 2 criteria mapping or audit verdict.
-5. Expand the knowledge sources and decision trail to inspect which evidence each result used. Download the result JSON if useful.
+### Release-note comparison
+
+For the release-note comparison, use the **01 · Release notes** tab. The left card is **Release note inputs**; the right card is **Workflow output**. Leave **Change type** on **Routine update**, **Draft wording** empty and the product-change knowledge source checked. This offline page starts from a source-based template. It does not show the model-written draft from the separate [integrated release agent](release-agent.md).
+
+1. Set **Proposed audience** to **Confirmed pilot groups** and click **Run release note flow**. On the right, expect **awaiting model review** and a CSV export draft naming the pilot groups. Under **Journey taken**, step 4 shows the rule checks and step 5 says the model was **not called**. Step 6 says local delivery is paused. That is the safe offline baseline, not a failed run.
+2. Change only **Proposed audience** to **All customers · test an incorrect claim** and click the same button again. On the right, expect **blocked**, **Draft blocked: audience exceeds confirmed availability**, **Proposed audience: all_customers**, and **Checks raised: audience_mismatch**. Step 6 now says the source check blocked the draft. Nothing enters the local release feed.
+3. You may still see **5/5 automated checks passed** under **Output evaluation**. That means the *safety behaviour* passed: the workflow recognised the wrong audience and held it back. It does not mean the proposed draft was acceptable. Open **Inspect complete result** if you want to compare `status`, `findings`, `output_gate` and the approved `evidence_snapshot`.
+
+To see an actual model-written draft and model verdict, use the [integrated agent command](release-agent.md#run-it-yourself). The offline browser page is a separate way to demonstrate the source and policy gates.
+
+### Other workflows
+
+1. Choose **Vulnerability review** and run the sample. Expect two fictional findings, owners, remediation deadlines and available fix information. Enable the unavailable-feed option and run again: the result should be incomplete, rather than report a clean scan.
+2. Choose **Security questionnaire** and run the sample. Expect four cited answer drafts and one evidence gap for SOC 2. Disable a policy source and rerun to see which answers lose support.
+3. Choose **SOC 2 evidence review** and run the sample. Expect one control ready for a reviewer and four needing follow-up. Disable the evidence register to see all five lose their evidence. In the sample input, change evidence references or remove an owner to explore other gaps. These are demonstration controls, not a SOC 2 criteria mapping or audit verdict.
+4. Expand the knowledge sources and decision trail to inspect which evidence each result used. Download the result JSON if useful.
 
 All sources and advisories are fictional local fixtures. Source-system labels illustrate potential connections; no live GitHub, Notion or Drive adapters are used here. Vulnerability review matches exact versions against supplied advisories, rather than scanning a repository or querying a live feed. Questionnaire answers use explicit control keys. Release drafting uses deterministic templates and checks. In default offline mode no live language model is called. No external publication or customer submission occurs. Routine release notes can be delivered to a durable local demo release feed after checks and model review; new features, new documents and security outputs require human review.
 

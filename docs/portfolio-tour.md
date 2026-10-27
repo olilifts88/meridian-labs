@@ -12,7 +12,7 @@ Start at the [README](../README.md), then follow this path from the repository f
 
 ## Then: inspect the browser workflows
 
-Run `python3 demo.py` and open http://127.0.0.1:8765/. The default browser mode is offline, so its model route is a preview. Keep the terminal open and press Ctrl+C to stop. The [browser setup guide](showcase.md) explains optional live model review.
+Run `python3 demo.py` and open http://127.0.0.1:8765/. The default browser mode is offline, so its model route is a preview. The browser does not display the model-written draft from the CLI run. Start with the [exact release-note comparison](showcase.md#five-minute-walkthrough): run once for the confirmed pilot groups, then change only the proposed audience to all customers and run again. The first waits for model review; the second must say blocked. Keep the terminal open and press Ctrl+C to stop. The [browser setup guide](showcase.md) explains optional live model review.
 
 ## 1. Release notes
 

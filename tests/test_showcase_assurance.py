@@ -51,6 +51,13 @@ class AssuranceTests(unittest.TestCase):
         self.assertEqual(r['evaluation']['status'],'failed')
         self.assertEqual(r['output_gate'],'held_by_evaluation')
 
+    def test_wrong_release_audience_is_held_by_source_before_model_review(self):
+        r = run('release-notes', {'as_of':'2026-10-26','audience':'all-customers'})
+        self.assertEqual(r['status'], 'blocked')
+        self.assertEqual(r['output_gate'], 'held_by_source')
+        self.assertEqual(r['evaluation']['status'], 'passed')
+        self.assertFalse(r['routing']['model_called'])
+
     def test_conflicting_sources_are_held_and_pass_the_safety_check(self):
         k = load_json(FIXTURES/'knowledge.json')
         k['sources'][2]['content']['encryption'] = 'Conflicting policy claim.'

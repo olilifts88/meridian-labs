@@ -169,6 +169,8 @@ def attach_assurance(flow, result, sources, payload, selected_route=None):
     result['audit'].append({'stage':'output evaluation','outcome':result['evaluation']['status']})
     if result['evaluation']['status'] == 'failed':
         result['output_gate'] = 'held_by_evaluation'
+    elif result['status'] in ('blocked', 'needs_evidence', 'incomplete'):
+        result['output_gate'] = 'held_by_source'
     else:
         result['output_gate'] = 'awaiting_model_review' if flow=='release-notes' and not result['review_required'] else 'human_review_required'
     return result
