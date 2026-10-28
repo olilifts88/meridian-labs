@@ -360,6 +360,12 @@ def run(flow, options=None, knowledge=None, payload=None):
 
 
 def main(argv=None):
+    if argv and argv[0] == 'pilot':
+        from .ai_pilot import main as pilot_main
+        return pilot_main(argv[1:])
+    if argv and argv[0] == 'benchmark':
+        from .evals import benchmark_main
+        return benchmark_main(argv[1:])
     if argv and argv[0] == 'review':
         from .showcase_review import main as review_main
         return review_main(argv[1:])

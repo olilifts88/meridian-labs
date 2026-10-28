@@ -2,7 +2,9 @@
 
 ## Scope
 
-This page describes the older release service and n8n examples. The [workflow tour](portfolio-tour.md) explains the four-demo surface and its local knowledge fixtures. The showcase uses in-memory release validation. Its optional live session separately stores private model receipts and idempotent local delivery records; these are not external publication receipts. Test results must identify the execution surface they cover.
+This page describes the older release service and n8n examples. The [workflow tour](portfolio-tour.md) explains the five browser journeys and their local knowledge fixtures. The demo uses in-memory release validation. Its optional live session separately stores private model receipts and idempotent local delivery records; these are not external publication receipts. Test results must identify the execution surface they cover.
+
+The [calls/Notion CRM journey](call-crm.md) reuses the loopback server and adds domain-specific evidence/priority rules plus mock views. All five browser workflows emit the [shared evaluation contract](evaluation-framework.md). The benchmark adapter calls each existing evaluator; usage collection, token valuation and human calibration retain their existing modules. The separate connected Notion demo is editable data, not an installed browser-to-Notion writer.
 
 ## Release service and n8n examples
 

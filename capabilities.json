@@ -11,20 +11,40 @@
         "docs/release-agent.md"
       ],
       "symbols": {
-        "src/workflow_portfolio/release_agent.py": ["run_release", "usage_summary", "parse_draft"]
+        "src/workflow_portfolio/release_agent.py": [
+          "run_release",
+          "usage_summary",
+          "parse_draft"
+        ]
       },
-      "tests": ["tests/test_release_agent.py"],
+      "tests": [
+        "tests/test_release_agent.py"
+      ],
       "test_symbols": {
-        "tests/test_release_agent.py": ["ReleaseAgentTests.test_full_path_records_both_stage_usage_and_keeps_release_local"]
+        "tests/test_release_agent.py": [
+          "ReleaseAgentTests.test_full_path_records_both_stage_usage_and_keeps_release_local"
+        ]
       },
       "entrypoint": [
-        "python3", "-m", "workflow_portfolio.release_agent",
-        "--policy", "examples/showcase/review-policy.json",
-        "--capabilities", "examples/showcase/review-capabilities.json",
-        "--as-of", "2026-10-27", "--live"
+        "python3",
+        "-m",
+        "workflow_portfolio.release_agent",
+        "--policy",
+        "examples/showcase/review-policy.json",
+        "--capabilities",
+        "examples/showcase/review-capabilities.json",
+        "--as-of",
+        "2026-10-27",
+        "--live"
       ],
-      "verification_groups": ["python"],
-      "known_gaps": ["Fictional local source and delivery", "No account-wide cash cost limit", "Not a held-out multi-model benchmark"],
+      "verification_groups": [
+        "python"
+      ],
+      "known_gaps": [
+        "Fictional local source and delivery",
+        "No account-wide cash cost limit",
+        "Not a held-out multi-model benchmark"
+      ],
       "recorded_evidence": "docs/release-agent.md"
     },
     {
@@ -340,6 +360,88 @@
         "Separate project with fixes in progress",
         "Integrated collection/reporting and a runnable dashboard are not delivered by this repository"
       ]
+    },
+    {
+      "id": "call-notion-crm",
+      "claim": "Evidence-bound call journey with cumulative engineering signals and simulated selective approvals",
+      "files": [
+        "src/workflow_portfolio/call_crm.py",
+        "src/workflow_portfolio/call_crm.html",
+        "examples/showcase/calls.json",
+        "docs/call-crm.md"
+      ],
+      "symbols": {
+        "src/workflow_portfolio/call_crm.py": [
+          "simulate",
+          "evaluate"
+        ]
+      },
+      "tests": [
+        "tests/test_call_crm.py"
+      ],
+      "test_symbols": {
+        "tests/test_call_crm.py": [
+          "CallCRMTests.test_journey_stage_priority_and_commercial_hold",
+          "CallCRMTests.test_stale_duplicate_automatic_and_reasonless_reviews_are_rejected"
+        ]
+      },
+      "entrypoint": [
+        "python3",
+        "demo.py",
+        "serve"
+      ],
+      "verification_groups": [
+        "python"
+      ],
+      "known_gaps": [
+        "Authored extraction candidates; no model or reviewer execution",
+        "Browser snapshot is separate from connected Notion demo",
+        "Linear and Slack simulated; reviews are unauthenticated session state"
+      ],
+      "recorded_evidence": "docs/verification-call-crm-2026-10-27.md"
+    },
+    {
+      "id": "shared-workflow-evaluation",
+      "claim": "Shared criterion record and matched saved-output benchmark reusing the five browser workflow evaluators",
+      "files": [
+        "src/workflow_portfolio/evals.py",
+        "src/workflow_portfolio/showcase_assurance.py",
+        "docs/evaluation-framework.md",
+        "src/workflow_portfolio/evaluation.html",
+        "src/workflow_portfolio/workflow_home.html",
+        "src/workflow_portfolio/showcase_server.py"
+      ],
+      "symbols": {
+        "src/workflow_portfolio/evals.py": [
+          "evaluation_record",
+          "frozen_workflow_cases",
+          "compare_workflow_candidates",
+          "benchmark_main"
+        ]
+      },
+      "tests": [
+        "tests/test_workflow_benchmarks.py",
+        "tests/test_showcase.py"
+      ],
+      "test_symbols": {
+        "tests/test_workflow_benchmarks.py": [
+          "WorkflowBenchmarkTests.test_five_workflows_reuse_checks_and_detect_bad_outputs"
+        ]
+      },
+      "entrypoint": [
+        "python3",
+        "demo.py",
+        "benchmark"
+      ],
+      "verification_groups": [
+        "python"
+      ],
+      "known_gaps": [
+        "Synthetic saved-output comparison, not live model benchmark",
+        "No held-out human calibration",
+        "Existing usage receipts not yet joined to candidates; cost/tokens/latency unavailable"
+      ],
+      "recorded_evidence": "docs/verification-call-crm-2026-10-27.md"
     }
   ]
 }

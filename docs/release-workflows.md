@@ -8,7 +8,7 @@ I built this independent, runnable example to show how I approach an AI workflow
 
 ## Scope and entry points
 
-For the four-workflow overview, follow the [workflow tour](portfolio-tour.md). This page covers the older release service, candidate relay and n8n examples. The browser showcase is a separate local execution surface with optional routed model review and a durable private local release feed. Its [verification record](verification-2026-10-26.md) covers routine automation and the new-feature/new-document review gates.
+For the four-workflow overview, follow the [workflow tour](portfolio-tour.md). This page covers the older release service, candidate relay and n8n examples. The browser demo is a separate local execution surface with optional routed model review and a durable private local release feed. Its [verification record](verification-2026-10-26.md) covers routine automation and the new-feature/new-document review gates.
 
 For the product-change report example, follow the [release journey](release-journey.md). Its two offline commands use the same fictional report for a relay preview and code-only draft checks. Shared input does not make the stages a hosted, connected publishing system.
 

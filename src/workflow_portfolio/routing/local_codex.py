@@ -6,6 +6,7 @@ import os
 import shutil
 import subprocess
 import tempfile
+import time
 from pathlib import Path
 from .router import RoutingError, select_route, trace
 
@@ -52,6 +53,7 @@ def execute(request, policy, capabilities, receipt, run=subprocess.run, environ=
     with tempfile.TemporaryDirectory(prefix='meridian-readonly-') as cwd:
         prompt = ('Bounded read-only text task. Do not use tools, change files, delegate, or perform external actions. '
                   'The coordinator owns capture. Apply the supplied task only and return the answer.\n\n' + request['text'])
+        started = time.perf_counter()
         try:
             result = run(command(binary, decision, cwd), input=prompt, env=env,
                          capture_output=True, text=True, timeout=120)
@@ -60,6 +62,7 @@ def execute(request, policy, capabilities, receipt, run=subprocess.run, environ=
                 raise RoutingError('Codex execution failed; no automatic retry or API fallback')
             answer, usage = parse_events(result.stdout)
         except (subprocess.TimeoutExpired, RoutingError):
+            claim['duration_ms'] = round((time.perf_counter() - started)*1000, 3)
             claim['status'] = 'failed_or_uncertain_no_retry'
             receipt.write_text(json.dumps(claim, indent=2))
             raise
@@ -67,6 +70,7 @@ def execute(request, policy, capabilities, receipt, run=subprocess.run, environ=
     report['decision']['execution_status'] = 'completed'
     report.update({'status': 'completed', 'binding': binding, 'auth': 'chatgpt_subscription',
                    'policy_source': policy.get('source'),
+                   'duration_ms': round((time.perf_counter() - started)*1000, 3),
                    'usage': usage, 'answer': answer, 'usage_scope': 'one_local_codex_turn',
                    'actual_identity_note': 'Explicit CLI settings accepted; independent backend model/effort not exposed by exec events'})
     receipt.write_text(json.dumps(report, indent=2) + '\n')

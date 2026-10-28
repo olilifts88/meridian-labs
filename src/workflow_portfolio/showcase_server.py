@@ -8,6 +8,7 @@ from urllib.parse import urlsplit
 from .showcase import FIXTURES, FLOWS, load_json, run
 
 HTML = Path(__file__).with_name('showcase.html')
+ASSET_ROOT = Path(__file__).resolve().parents[2] / 'assets'
 
 
 class ModelReviewSession:
@@ -110,7 +111,7 @@ class Handler(BaseHTTPRequestHandler):
         self.send_header('Cache-Control', 'no-store')
         self.send_header('X-Content-Type-Options', 'nosniff')
         self.send_header('X-Frame-Options', 'DENY')
-        self.send_header('Content-Security-Policy', "default-src 'self'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; connect-src 'self'; img-src 'self'; frame-ancestors 'none'; base-uri 'none'; form-action 'none'")
+        self.send_header('Content-Security-Policy', "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; connect-src 'self'; img-src 'self'; frame-ancestors 'none'; base-uri 'none'; form-action 'none'")
         self.end_headers()
         self.wfile.write(data)
 
@@ -124,20 +125,77 @@ class Handler(BaseHTTPRequestHandler):
         if not self.trusted_request():
             return self.reply(403, '{"error":"Local origin required"}')
         path = urlsplit(self.path).path
+        assets = {
+            '/assets/studio.css': (HTML.with_name('studio.css'), 'text/css; charset=utf-8'),
+            '/assets/meridian-labs-banner.svg': (ASSET_ROOT / 'meridian-labs-banner.svg', 'image/svg+xml; charset=utf-8'),
+            '/assets/meridian-labs-lockup.svg': (ASSET_ROOT / 'meridian-labs-lockup.svg', 'image/svg+xml; charset=utf-8'),
+            '/assets/demo-banner.css': (HTML.with_name('demo_banner.css'), 'text/css; charset=utf-8'),
+            '/assets/run-explorer.css': (HTML.with_name('run_explorer.css'), 'text/css; charset=utf-8'),
+            '/assets/run-explorer.mjs': (HTML.with_name('run_explorer.mjs'), 'text/javascript; charset=utf-8'),
+            '/assets/visitor-results.mjs': (HTML.with_name('visitor_results.mjs'), 'text/javascript; charset=utf-8'),
+            '/assets/design-options.css': (HTML.with_name('design_options.css'), 'text/css; charset=utf-8'),
+            '/assets/design-options.mjs': (HTML.with_name('design_options.mjs'), 'text/javascript; charset=utf-8'),
+        }
+        if path in assets:
+            asset, content_type = assets[path]
+            if not asset.is_file():
+                return self.reply(404, '{"error":"This optional asset is not part of this download."}')
+            return self.reply(200, asset.read_text(encoding='utf-8'), content_type)
         if path == '/':
+            return self.reply(200, HTML.with_name('workflow_home.html').read_text(encoding='utf-8'), 'text/html; charset=utf-8')
+        if path == '/workflows':
             return self.reply(200, HTML.read_text(encoding='utf-8'), 'text/html; charset=utf-8')
+        if path in ('/runs','/scenarios','/results','/saved-results'):
+            return self.reply(200, HTML.with_name('run_explorer.html').read_text(encoding='utf-8'), 'text/html; charset=utf-8')
+        if path == '/design-options':
+            design=HTML.with_name('design_options.html')
+            if not design.is_file():
+                return self.reply(404, '{"error":"Design studies are separate from the workflow download."}')
+            return self.reply(200, design.read_text(encoding='utf-8'), 'text/html; charset=utf-8')
+        if path == '/api/recorded-runs':
+            from .recorded_showcase import catalog
+            try:
+                return self.reply(200, json.dumps(catalog(self.server.recorded_snapshot)))
+            except (ValueError, KeyError, OSError, TypeError):
+                return self.reply(409, '{"error":"The recorded example snapshot is missing or invalid. No AI call was made."}')
+        if path == '/calls':
+            return self.reply(200, HTML.with_name('call_crm.html').read_text(encoding='utf-8'), 'text/html; charset=utf-8')
+        if path == '/evaluation':
+            return self.reply(200, HTML.with_name('evaluation.html').read_text(encoding='utf-8'), 'text/html; charset=utf-8')
+        if path == '/evaluation/review':
+            if not self.server.owner_review_enabled:
+                return self.reply(403, '{"error":"The private owner review queue is not part of this download."}')
+            return self.reply(200, HTML.with_name('pilot_review.html').read_text(encoding='utf-8'), 'text/html; charset=utf-8')
+        if path == '/api/pilot':
+            if not self.server.owner_review_enabled:
+                from .recorded_showcase import pilot_summary
+                return self.reply(200, json.dumps(pilot_summary(self.server.recorded_snapshot)))
+            from .ai_pilot import report
+            try:
+                return self.reply(200, json.dumps(report(self.server.pilot_directory)))
+            except (ValueError, KeyError, OSError, TypeError):
+                return self.reply(409, '{"error":"Saved pilot evidence needs checking; no model was called."}')
+        if path == '/api/evaluations':
+            from .showcase_evaluation import evaluate_suite
+            return self.reply(200, json.dumps(evaluate_suite()))
         if path == '/api/sources':
             return self.reply(200, json.dumps(load_json(FIXTURES / 'knowledge.json')))
         if path == '/api/fixtures':
             return self.reply(200, json.dumps({f: load_json(FIXTURES / filename) for f, filename in
                 [('vulnerabilities', 'vulnerabilities.json'), ('questionnaire', 'questionnaire.json'), ('soc2', 'soc2.json')]}))
+        if path == '/api/benchmarks':
+            from .evals import frozen_workflow_cases, candidate_from_reference, compare_workflow_candidates
+            bundle = frozen_workflow_cases()
+            candidates = [candidate_from_reference(bundle),
+                          candidate_from_reference(bundle, 'deliberately-corrupted-fixture', corrupt=True)]
+            return self.reply(200, json.dumps(compare_workflow_candidates(bundle, candidates)))
         return self.reply(404, '{"error":"Not found"}')
 
     def do_POST(self):
         if not self.trusted_request():
             return self.reply(403, '{"error":"Local origin required"}')
         path = urlsplit(self.path).path
-        if not path.startswith('/api/run/') or path.removeprefix('/api/run/') not in FLOWS:
+        if path not in ('/api/calls', '/api/pilot/review', '/api/scenario') and (not path.startswith('/api/run/') or path.removeprefix('/api/run/') not in FLOWS):
             return self.reply(404, '{"error":"Unknown workflow"}')
         if self.headers.get_content_type() != 'application/json':
             return self.reply(415, '{"error":"JSON body required"}')
@@ -148,6 +206,17 @@ class Handler(BaseHTTPRequestHandler):
             body = json.loads(self.rfile.read(length))
             if not isinstance(body, dict):
                 raise ValueError('Input must be a JSON object')
+            if path == '/api/scenario':
+                from .recorded_showcase import run_scenario
+                return self.reply(200, json.dumps(run_scenario(body, self.server.recorded_snapshot)))
+            if path == '/api/pilot/review':
+                if not self.server.owner_review_enabled:
+                    return self.reply(403, '{"error":"Private owner review writes are disabled in this download."}')
+                from .ai_pilot import review
+                return self.reply(200, json.dumps(review(self.server.pilot_directory, body)))
+            if path == '/api/calls':
+                from .call_crm import simulate
+                return self.reply(200, json.dumps(simulate(through=body.get('through', 4), decisions=body.get('decisions'))))
             result = run(path.removeprefix('/api/run/'), body.get('options', {}), payload=body.get('input'))
             if self.server.model_review_session is not None:
                 result = self.server.model_review_session.apply(result)
@@ -156,12 +225,17 @@ class Handler(BaseHTTPRequestHandler):
             return self.reply(400, json.dumps({'error': str(e)}))
 
 
-def make_server(port=8765, model_review_session=None):
+def make_server(port=8765, model_review_session=None, pilot_directory=None, recorded_snapshot=None, owner_review_enabled=True):
     if not isinstance(port, int) or not 0 <= port <= 65535:
         raise ValueError('Choose a valid local port')
     server = ThreadingHTTPServer(('127.0.0.1', port), Handler)
     server.daemon_threads = True
     server.model_review_session = model_review_session
+    from .recorded_showcase import SNAPSHOT
+    server.recorded_snapshot = recorded_snapshot if recorded_snapshot is not None else SNAPSHOT
+    server.owner_review_enabled = owner_review_enabled
+    from .ai_pilot import DEFAULT_DIRECTORY
+    server.pilot_directory = pilot_directory if pilot_directory is not None else DEFAULT_DIRECTORY
     return server
 
 

@@ -1,41 +1,88 @@
 ![Meridian Labs](assets/meridian-labs-banner.svg)
 
-# Meridian Labs | AI Agents, Workflows & Infrastructure
+# Meridian Labs | AI Workflows
 
-Building AI agents and automated workflows, supported by model routing, LLM evaluations, usage tracking and cost controls. This repository brings together the code, architecture, tests and operating guidance behind these systems.
+Five practical AI workflows, with real model answers and the evidence behind them. Follow a customer call into a CRM proposal, review security evidence or inspect a release note. See what the AI produced, which checks passed, where a person needs to review it, and how the model setups compare on quality, time and estimated cost.
 
-## Start here
+**[Download the AI Workflows ZIP](https://github.com/olilifts88/meridian-labs/releases/download/ai-workflows-v1.0.0/meridian-ai-workflows.zip)** · **[Setup instructions](#start-the-demo)** · **[Explore the code](#inspect-the-code-and-evidence)**
 
-**[Take the reviewer walkthrough](docs/portfolio-tour.md)** for a short path through the model-written release note, its checks and duplicate protection, then the four browser workflows. It explains what to try, what should happen and where the supporting code lives.
+The download contains just the demo. **Python 3.9+ and a desktop browser are all you need.** No package installation, AI account or API key. Visitors replay recorded AI answers, so trying scenarios makes no new AI calls.
 
-**[Try the integrated release agent](docs/release-agent.md)** to see a subscription-model draft move through source checks, a second model evaluation, a review gate and a private local delivery record. The run also saves actual token usage where exposed and enforces a two-call limit.
+![The Meridian Labs AI Workflows, using the Studio interface](assets/studio-applied-home.png)
 
-To review the repository: follow the walkthrough, run the release-note agent, inspect its short summary or saved JSON, then follow the implementation and test links. The [folder guide](#folder-guide) explains the repository layout.
+## Start the demo
 
-## Run the workflows
+1. **Download** `meridian-ai-workflows.zip` using the link above. On the release page, choose that file under **Assets**, not GitHub's automatic “Source code” downloads.
+2. **Extract the ZIP** and open the `meridian-workflow-showcase` folder.
+3. **Open a terminal in that folder** and start it:
 
-Download the repository, open a terminal in its folder, and run:
+   **Mac / Linux**
 
-```sh
-python3 demo.py
-```
+   ```sh
+   python3 showcase_demo.py
+   ```
 
-Open **http://127.0.0.1:8765/**. Python 3.9+ and a browser are enough for the offline demo. On Windows use `py demo.py`. No installation, Notion, Slack, n8n, API keys or model account is needed in this mode.
+   **Windows**
 
-| Workflow | What happens | What to try |
-| --- | --- | --- |
-| **Release notes** | Draft from confirmed product facts; check rollout scope; route a model review when enabled | Routine updates automate to a local release feed after checks and model review. New features and documents require human review. Incorrect audiences are blocked. |
-| **Vulnerability review** | Match pinned packages to supplied advisories; attach owners, deadlines and fixes | Two sample findings, then an unavailable-feed case that reports incomplete coverage. This is snapshot triage, not a live scanner. |
-| **Security questionnaires** | Prepare cited answers from approved policy facts; hold unsupported or conflicting answers | Four supported drafts and one SOC 2 evidence gap. Remove a policy to see the affected answers withheld. |
-| **SOC 2 evidence review** | Check owners, evidence references, review dates, period and approval | One control ready for a reviewer and four needing follow-up. These are demonstration controls, not an audit verdict. |
+   ```powershell
+   py showcase_demo.py
+   ```
 
-Each run shows **Journey taken**, **Output evaluation**, **Decision trail** and a downloadable **complete JSON result**. Source systems are represented by fictional local snapshots. Nothing is published externally or submitted to a customer.
+4. **Open [http://127.0.0.1:8766](http://127.0.0.1:8766)** in your browser. Keep the terminal open while you explore. Press **Ctrl+C** in the terminal to stop it.
 
-### Offline and live modes
+If Python is not installed, install it from [python.org](https://www.python.org/downloads/) first. If you get stuck opening the folder or starting Python, use the [step-by-step setup and troubleshooting guide](docs/showcase-quickstart.md#setup-help).
 
-The default is offline: deterministic rules execute, and the model route is a clearly labelled preview. It does not pretend a model was called. Routine release delivery pauses at the model-review gate in this mode.
+## Two ways to explore
 
-Optional live mode uses the installed Codex CLI and the reviewer's own ChatGPT sign-in, with an explicit routing policy, call budget and private receipts. The browser demo adds a model review to its initial template draft. The separate [integrated release-agent path](docs/release-agent.md) uses the model to write the initial draft as well. Identical inputs and policy reuse completed receipts. **[Setup and test paths](docs/showcase.md)** explain the browser modes.
+| Start with | What you can do |
+| --- | --- |
+| **Try a workflow** | Pick a prepared scenario. Follow the routing rule or select a recorded setup, inspect the evidence, run the checks and choose a simulated approval. Save the result in your browser or download it. |
+| **Real AI runs** | Inspect all 40 actual model answers, including mistakes. See the original and revised checks, recorded human-review labels and matched model comparisons. |
+
+Both paths use the same results view: **Overview → Evidence & answer → Checks → Routing & usage → Compare setups**. The home page also links to **Evaluation** and your **Saved scenarios**.
+
+## The five workflows
+
+| Workflow | What it demonstrates |
+| --- | --- |
+| **[Release notes](docs/workflow-guidance/pilot-release-notes.md)** | Turn confirmed product facts into a draft while respecting pilot and rollout limits. |
+| **[Vulnerability review](docs/workflow-guidance/pilot-vulnerabilities.md)** | Match installed versions to supplied advisories and organise supported findings. |
+| **[Security questionnaires](docs/workflow-guidance/pilot-questionnaire.md)** | Answer from policy evidence and hold unsupported claims. |
+| **[SOC 2 evidence review](docs/workflow-guidance/pilot-soc2.md)** | Check evidence dates, ownership and approval; identify follow-up work. |
+| **[Calls to Notion CRM](docs/call-crm.md)** | Extract customer intent, propose CRM changes, connect engineering signals and keep uncertain changes behind human approval. Includes Notion, Linear and Slack mock views. |
+
+All data is fictional. Approvals affect the local simulation; they do not send messages or update external services. Your saved scenarios stay in this browser and are separate from the original benchmark.
+
+## What the evaluation shows
+
+The recorded pilot contains **10 examples × 2 models × 2 instruction styles = 40 answers**. It preserves the original answers and failures. The original checks passed 31/40; a separate checker correction passed 33/40. Nine answers have owner-review labels; the others are unreviewed.
+
+The result and evaluation pages connect those answers to measured tokens, generation time and **estimated API cost per answer and per check-passing answer**, including failed attempts in the cost. Estimates use a dated rate card and are separate from subscription bills. Automated checks and human judgments remain separate.
+
+The new routing rules choose a smaller or stronger model, use ordinary code, or hold for missing evidence. They can select a matching recorded answer. These rules were written after the fixed-setup pilot, so their replay is an exploratory comparison, not a fresh routing experiment or proof of savings.
+
+**[See the evaluation method](docs/evaluation-framework.md)** · **[Inspect routing rules and cost calculations](docs/showcase-routing-and-costs.md)** · **[Read the latest verification](docs/verification-studio-routing-costs-2026-10-28.md)**
+
+## Inspect the code and evidence
+
+The ZIP includes the source needed to run the demo. The full repository contains the wider implementation, tests and supporting guides.
+
+| Follow this part | Source |
+| --- | --- |
+| Recorded answers and local scenario execution | [recorded_showcase.py](src/workflow_portfolio/recorded_showcase.py) |
+| Routing rules and estimated costs | [showcase_measurement.py](src/workflow_portfolio/showcase_measurement.py), reusing the [router](src/workflow_portfolio/routing/router.py) and [token calculator](src/workflow_portfolio/usage/token_cost.py) |
+| Shared results and browser-owned history | [run_explorer.mjs](src/workflow_portfolio/run_explorer.mjs) and [visitor_results.mjs](src/workflow_portfolio/visitor_results.mjs) |
+| Workflow checks and CRM simulation | [showcase_assurance.py](src/workflow_portfolio/showcase_assurance.py) and [call_crm.py](src/workflow_portfolio/call_crm.py) |
+| Frozen experiment and versioned rechecks | [ai_pilot.py](src/workflow_portfolio/ai_pilot.py) and the [recorded answers](examples/recorded-runs/pilot-2026-10-28.json) |
+| Tests | [Python and JavaScript tests](tests/) |
+
+## Working from the full repository
+
+If you already have the source checkout, run `python3 showcase_demo.py` from its root and open the same address. The standalone path works without installing the project.
+
+For the private owner-review screen and original developer demos, run `python3 demo.py serve --port 8766` instead. Stop the first server before starting another on the same port. Model calls remain disabled by default. Optional live experiments are a separate, explicitly budgeted path: [developer setup](docs/showcase.md) and [integrated release agent](docs/release-agent.md).
+
+To rebuild the small ZIP, run `python3 scripts/build-workflow-showcase.py`. The [release guide](docs/showcase-release.md) explains its placement, checksum, source version and publication steps. Its explicit allowlist excludes private data, credentials and unrelated projects. No hosted account is needed; Cloudflare is deferred.
 
 ## Inspect the engineering
 
@@ -45,22 +92,24 @@ Optional live mode uses the installed Codex CLI and the reviewer's own ChatGPT s
 - **[Release engineering](docs/release-workflows.md)** and **[architecture](docs/architecture.md):** domain contracts, the older SQLite service and separate n8n stages.
 - **[Model routing](docs/model-routing.md):** policy compilation, direct-first planning and subscription execution boundaries.
 - **[Usage and evaluation](docs/usage-and-evaluation.md):** supplied-log measurement, token-cost estimation and matched saved-output comparisons.
+- **[Shared evaluation framework](docs/evaluation-framework.md):** one record contract across five workflows, frozen-input saved-output comparisons, individual criterion findings and explicit usage gaps. It reuses existing evaluators, usage modules and feedback validation.
 - **[Integrated release agent](docs/release-agent.md):** two bounded subscription calls, source checks, private usage record and local release outcome.
 - **[Workflow guidance](docs/workflow-guidance/README.md):** two scoped example guides and where they are used.
 - **[Repository security](docs/security.md)** and **[deployment boundaries](docs/n8n-deployment.md):** operational controls and optional external integrations.
 
-## AI Performance Dashboard — coming soon
+## AI performance dashboard · coming soon
 
-I'm rebuilding an AI Performance Dashboard for automated workflow monitoring, output evaluations, model comparisons and recorded usage. It is designed to flag checks and proposed changes for my review and approval, building on reference cases I reviewed and evaluation rules I established first. [See the intended behavior and current boundaries](docs/ai-performance-dashboard.md).
+I'm building a fully automated AI performance dashboard for workflow monitoring, output evaluations, model comparisons, usage and cost tracking, and more. [Read more here](docs/ai-performance-dashboard.md).
 
 ## Repeat the checks
 
 ```sh
 python3 demo.py evaluate
+python3 demo.py benchmark
 python3 scripts/capability_check.py
 ```
 
-The evaluation runs 11 workflow scenarios and 10 deliberately corrupted outputs. The capability checker reports code/test references and recorded evidence; it does not infer passing tests from their presence. Its `--verify` mode runs the offline checks, requiring Node 24+ as well as Python. See the [guide](docs/capability-check.md).
+The shared evaluation runs 19 workflow scenarios and 17 deliberately corrupted outputs across all five workflows, including Calls to Notion CRM. The shared benchmark compares reference and corrupted saved outputs across all five workflows; these are checker probes, not a live model leaderboard. Calls adds tests for cumulative evidence, stale approvals, selective/bulk review and corrupted records. [Call and benchmark verification](docs/verification-call-crm-2026-10-27.md) records the observed checks. The capability checker reports code/test references and recorded evidence; it does not infer passing tests from their presence. Its `--verify` mode runs the offline checks, requiring Node 24+ as well as Python. See the [guide](docs/capability-check.md).
 
 The [portfolio map](docs/portfolio-map.md) and [implementation plan](docs/rebuild-plan.md) retain historical context and future work. Hosted source connections, external publication, questionnaire submission, universal model routing and achieved cost savings are not claimed by these demos.
 
@@ -79,4 +128,4 @@ The [portfolio map](docs/portfolio-map.md) and [implementation plan](docs/rebuil
 | [`.github/workflows/`](.github/workflows/) | Automated checks and the manual code-only example |
 | [`workflow_portfolio/`](workflow_portfolio/) | Small source-checkout launcher for the older module commands; implementation remains in `src/` |
 
-`demo.py` starts the four-workflow showcase. `capabilities.json` maps claims to their supporting files. Private receipts and local release records are ignored by Git and are not part of the shared repository.
+`demo.py` starts the AI workflows, including the separate `/calls` journey. `capabilities.json` maps claims to their supporting files. Private receipts, workspace identifiers and local release records are ignored by Git and are not part of the shared repository.

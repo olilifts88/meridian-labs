@@ -13,9 +13,11 @@ from workflow_portfolio.showcase_review import review
 class AssuranceTests(unittest.TestCase):
     def test_regression_and_corruption_probes(self):
         report = evaluate_suite()
-        self.assertEqual(report['passed'],21)
+        self.assertEqual(report['passed'],36)
         self.assertEqual(report['passed'],report['attempted'])
-        self.assertEqual(sum(c['kind']=='corrupted_output_probe' for c in report['cases']),10)
+        self.assertEqual(sum(c['kind']=='corrupted_output_probe' for c in report['cases']),17)
+        self.assertEqual(set(report['workflows']), {'release-notes','vulnerabilities','questionnaire','soc2','call-crm'})
+        self.assertEqual(sum(c['workflow']=='call-crm' for c in report['cases']),15)
 
     def test_all_workflows_run_checks_and_router_automatically(self):
         for flow in ('release-notes','vulnerabilities','questionnaire','soc2'):

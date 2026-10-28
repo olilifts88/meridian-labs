@@ -1,6 +1,6 @@
 # Model routing: local subscription pilot
 
-The four-workflow browser demo now uses this runner for automatic output reviews. See the [showcase setup](showcase.md) and [dated verification](verification-2026-10-26.md). The pilot below describes the underlying subscription execution boundary.
+The four-workflow browser demo now uses this runner for automatic output reviews. See the [demo setup](showcase.md) and [dated verification](verification-2026-10-26.md). The pilot below describes the underlying subscription execution boundary.
 
 ## What works
 
@@ -65,3 +65,8 @@ The runner records requested settings, accepted execution, answer and raw turn u
 Notion remains the policy source. Local snapshots are operational inputs, not competing model lists. `Inherit current` fails without an evidenced runtime context; `Not applicable` disables a tier. Missing or incompatible configuration never silently substitutes a model.
 
 Official runtime reference: [Codex non-interactive mode](https://learn.chatgpt.com/docs/non-interactive-mode).
+
+
+## Five-workflow recorded demo · 28 October 2026
+
+The new [demo routing and cost layer](showcase-routing-and-costs.md) reuses `select_route` and the domain preflight checks. It implements explicit evidence-based model/code/hold rules across all five workflows and an inspectable policy preview. The scenario UI can select a matching recorded guided answer. This policy was defined after the 40 fixed-configuration calls, so it is exploratory replay, not a claim those original calls were automatically routed. No new inference, classifier or retry is enabled.

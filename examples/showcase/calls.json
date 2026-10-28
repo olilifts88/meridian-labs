@@ -1,0 +1,43 @@
+{
+  "company": "RelayOps",
+  "as_of": "2026-10-27",
+  "accounts": [
+    {"id":"a1","name":"Northstar Logistics","segment":"Mid-market","owner":"Alex Morgan","health":"Evaluating","next_meeting":"2026-10-28T10:00:00+00:00"},
+    {"id":"a2","name":"Pebble Finance","segment":"Enterprise","owner":"Sam Patel","health":"At risk","next_meeting":"2026-10-29T14:00:00+00:00"},
+    {"id":"a3","name":"Cedar Health","segment":"Mid-market","owner":"Alex Morgan","health":"Evaluating","next_meeting":"2026-10-28T15:00:00+00:00"}
+  ],
+  "contacts": [
+    {"id":"p1","name":"Maya Chen","account":"a1","role":"Operations director","stakeholder":"Decision maker","email":"maya@northstar.example"},
+    {"id":"p2","name":"Theo Brooks","account":"a2","role":"Platform lead","stakeholder":"Champion","email":"theo@pebble.example"},
+    {"id":"p3","name":"Amara Okafor","account":"a3","role":"Head of operations","stakeholder":"Decision maker","email":"amara@cedar.example"}
+  ],
+  "deals": [
+    {"id":"d1","name":"Northstar workflow pilot","account":"a1","stage":"Qualified","annual_value_gbp":18000,"revision":1,"next_step":"Confirm pilot scope"},
+    {"id":"d2","name":"Pebble expansion","account":"a2","stage":"Commercial","annual_value_gbp":48000,"revision":1,"next_step":"Resolve export blocker"},
+    {"id":"d3","name":"Cedar workflow rollout","account":"a3","stage":"Discovery","annual_value_gbp":24000,"revision":1,"next_step":"Confirm pricing and delivery expectations"}
+  ],
+  "calls": [
+    {"id":"c1","title":"Northstar: pilot decision and export failure","account":"a1","date":"2026-10-26T09:00:00+00:00","transcript":"Maya: I approve a two-week pilot for the dispatch team starting 2 November. I own the decision and will confirm success against a 20% reduction in manual handoffs. CSV export fails when the report has more than 10,000 rows; this blocks our pilot review.","facts":[
+      {"kind":"stage","deal":"d1","value":"Pilot","quote":"I approve a two-week pilot for the dispatch team starting 2 November. I own the decision and will confirm success against a 20% reduction in manual handoffs."},
+      {"kind":"bug","topic":"export-large-reports","quote":"CSV export fails when the report has more than 10,000 rows; this blocks our pilot review."}
+    ]},
+    {"id":"c2","title":"Pebble: export blocks expansion","account":"a2","date":"2026-10-26T14:00:00+00:00","transcript":"Theo: CSV export fails above 10,000 rows. It blocks our expansion review because the finance team cannot reconcile a full report. We need an update before Thursday.","facts":[
+      {"kind":"bug","topic":"export-large-reports","quote":"CSV export fails above 10,000 rows. It blocks our expansion review because the finance team cannot reconcile a full report."}
+    ]},
+    {"id":"c3","title":"Northstar: repeated export issue","account":"a1","date":"2026-10-27T09:00:00+00:00","transcript":"Maya: The same CSV export failure above 10,000 rows is still blocking our pilot review. This is the same issue we discussed yesterday, not a separate bug.","facts":[
+      {"kind":"bug","topic":"export-large-reports","quote":"The same CSV export failure above 10,000 rows is still blocking our pilot review."}
+    ]},
+    {"id":"c4","title":"Cedar: export, tentative budget and delivery","account":"a3","date":"2026-10-27T13:00:00+00:00","transcript":"Amara: CSV export fails when we exceed 10,000 rows, blocking our rollout assessment. The annual budget might be around £32,000, but procurement has not approved it. Could delivery be roughly next quarter? That is a request, not an agreed date. We also cannot find a guide explaining the export limits.","facts":[
+      {"kind":"bug","topic":"export-large-reports","quote":"CSV export fails when we exceed 10,000 rows, blocking our rollout assessment."},
+      {"kind":"price","deal":"d3","value":32000,"quote":"The annual budget might be around £32,000, but procurement has not approved it."},
+      {"kind":"delivery","deal":"d3","value":"Roughly next quarter (customer request; uncommitted)","quote":"Could delivery be roughly next quarter? That is a request, not an agreed date."},
+      {"kind":"knowledge_gap","topic":"export-limits-guide","quote":"We also cannot find a guide explaining the export limits."}
+    ]}
+  ],
+  "policy": {
+    "revision":"call-demo-v1",
+    "stage_rule":"Qualified to Pilot only when the supplied fixture explicitly records an authorised decision, pilot scope, start and success criterion.",
+    "priority_rule":"High after at least 3 distinct accounts report the same blocking issue in a rolling 7-day window. Repeated calls do not count as new accounts. Urgent is never automatic in this demo.",
+    "review_rule":"Tentative commercial numbers and delivery commitments require human review. Approved values retain the source uncertainty in their history."
+  }
+}

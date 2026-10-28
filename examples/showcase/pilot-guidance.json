@@ -1,0 +1,27 @@
+{
+  "release-notes": {
+    "version": "pilot-guidance-v1",
+    "path": "docs/workflow-guidance/pilot-release-notes.md",
+    "source": "docs/workflow-guidance/release-note-drafting.md"
+  },
+  "vulnerabilities": {
+    "version": "pilot-guidance-v1",
+    "path": "docs/workflow-guidance/pilot-vulnerabilities.md",
+    "source": "showcase.py + showcase_assurance.py"
+  },
+  "questionnaire": {
+    "version": "pilot-guidance-v1",
+    "path": "docs/workflow-guidance/pilot-questionnaire.md",
+    "source": "Notion security-questionnaire v1.0"
+  },
+  "soc2": {
+    "version": "pilot-guidance-v1",
+    "path": "docs/workflow-guidance/pilot-soc2.md",
+    "source": "showcase.py + showcase_assurance.py"
+  },
+  "call-crm": {
+    "version": "pilot-guidance-v1",
+    "path": "docs/workflow-guidance/pilot-call-crm.md",
+    "source": "Notion crm-audit v1.0 (schema/quality principles only); user-approved call workflow"
+  }
+}
