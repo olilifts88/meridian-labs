@@ -4,7 +4,12 @@
 
 Five practical AI workflows, with real model answers and the evidence behind them. Follow a customer call into a CRM proposal, review security evidence or inspect a release note. See what the AI produced, which checks passed, where a person needs to review it, and how the model setups compare on quality, time and estimated cost.
 
-**[Download the AI Workflows ZIP](https://github.com/olilifts88/meridian-labs/releases/download/ai-workflows-v1.0.0/meridian-ai-workflows.zip)** · **[Setup instructions](#start-the-demo)** · **[Explore the code](#inspect-the-code-and-evidence)**
+<p>
+  <a href="https://github.com/olilifts88/meridian-labs/releases/download/ai-workflows-v1.0.0/meridian-ai-workflows.zip"><img src="assets/download-ai-workflows.svg" alt="Download AI Workflows ZIP" width="282" height="48"></a>
+  <a href="#start-the-demo"><img src="assets/setup-instructions.svg" alt="Setup instructions" width="214" height="48"></a>
+</p>
+
+[Explore the code and evidence](#inspect-the-code-and-evidence)
 
 The download contains just the demo. **Python 3.9+ and a desktop browser are all you need.** No package installation, AI account or API key. Visitors replay recorded AI answers, so trying scenarios makes no new AI calls.
 
@@ -80,20 +85,19 @@ The ZIP includes the source needed to run the demo. The full repository contains
 
 If you already have the source checkout, run `python3 showcase_demo.py` from its root and open the same address. The standalone path works without installing the project.
 
-For the private owner-review screen and original developer demos, run `python3 demo.py serve --port 8766` instead. Stop the first server before starting another on the same port. Model calls remain disabled by default. Optional live experiments are a separate, explicitly budgeted path: [developer setup](docs/showcase.md) and [integrated release agent](docs/release-agent.md).
+For the private owner-review screen and original developer demos, run `python3 demo.py serve --port 8766` instead. Stop the first server before starting another on the same port. Model calls remain disabled by default.
 
 To rebuild the small ZIP, run `python3 scripts/build-workflow-showcase.py`. The [release guide](docs/showcase-release.md) explains its placement, checksum, source version and publication steps. Its explicit allowlist excludes private data, credentials and unrelated projects. No hosted account is needed; Cloudflare is deferred.
 
 ## Inspect the engineering
 
-- **[Workflow tour](docs/portfolio-tour.md):** the four journeys, knowledge sources and review boundaries.
+- **[Workflow guide](docs/recorded-workflows.md):** the five workflows, recorded answers, local checks and review boundaries.
 - **[Capability evidence map](docs/capability-check.md):** find the implementation, tests, runnable commands, dated evidence and known gaps for a claim.
-- **[Verification records](docs/verification-2026-10-27.md):** the integrated release-agent live test, local checks and what was not tested. The [26 October baseline](docs/verification-2026-10-26.md) covers the browser workflows.
+- **[Verification records](docs/verification-studio-routing-costs-2026-10-28.md):** the five workflow demos, routing, estimated costs and standalone-package checks.
 - **[Release engineering](docs/release-workflows.md)** and **[architecture](docs/architecture.md):** domain contracts, the older SQLite service and separate n8n stages.
 - **[Model routing](docs/model-routing.md):** policy compilation, direct-first planning and subscription execution boundaries.
 - **[Usage and evaluation](docs/usage-and-evaluation.md):** supplied-log measurement, token-cost estimation and matched saved-output comparisons.
 - **[Shared evaluation framework](docs/evaluation-framework.md):** one record contract across five workflows, frozen-input saved-output comparisons, individual criterion findings and explicit usage gaps. It reuses existing evaluators, usage modules and feedback validation.
-- **[Integrated release agent](docs/release-agent.md):** two bounded subscription calls, source checks, private usage record and local release outcome.
 - **[Workflow guidance](docs/workflow-guidance/README.md):** two scoped example guides and where they are used.
 - **[Repository security](docs/security.md)** and **[deployment boundaries](docs/n8n-deployment.md):** operational controls and optional external integrations.
 
