@@ -158,6 +158,16 @@ class BrowserSurfaceTests(unittest.TestCase):
         self.assertEqual(status, 200)
         self.assertIn('Meridian Labs', body)
         self.assertEqual(headers['Cache-Control'], 'no-store')
+        self.assertIn('href="/evaluation"', body)
+        status, _, body = self.request('/evaluation')
+        self.assertEqual(status, 200)
+        self.assertIn('Saved-output comparison', body)
+        status, _, body = self.request('/api/evaluations')
+        self.assertEqual(status, 200)
+        self.assertEqual(json.loads(body)['passed'], json.loads(body)['attempted'])
+        status, _, body = self.request('/api/benchmarks')
+        self.assertEqual(status, 200)
+        self.assertEqual([c['successful'] for c in json.loads(body)['candidates']], [5, 0])
         for flow in ('release-notes','vulnerabilities','questionnaire','soc2'):
             status, _, body = self.request('/api/run/'+flow, 'POST',
                       {'options': {'as_of':'2026-10-26'}}, {'Content-Type':'application/json'})

@@ -173,4 +173,8 @@ def attach_assurance(flow, result, sources, payload, selected_route=None):
         result['output_gate'] = 'held_by_source'
     else:
         result['output_gate'] = 'awaiting_model_review' if flow=='release-notes' and not result['review_required'] else 'human_review_required'
+    from .evals import evaluation_record
+    result['evaluation_record'] = evaluation_record(flow, {'sources': sources, 'payload': payload},
+                                                   result, result['evaluation'], VERSION)
+    result['evaluation_record']['stage'] = 'before_optional_model_review_and_delivery'
     return result

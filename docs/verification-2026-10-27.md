@@ -8,7 +8,7 @@ Verification completed after the code changes:
 
 - Python: 157 tests passed, including bad-draft hold, full path, one-call budget and repeated-run behavior.
 - JavaScript: 24 tests passed, including n8n export, relay, deployment and mirror checks.
-- Showcase evaluation: 21 of 21 fictional scenarios and deliberate corruptions passed.
+- Demo evaluation: 21 of 21 fictional scenarios and deliberate corruptions passed.
 - `scripts/capability_check.py --verify`: mapped offline checks passed.
 
 The new integrated path is a CLI workflow, while the browser demo retains its template-first route. The source is fictional and local. Delivery is only to a private local demo file. There is no live source connector, external publication, account-wide spend cap, measured cash cost or held-out multi-model benchmark in this verification.

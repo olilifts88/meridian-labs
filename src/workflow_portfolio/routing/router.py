@@ -19,7 +19,10 @@ class Decision:
     execution_status: str = 'not_dispatched'
 
 # The caller supplies a trusted task kind. User text is not a permission grant.
-RULES = {'summarise_saved_text': ('summarisation', 'Low'),
+RULES = {'showcase_bounded_draft': ('analysis', 'Low'),
+         'showcase_contextual_draft': ('analysis', 'Medium'),
+         'showcase_uncertain_commercial': ('analysis', 'High'),
+         'summarise_saved_text': ('summarisation', 'Low'),
          'compare_saved_evidence': ('analysis', 'Medium'),
          'draft_release_output': ('analysis', 'Low'),
          'draft_new_release_output': ('analysis', 'Medium'),

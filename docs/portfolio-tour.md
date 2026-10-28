@@ -12,7 +12,7 @@ Start at the [README](../README.md), then follow this path from the repository f
 
 ## Then: inspect the browser workflows
 
-Run `python3 demo.py` and open http://127.0.0.1:8765/. The default browser mode is offline, so its model route is a preview. The browser does not display the model-written draft from the CLI run. Start with the [exact release-note comparison](showcase.md#five-minute-walkthrough): run once for the confirmed pilot groups, then change only the proposed audience to all customers and run again. The first waits for model review; the second must say blocked. Keep the terminal open and press Ctrl+C to stop. The [browser setup guide](showcase.md) explains optional live model review.
+Run `python3 demo.py` and open http://127.0.0.1:8765/. The home directory introduces all five workflows; choose **Open workflow** under Release notes to begin. The default browser mode is offline, so its model route is a preview. The browser does not display the model-written draft from the CLI run. Start with the [exact release-note comparison](showcase.md#five-minute-walkthrough): run once for the confirmed pilot groups, then change only the proposed audience to all customers and run again. The first waits for model review; the second must say blocked. Keep the terminal open and press Ctrl+C to stop. The [browser setup guide](showcase.md) explains optional live model review.
 
 ## 1. Release notes
 
@@ -20,7 +20,7 @@ Run the routine CSV export update. Source checks verify feature, stage, audience
 
 Select **New feature** or **New document** to load a distinct fictional source fixture. These paths retain human review even after a passing model assessment. Change the audience to all customers to see a deterministic block before a model call. Repeated successful runs reuse the review and delivery identity.
 
-The showcase uses the existing release service for bounded in-memory draft validation. Its optional live session adds private durable model receipts and local delivery records. The older SQLite service has its own review transitions; `ready_to_publish` is a policy state, not proof of external publication. See [release engineering](release-workflows.md).
+The demo uses the existing release service for bounded in-memory draft validation. Its optional live session adds private durable model receipts and local delivery records. The older SQLite service has its own review transitions; `ready_to_publish` is a policy state, not proof of external publication. See [release engineering](release-workflows.md).
 
 ## 2. Vulnerability review
 
@@ -39,6 +39,14 @@ This is transparent policy lookup, not semantic retrieval or certification verif
 Review five demonstration controls against an evidence register. One has evidence ready for a reviewer; four illustrate stale evidence, missing ownership/evidence, an out-of-period item and pending approval. Source checks and the evaluator verify the review rules; the optional model receives the original control register and relevant evidence.
 
 The 90-day sample freshness rule is a demonstration policy, not a SOC 2 requirement. Date and approval checks do not establish evidence sufficiency, control effectiveness or audit readiness.
+
+## 5. Calls to Notion CRM
+
+Open `/calls` from the main workflow page. Follow four calls through a fictional B2B software CRM. Northstar's authorised pilot decision advances its deal. Export failures accumulate in one simulated Linear issue; a repeat call does not inflate the distinct-account count, and a third account raises priority to High.
+
+Use the Slack mock to approve or reject selected proposals with feedback, switch meeting-report templates, inspect preparation and weekly-report previews, then open Evaluation. The shared comparison calls the existing evaluators for all five workflows. Its synthetic outputs test checker behaviour, not model accuracy. See [Calls to Notion CRM](call-crm.md) and [shared evaluation](evaluation-framework.md).
+
+The editable Notion environment is separate from the browser snapshot. Browser decisions do not write to Notion, Linear or Slack. Transcripts and extraction candidates are authored fixtures; no model extraction or reviewer sub-agent ran.
 
 ## How the knowledge connects
 
@@ -71,5 +79,7 @@ Continue with the [capability evidence map](capability-check.md), [27 October in
 | Session budget, receipt reuse and local delivery | [`showcase_server.py`](../src/workflow_portfolio/showcase_server.py) |
 | Repeatable scenarios and corrupted-output checks | [`showcase_evaluation.py`](../src/workflow_portfolio/showcase_evaluation.py) |
 | Regression tests | [`test_showcase.py`](../tests/test_showcase.py), [`test_showcase_assurance.py`](../tests/test_showcase_assurance.py), [`test_soc2_showcase.py`](../tests/test_soc2_showcase.py) |
+| Call evidence, cumulative priority and simulated reviews | [`call_crm.py`](../src/workflow_portfolio/call_crm.py), [`test_call_crm.py`](../tests/test_call_crm.py) |
+| Shared record and frozen-input comparison | [`evals.py`](../src/workflow_portfolio/evals.py), [`test_workflow_benchmarks.py`](../tests/test_workflow_benchmarks.py) |
 
 Use the [capability map](capability-check.md) to locate the specific function and test behind a claim. Return to the [README folder guide](../README.md#folder-guide) for the rest of the repository.

@@ -1,0 +1,27 @@
+.site-banner {
+  display: block;
+  padding: 0;
+  background: #111215;
+  border-bottom: 3px solid #ed4146;
+}
+.site-banner .banner-home {
+  display: block;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.site-banner img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.site-banner .banner-nav {
+  display: flex;
+  justify-content: flex-end;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px 12px;
+}
+.site-banner .banner-nav a {
+  color: #d4cfc6;
+  font-size: 13px;
+}

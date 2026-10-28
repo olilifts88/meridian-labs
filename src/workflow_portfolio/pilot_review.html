@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Meridian Labs | Review AI answers</title>
+<link rel="stylesheet" href="/assets/demo-banner.css">
+<style>
+:root{font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#242426;background:#f2efe8;--muted:#69655f;--line:#d8d2c8}*{box-sizing:border-box}body{margin:0}a{color:inherit}.wrap{max-width:1160px;margin:auto;padding:30px 24px 70px}h1{font-size:34px;line-height:1.2;letter-spacing:-1px;margin:10px 0}h2{font-size:23px;line-height:1.35;margin:6px 0 12px}h3{font-size:16px;margin:20px 0 8px}p{margin:8px 0 15px}.muted,.meta{color:var(--muted);font-size:14px}.eyebrow{font-size:12px;color:#a51d26;font-weight:650;letter-spacing:1.2px;text-transform:uppercase}.top,.nav,.filters,.labels{display:flex;gap:12px;align-items:center;flex-wrap:wrap}.top,.nav{justify-content:space-between}.filters{margin:18px 0 24px}.filters label{font-size:13px}select,textarea,button{font:inherit}select{padding:8px;border:1px solid var(--line);border-radius:5px;background:#fff;max-width:100%}button,.button{cursor:pointer;min-height:44px;padding:9px 15px;border:1px solid var(--line);border-radius:5px;background:white;color:inherit;text-decoration:none;font-size:14px}button:disabled{opacity:.45;cursor:default}.primary{background:#252526;color:white;border-color:#252526}button:focus-visible,a:focus-visible,select:focus-visible,textarea:focus-visible,input:focus-visible,summary:focus-visible{outline:3px solid #477db5;outline-offset:3px}.card{background:white;border:1px solid var(--line);border-radius:8px;padding:25px;margin:18px 0}.grid{display:grid;grid-template-columns:1fr 1fr;gap:28px}.reading{white-space:pre-wrap;overflow-wrap:anywhere;font-size:15px}.answer-item{border-top:1px solid var(--line);padding-top:10px;margin-top:12px}.answer-item:first-child{border-top:0;padding-top:0}blockquote{margin:8px 0;padding:10px 14px;background:#f6f3ed;border-left:3px solid #c4bcae}.tag{display:inline-block;font-size:12px;border-radius:4px;padding:3px 8px;background:#eee9e0}.tag.flag{color:#8b2424;background:#fbe3e3}.tag.pass{color:#285b38;background:#e1eee4}.check-row{padding:10px 0;border-bottom:1px solid var(--line);font-size:14px}.check-row:last-child{border-bottom:0}.check-row p{margin:5px 0}.check-heading{font-weight:650}.check-compare{display:flex;gap:20px;flex-wrap:wrap}.check-compare span{font-size:13px}details{margin:15px 0}summary{cursor:pointer;font-size:14px;font-weight:600}pre{font:12px/1.6 ui-monospace,monospace;white-space:pre-wrap;overflow-wrap:anywhere;background:#f2efe8;padding:14px;max-height:380px;overflow:auto}textarea{display:block;width:100%;min-height:80px;margin:10px 0 18px;padding:12px;border:1px solid var(--line);border-radius:5px;resize:vertical}.labels label{padding:10px 15px;border:1px solid var(--line);border-radius:5px;cursor:pointer}.labels label:has(input:checked){border-color:#242426;background:#efede8}.labels input{margin-right:6px}.review-form{border-top:1px solid var(--line);margin-top:28px;padding-top:20px}.review-form h3{margin-top:0}.notice{padding:12px 15px;background:#ece7dc;border-radius:5px;font-size:14px}.error{color:#9d222b}ul{padding-left:20px}.source-item{margin:12px 0;padding:12px;background:#f6f3ed;border-radius:4px}.source-item p{margin:5px 0}#position{font-size:14px}#feedback{min-height:25px}progress{width:180px;accent-color:#3a6a45;height:8px}footer{font-size:12px;color:var(--muted);margin-top:22px}[hidden]{display:none!important}@media(max-width:750px){.wrap{padding:22px 16px 50px}.grid{grid-template-columns:1fr;gap:5px}.card{padding:18px}.filters{align-items:flex-start}.filters label{width:100%}.filters select{display:block;width:100%}h1{font-size:29px}.labels{gap:8px}.labels label{flex:1;padding:10px;font-size:14px}.check-compare{gap:8px 18px}}
+</style>
+<header class="site-banner"><a class="banner-home" href="/" aria-label="Meridian Labs home"><img src="/assets/meridian-labs-banner.svg" alt="Meridian Labs" width="1200" height="260"></a><nav class="banner-nav"><a href="/evaluation">← Evaluation &amp; benchmarking</a></nav></header>
+<main class="wrap">
+<div class="eyebrow">Local test review / Recorded AI runs</div>
+<h1>Does the answer do the job?</h1>
+<p class="muted">This is your review of our 40 test answers. Start with the nine originally flagged ones. Your judgment checks answer quality; it does not approve a CRM change or other business action.</p>
+<div class="top"><div><strong id="progress-text">Loading saved answers…</strong><br><progress id="progress" max="40" value="0" aria-label="Answers reviewed"></progress></div><button id="refresh">Reload saved reviews</button></div>
+<p id="totals" class="muted"></p>
+<div class="filters">
+<label>Show <select id="queue"><option value="flagged">Originally flagged first</option><option value="all">All answers</option><option value="remaining">Not reviewed yet</option><option value="changed">Check result changed</option><option value="reviewed">Already reviewed</option></select></label>
+<label>Workflow <select id="workflow"><option value="all">All five workflows</option><option value="release-notes">Release notes</option><option value="vulnerabilities">Vulnerability review</option><option value="questionnaire">Security questionnaires</option><option value="soc2">SOC 2 evidence</option><option value="call-crm">Calls to CRM</option></select></label>
+<a class="button" href="/evaluation#ai-pilot">Compare the four setups</a>
+</div>
+<p id="feedback" class="muted" role="status" aria-live="polite"></p>
+<div id="review-content" hidden>
+<div class="nav"><button id="previous">← Previous</button><span id="position"></span><button id="next">Next / skip →</button></div>
+<article class="card">
+<div class="top"><span id="workflow-label" class="eyebrow"></span><span id="review-state" class="tag"></span></div>
+<h2 id="case-title"></h2><p id="setup" class="meta"></p>
+<div class="grid"><section><h3>What a good answer should do</h3><p id="expected"></p><h3>Evidence the AI received</h3><div id="evidence"></div><details><summary>Exact input evidence</summary><pre id="source-json"></pre></details></section>
+<section><h3>The AI’s answer</h3><div id="answer" class="reading"></div><p id="usage" class="meta"></p><details><summary>Exact answer, unchanged</summary><pre id="answer-json"></pre></details></section></div>
+<section><h3>What the checks found</h3><p id="check-summary" class="notice"></p><div id="findings"></div><details><summary>Original and revised check records</summary><pre id="checks-json"></pre></details></section>
+<form class="review-form" id="review-form">
+<h3>Your judgment</h3><p class="muted">Choose what you think about the answer, even if the automatic checks disagree. “Correct” does not approve a CRM update or publication.</p>
+<fieldset style="border:0;padding:0;margin:0"><legend class="muted">Is this answer usable?</legend><div class="labels"><label><input type="radio" name="verdict" value="Pass" required>Correct</label><label><input type="radio" name="verdict" value="Needs improvement">Needs changes</label><label><input type="radio" name="verdict" value="Unverified">Unsure</label></div></fieldset>
+<label for="reason">Why? <span class="muted">Optional</span></label><textarea id="reason" maxlength="1500" placeholder="For example: the answer missed the proposed price, or the checker rejected useful extra detail."></textarea>
+<div class="top"><button type="submit" class="primary" id="save">Save review &amp; next →</button><span id="saved-note" class="muted"></span></div>
+</form>
+</article>
+<details><summary>What changed in the marking rules?</summary><p class="muted">These checks were revised after seeing this pilot. This is a development recheck, not a fresh or unseen test. The original scores and all answers remain unchanged. Your review applies to the answer and survives a recheck.</p><ul id="changes"></ul></details>
+</div>
+<p id="empty" class="notice" hidden></p>
+<footer>Local review only. Recorded answers, source versions and execution receipts are retained. Reviews are saved to this machine and do not change the original AI answer.</footer>
+</main>
+<script>
+const $=id=>document.getElementById(id);
+const names={'release-notes':'Release notes',vulnerabilities:'Vulnerability review',questionnaire:'Security questionnaires',soc2:'SOC 2 evidence','call-crm':'Calls to CRM'};
+const labelNames={'Pass':'Correct','Needs improvement':'Needs changes','Unverified':'Unsure'};
+const checkNames={
+ valid_generation_format:['Required answer format','The answer must use the requested structured format so the workflow can read it.'],
+ extraction_quotes:['Quotes come from the call','Every extracted fact must include an exact excerpt from the transcript.'],
+ extraction_coverage:['The important call facts are captured','Keep the required pilot, price and engineering signals. The recheck compares the fields each fact type uses.'],
+ expected_crm_state:['The CRM ends in the expected state','Supported changes should proceed in the simulator; uncertain commercial changes stay pending.'],
+ expected_issue_links:['The right engineering issue is linked','Retain the supported export issue and avoid inventing an issue from unrelated call text.'],
+ evidence_readiness:['Evidence is current enough','Old, unapproved or out-of-period evidence must not be marked ready.'],
+ control_follow_ups:['Missing or old evidence gets follow-up','Explain what needs to be refreshed before a reviewer can rely on it.'],
+ control_evidence_and_owner:['The source facts and owner match','Keep the original evidence IDs, dates, approval, citations and owner. Extra detail is allowed by the recheck.'],
+ expected_follow_up_count:['The follow-up total is right','The number of controls needing follow-up must match the evidence.'],
+ confirmed_availability_in_answer:['Availability is stated correctly','Include the confirmed rollout statement from the source.'],
+ no_unsupported_general_availability:['Pilot access stays limited','A pilot must not be described as available to everyone.'],
+ expected_scan_coverage:['The supplied packages were checked','Do not claim a complete scan while leaving out supplied packages.']
+};
+let data=null,rows=[],index=0,dirty=false,saving=false;
+function say(message,error=false){$('feedback').textContent=message;$('feedback').className=error?'error':'muted';}
+function add(parent,tag,text,cls){const node=document.createElement(tag);node.textContent=text;if(cls)node.className=cls;parent.append(node);return node;}
+function flow(row){return row.case_id.split(':')[0];}
+function flagged(row){return row.original_evaluation?.outcome!=='Pass';}
+function changed(row){return row.recheck_evaluation&&row.original_evaluation?.outcome!==row.recheck_evaluation.outcome;}
+function canLeave(){return !dirty||confirm('Your review has not been saved. Leave it and continue?');}
+function filtered(){const mode=$('queue').value,w=$('workflow').value;return data.answers.filter(r=>(w==='all'||flow(r)===w)&&(mode==='flagged'?flagged(r):mode==='remaining'?!r.human_review?.human_label:mode==='reviewed'?!!r.human_review?.human_label:mode==='changed'?changed(r):true)).sort((a,b)=>Number(flagged(b))-Number(flagged(a))||a.case_id.localeCompare(b.case_id)||a.configuration.localeCompare(b.configuration));}
+function showEvidence(row){
+ const target=$('evidence');target.replaceChildren();const e=row.source.evidence;
+ if(e.calls){
+  for(const call of e.calls){const box=add(target,'div','','source-item');add(box,'strong',call.title||'Call transcript');add(box,'p',call.transcript);}
+  for(const deal of e.deals||[])add(target,'p',`Deal ${deal.id}: stage ${deal.stage}; annual value £${deal.annual_value_gbp??'not recorded'}.`,'meta');
+  if(e.known_issue)add(target,'p',`Known issue ${e.known_issue.id}: ${e.known_issue.title}.`,'meta');
+ }else{
+  add(target,'p','Review date: '+e.as_of,'meta');
+  if(e.input?.controls){add(target,'p',`Evidence must have been reviewed within ${e.input.max_review_age_days} days.`);for(const control of e.input.controls){add(target,'p',control.title+' · owner: '+(control.owner||'Unassigned'));const refs=control.evidence_ids||[];for(const source of Object.values(e.sources||{}))for(const item of source.content?.evidence||[])if(refs.includes(item.id)){const box=add(target,'div','','source-item');add(box,'strong',item.title);add(box,'p',`Collected: ${item.collected_on} · reviewed: ${item.reviewed_on} · ${item.approved?'approved':'not approved'}`);}}}
+  if(e.input){const input=add(target,'details','');add(input,'summary','Task details and rules');add(input,'pre',JSON.stringify(e.input,null,2));}
+  for(const s of Object.values(e.sources||{})){
+   const box=add(target,'div','','source-item');add(box,'strong',s.title);const c=s.content;
+   if(typeof c==='string')add(box,'p',c);
+   else if(c&&typeof c==='object'){
+    for(const [key,value] of Object.entries(c)){
+     if(typeof value==='string'||typeof value==='number')add(box,'p',key.replaceAll('_',' ')+': '+value);
+     else if(Array.isArray(value)&&value.every(x=>typeof x==='string'))add(box,'p',key.replaceAll('_',' ')+': '+value.join(', '));
+     else{const details=add(box,'details','');add(details,'summary',key.replaceAll('_',' '));add(details,'pre',JSON.stringify(value,null,2));}
+    }
+   }
+  }
+ }
+ $('source-json').textContent=JSON.stringify(e,null,2);
+}
+function showAnswer(row){
+ const target=$('answer');target.replaceChildren();let a;try{a=JSON.parse(row.answer);}catch{add(target,'p',row.answer||'No completed answer.');return;}
+ if(typeof a.body==='string'){add(target,'p',a.body);return;}
+ const list=a.facts||a.controls||a.answers||a.findings;
+ if(!Array.isArray(list)){add(target,'pre',JSON.stringify(a,null,2));return;}
+ if(!list.length){add(target,'p',a.facts?'No call facts extracted.':a.findings?'No affected packages reported.':'No items returned.');return;}
+ for(const item of list){
+  const box=add(target,'div','','answer-item');
+  const headings={stage:'Deal stage',bug:'Engineering issue',price:'Proposed annual price',delivery:'Delivery proposal',knowledge_gap:'Knowledge gap'};
+  add(box,'strong',item.kind?headings[item.kind]||item.kind:item.question||item.title||item.package||item.id);
+  if(item.kind){if(item.value!=null&&item.value!=='')add(box,'p',item.kind==='price'?'£'+Number(item.value).toLocaleString():String(item.value));if(item.topic)add(box,'p','Topic: '+item.topic);if(item.quote)add(box,'blockquote',item.quote);}
+  else if(item.answer){add(box,'p',item.answer);add(box,'p','Status: '+item.status.replaceAll('_',' '),'meta');}
+  else if(item.status){add(box,'p',item.status.replaceAll('_',' '));for(const follow of item.follow_ups||[])add(box,'p',follow);const d=add(box,'details','');add(d,'summary','Evidence used in this answer');add(d,'pre',JSON.stringify(item.evidence,null,2));}
+  else{add(box,'p',item.summary||'');add(box,'p',item.next_action||'');add(box,'p',`Severity: ${item.severity}; owner: ${item.owner}; due: ${item.due_on??'not set'}`,'meta');}
+ }
+}
+function showChecks(row){
+ const o=row.original_evaluation,n=row.recheck_evaluation,originalFlag=flagged(row);
+ $('check-summary').textContent=`Original: ${o?.outcome==='Pass'?'passed':'flagged'}. Recheck: ${n?n.outcome==='Pass'?'passed':'still flagged':'not yet run'}. `+(changed(row)?'The marking rules changed; this answer did not.':'Your judgment is still needed.');
+ const target=$('findings');target.replaceChildren();const failed=(o?.criteria||[]).filter(c=>c.verdict!=='Pass');
+ if(!failed.length)add(target,'p','No original check failures. Please still check that the answer is useful and supported by the evidence.','muted');
+ for(const c of failed){
+  const current=n?.criteria.find(x=>x.criterion===c.criterion);const description=checkNames[c.criterion]||[c.criterion.replaceAll('_',' '),'Check the source and exact findings below.'];
+  const box=add(target,'div','','check-row');add(box,'div',description[0],'check-heading');add(box,'p',description[1]);
+  const compare=add(box,'div','','check-compare');add(compare,'span','Original: flagged','tag flag');add(compare,'span',current?'Recheck: '+(current.verdict==='Pass'?'passed':'flagged'):'Recheck: not run','tag '+(current?.verdict==='Pass'?'pass':'flag'));
+ }
+ $('checks-json').textContent=JSON.stringify({original:o,recheck:n||null},null,2);
+}
+function render(preferredId){
+ rows=filtered();if(preferredId){const i=rows.findIndex(r=>r.id===preferredId);if(i>=0)index=i;}index=Math.min(index,Math.max(0,rows.length-1));
+ $('review-content').hidden=!rows.length;$('empty').hidden=!!rows.length;
+ if(!rows.length){$('empty').textContent='No answers in this view. Choose another filter to continue.';return;}
+ const row=rows[index],c=data.cases.find(c=>c.id===row.case_id);dirty=false;
+ $('position').textContent=`${index+1} of ${rows.length} in this view`;$('previous').disabled=index===0;$('next').disabled=index===rows.length-1;
+ $('workflow-label').textContent=names[flow(row)];$('case-title').textContent=c.title;
+ $('setup').textContent=`${row.configuration.startsWith('luna')?'GPT-6 Luna':'GPT-6.1 Sol'} · ${row.configuration.endsWith('guided')?'workflow guide':'basic instructions'} · recorded medium reasoning setting`;
+ $('review-state').textContent=row.human_review?.human_label?'Reviewed: '+labelNames[row.human_review.human_label]:'Not reviewed';
+ $('expected').textContent=row.source.good_answer;showEvidence(row);showAnswer(row);showChecks(row);
+ $('answer-json').textContent=row.answer;
+ $('usage').textContent=`Recorded time: ${(row.generation_duration_ms/1000).toFixed(1)} seconds · ${((row.usage?.input_tokens||0)+(row.usage?.output_tokens||0)).toLocaleString()} tokens processed`;
+ $('review-form').reset();const saved=row.human_review?.human_label;
+ for(const radio of document.querySelectorAll('input[name="verdict"]')){radio.checked=radio.value===saved;radio.disabled=!!saved;}
+ $('reason').value=row.human_review?.human_feedback?.statement||'';$('reason').disabled=!!saved;$('save').disabled=!!saved;
+ $('saved-note').textContent=saved?'Your saved review is retained. Use Next to continue.':'Saved reviews survive reload.';
+}
+function updateTotals(){
+ const reviewed=data.answers.filter(r=>r.human_review?.human_label).length,flags=data.answers.filter(flagged),remaining=flags.filter(r=>!r.human_review?.human_label).length;
+ $('progress-text').textContent=`${reviewed} of ${data.answers.length} answers reviewed · ${remaining} originally flagged answers left`;$('progress').max=data.answers.length||40;$('progress').value=reviewed;
+ const passed=data.answers.filter(r=>r.original_evaluation?.outcome==='Pass').length,repassed=data.answers.filter(r=>r.recheck_evaluation?.outcome==='Pass').length;
+ $('totals').textContent=`Original checks: ${passed}/${data.answers.length} passed · ${data.recheck?'Revised checks: '+repassed+'/'+data.answers.length+' passed':'Recheck not run'} · Your review stays separate.`;
+ $('changes').replaceChildren();for(const change of data.recheck?.changes||[])add($('changes'),'li',change);
+}
+async function load(preferredId){
+ $('refresh').disabled=true;
+ try{const response=await fetch('/api/pilot');const value=await response.json();if(!response.ok)throw Error(value.error||'Could not load answers.');data=value;updateTotals();render(preferredId);}
+ catch(error){say(error.message,true);}finally{$('refresh').disabled=false;}
+}
+$('refresh').onclick=()=>{if(canLeave())load(rows[index]?.id);};
+let previousQueue='flagged',previousWorkflow='all';
+for(const id of ['queue','workflow'])$(id).onchange=()=>{if(!canLeave()){$('queue').value=previousQueue;$('workflow').value=previousWorkflow;return;}previousQueue=$('queue').value;previousWorkflow=$('workflow').value;index=0;say('');render();};
+$('previous').onclick=()=>{if(canLeave()){index--;say('');render();}};
+$('next').onclick=()=>{if(canLeave()){index++;say('');render();}};
+$('review-form').oninput=()=>{dirty=true;};
+$('review-form').onsubmit=async event=>{
+ event.preventDefault();if(saving)return;const row=rows[index],selected=document.querySelector('input[name="verdict"]:checked');if(!selected){say('Choose Correct, Needs changes or Unsure.',true);return;}
+ saving=true;$('save').disabled=true;
+ // Keep the same receipt on an uncertain response so a second click cannot duplicate a review.
+ const payload=row.pendingFeedback||{id:crypto.randomUUID(),revision:data.review_revision,decisions:[{case_id:row.id,kind:'label',label:selected.value,statement:$('reason').value.trim()||labelNames[selected.value]}]};row.pendingFeedback=payload;
+ try{const response=await fetch('/api/pilot/review',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});const result=await response.json();if(!response.ok)throw Error(result.error||'Could not save your review.');
+  dirty=false;const next=rows.slice(index+1).find(r=>!r.human_review?.human_label)||rows.slice(0,index).find(r=>!r.human_review?.human_label);await load(next?.id||row.id);say(next?'Review saved. Here is the next unreviewed answer.':'Review saved. You have reviewed every answer in this view. Choose All answers to continue.');
+ }catch(error){say(error.message+' Your choice is still on screen; retry saving before leaving.',true);$('save').disabled=false;}
+ finally{saving=false;}
+};
+window.addEventListener('beforeunload',event=>{if(dirty){event.preventDefault();event.returnValue='';}});
+load();
+</script>
+</html>

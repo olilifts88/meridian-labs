@@ -12,7 +12,7 @@ Those pieces fall into six useful families:
 | --- | --- | --- |
 | Documentation and releases | Product changes and questions become release candidates, review records, published notes and documentation fixes | Build the first complete end-to-end example in both n8n and code-only form |
 | Knowledge and AI operations | Route questions, retrieve evidence, evaluate outputs, spot recurring failures | Add saved cases, model comparisons and an inspectable operating view |
-| Calls and CRM | Turn meeting evidence into reports and proposed CRM changes with review | Build a second complete example after the release path |
+| Calls and CRM | Turn meeting evidence into reports, CRM changes, engineering signals and review | [Runnable Notion CRM journey](call-crm.md) with separate connected fictional records, simulated Linear/Slack, cumulative priority and selective review |
 | Security and trust | Prepare cited questionnaire answers and harvest approved answers for reuse | Build a third example with strict source and approval boundaries |
 | Legal and contracts | Intake, extraction, document preparation and review | Show the architecture and a bounded fictional example; the original Python engine is a separate substantial product |
 | Platform operations | Validate, deploy and mirror n8n workflows; monitor failures | Rebuild reusable tools with deployment and mirror disabled until configured |
@@ -23,7 +23,7 @@ The source distinguishes **announcement candidates**, **release-note broadcast**
 
 ## Earlier service implementation and remaining gaps
 
-This table describes the separate release service and n8n integration work. The newer [four-workflow showcase](showcase.md) adds local release delivery and real subscription model reviews; its verification is recorded separately.
+This table describes the separate release service and n8n integration work. The newer [four-AI workflows](showcase.md) adds local release delivery and real subscription model reviews; its verification is recorded separately.
 
 | Capability | Earlier system | In this repository now | Required change |
 | --- | --- | --- | --- |
@@ -64,7 +64,9 @@ Changing the old provider to OpenAI is a real integration change, not a word rep
 
 ## Usage and evaluation modules now included
 
-The repository now includes plain/compressed log reading, explicit execution bindings, deduplication, coverage checks, illustrative token valuation and revision-bound human feedback. See [usage-and-evaluation.md](usage-and-evaluation.md). These usage modules are offline components; connected upload, schedules, dashboard maintenance and a usage-wide automatic LLM judge are not included. The separate showcase has an optional live output reviewer and policy-based dispatch.
+The repository now includes plain/compressed log reading, explicit execution bindings, deduplication, coverage checks, illustrative token valuation and revision-bound human feedback. See [usage-and-evaluation.md](usage-and-evaluation.md). These usage modules are offline components; connected upload, schedules, dashboard maintenance and a usage-wide automatic LLM judge are not included. The separate demo has an optional live output reviewer and policy-based dispatch.
+
+All five browser workflows now share [evaluation records and frozen-input saved-output comparisons](evaluation-framework.md), reusing the original domain evaluators. This is a checker benchmark with synthetic reference/corruption cases; actual model comparisons and usage-to-candidate joins remain separate work.
 
 ## Build order and proof
 
@@ -72,7 +74,7 @@ The repository now includes plain/compressed log reading, explicit execution bin
 2. **Complete the release journey.** Add change discovery, candidate relay, review callback, documentation proposal and publication boundaries. Use a fictional repository and local adapter fakes. Verify normal, duplicate, wrong-audience and failed-delivery paths.
 3. **Match the GitHub-only path.** Run the same contracts and cases through GitHub Actions and code without n8n. Compare records, decisions and retries, not just a single check result.
 4. **Add model operations.** Integrate OpenAI behind a testable adapter, keep offline CI deterministic, and version prompts, skills, rubrics and comparison cases. Show what changed after a failed example.
-5. **Add two more journeys.** Use the same platform for a call-to-CRM review and a security-answer approval example. Each gets a five-minute walkthrough and explicit user outcome.
+5. **Expand the additional journeys.** Calls/Notion CRM now has a runnable evidence and review simulation; security answers have source-backed drafts. Add live model extraction, authenticated persistent approvals and connected delivery only after their own checks pass. Reuse the existing server, evaluators, usage and feedback modules.
 6. **Make sharing safe and useful.** Review all files and Git history, ensure demo data is fictional, provide a setup guide, run the offline suite, and leave external deploy/mirror jobs opt-in.
 
 The upstream change-analysis Action lives in a different source repository. The reviewed snapshot documents its payload and behaviour but does not contain that Action's code. Its portfolio equivalent must be built and verified from that contract; it cannot be described as a line-for-line port.

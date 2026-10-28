@@ -1,0 +1,17 @@
+# Studio, routing and cost verification · 28 October 2026
+
+Completed locally on the existing five-AI workflows. No new AI generation calls, external business writes, paid services, GitHub push/PR or hosting deployment.
+
+- Studio 1 applied to the working home, scenario selection, real-run library, shared result, evaluation and saved-history pages. Shared header/theme also applied to the original four-flow and CRM mock pages. The design-study selector remains separate.
+- Dated standard API-equivalent token estimates reuse `usage/token_cost.py`. All40 recorded answers have estimates, totalling USD0.19512988. Uncached/cached/output categories reconcile; reasoning and cached input are not added twice. Rate card, calculation and nullable identity evidence are expandable.
+- Evaluation board shows estimate totals by fixed setup and estimate per revised-check-passing answer, including failed attempts in the numerator. It keeps original31/40 versus revised33/40 and human labels distinct.
+- Versioned source-based routing rules cover allfive workflows. Model choices validate through the existing router; deterministic preflight checks are reused. Ten current cases exercise smaller model, stronger model, ordinary code and evidence hold. Rules ignore answer text, expected answers, case numbers/titles and pilot baseline. Rule mutations test changed inputs rather than a lookup keyed to fixtures.
+- Scenario selection can follow the policy to a matching saved guided answer or use a fixed recorded setup. No-model paths explicitly label their historical AI answer as a comparison. Policy is post-pilot exploratory replay; no prospective quality/savings claim or live model dispatcher.
+- Browser checked allfive scenario selectors, both cases per workflow and allfive shared result views. Routing/usage tab shows estimates and reasons; Overview/Checks/Evidence/Compare tabs preserve existing functions. Saved simulation persisted and reopened in the same browser. Main evaluation shows allten route rows and allfour setup estimates. No broken home images or page overflow at the inspected desktop viewport. This is not a complete mobile/accessibility audit.
+- 203 Python tests pass using bundled Node for the existing private-feedback/compressed-log tests. This includes five new pricing/routing tests plus prior all120 recorded-answer/approval combinations with model dispatch forbidden. 13 Node review/storage tests pass. Module/inline evaluation JavaScript syntax and git diff whitespace checks pass.
+- Original40 private answer strings and usage match the saved stage03 report. Public snapshot is enriched only at read time and remains unchanged; original checker results and owner reviews are preserved.
+- Rebuilt standalone ZIP:51 allowlisted files,162154bytes at verification. Extracted to a temporary directory and started with standard Python, without Node configuration. Verified home, Studio assets,40cost estimates,ten routes, recorded scenario with0modelcalls and disabled private review. Temporary server stopped. Full local owner server remains on8766, model reviews disabled.
+
+Useful personal-dashboard learning (quality-aware cost comparisons), and the later README/RFC/mockup presentation request, were saved separately in the existing Notion rebuild brief. That personal dashboard is not rebuilt here.
+
+Screenshots: `assets/studio-applied-home.png`, `assets/studio-routing-usage.png`.
