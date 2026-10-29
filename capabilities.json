@@ -347,7 +347,7 @@
     {
       "id": "ai-performance-dashboard",
       "status": "planned",
-      "claim": "AI Performance Dashboard \u2014 coming soon",
+      "claim": "In-repository AI Performance Dashboard implementation (private dashboard delivered separately)",
       "files": [
         "docs/ai-performance-dashboard.md"
       ],
@@ -357,7 +357,7 @@
       "entrypoint": [],
       "verification_groups": [],
       "known_gaps": [
-        "Separate project with fixes in progress",
+        "Private dashboard is delivered separately; this repository contains public guides, not its app source or hosted access",
         "Integrated collection/reporting and a runnable dashboard are not delivered by this repository"
       ]
     },
