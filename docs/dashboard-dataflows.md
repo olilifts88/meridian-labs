@@ -17,22 +17,6 @@ flowchart LR
  U --> Q["Refresh request and shared-source confirmation"] --> C
 ```
 
-## Review inbox
-
-```mermaid
-flowchart TD
- A["Complete Life OS review sections"] --> C["Complete source read and identity validation"]
- B["All Suggested Fixes, including history"] --> C
- C --> R["Current reviews and retained revisions"] --> I["Pending / follow-up / issues / history"]
- I --> H["Explicit authenticated choice"] --> D["Durable decision, source revision and actor"]
- D --> P["Connected collector · 12 hours or requested"]
- P --> X{"Source and existing human choice still match?"}
- X -->|Yes| W["Write exact choice and receipt to original source"] --> V["Read source back"] --> S["Mark synced in app"]
- X -->|No| G["Keep choice; show stale or conflict"]
- W -->|Failure| E["Retain decision; failed sync receipt"]
- V -->|Failure| E
-```
-
 ## Overview
 
 ```mermaid
@@ -50,6 +34,22 @@ flowchart TD
  S --> A
  Q -->|"No new inspection"| P["Retain original review date"]
  A --> P
+```
+
+## Review inbox
+
+```mermaid
+flowchart TD
+ A["Complete Life OS review sections"] --> C["Complete source read and identity validation"]
+ B["All Suggested Fixes, including history"] --> C
+ C --> R["Current reviews and retained revisions"] --> I["Pending / follow-up / issues / history"]
+ I --> H["Explicit authenticated choice"] --> D["Durable decision, source revision and actor"]
+ D --> P["Connected collector · 12 hours or requested"]
+ P --> X{"Source and existing human choice still match?"}
+ X -->|Yes| W["Write exact choice and receipt to original source"] --> V["Read source back"] --> S["Mark synced in app"]
+ X -->|No| G["Keep choice; show stale or conflict"]
+ W -->|Failure| E["Retain decision; failed sync receipt"]
+ V -->|Failure| E
 ```
 
 ## Activity & effort
@@ -124,8 +124,8 @@ flowchart TD
 
 | Requested tab | Sources requested | Other tabs that can partly update |
 | --- | --- | --- |
-| Review inbox | Reviews and decisions | Overview, Notion maintenance |
 | Overview | Reviews, tasks, saved quality/routing evidence | Review inbox, Activity & effort, Notion maintenance |
+| Review inbox | Reviews and decisions | Overview, Notion maintenance |
 | Activity & effort | Tasks and local usage | Overview, Usage & cost |
 | Usage & cost | Local usage and FX | Activity & effort, Workflow lab |
 | Notion maintenance | Reviews and decisions | Review inbox, Overview |
