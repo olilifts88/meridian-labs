@@ -1,6 +1,6 @@
 # AI performance dashboard
 
-A private Meridian dashboard brings together operational reviews, recorded tasks, usage estimates and workflow evidence. It has six tabs. The public repository documents its design and data contracts; the owner’s hosted app, personal records and source access are separate from the downloadable workflow demo.
+A private Meridian dashboard brings together operational reviews, recorded tasks, usage estimates and workflow evidence. It opens on Overview, followed by Review inbox, Activity & effort, Usage & cost, Notion maintenance and Workflow lab. The public repository documents its design and data contracts; the owner’s hosted app, personal records and source access are separate from the downloadable workflow demo.
 
 The interface uses the Meridian dark palette. Source dates and missing measurements remain visible. A saved task outcome, an automated quality check and a person’s judgment are separate records.
 
@@ -15,22 +15,6 @@ The interface uses the Meridian dark palette. Source dates and missing measureme
 A durable request queue distinguishes waiting, dispatched, running, completed and failed. An ordinary HTTPS courier checks for explicit requests every 30 seconds and queues the existing connected collector. It does not sync every source at that interval or call a model while idle. Its credential stays in process memory. A Mac restart or expired credential requires the connected reporting job to re-arm it. Requests wait when collection is unavailable.
 
 The collector verifies source writes and app readback before recording completion. A failed source retains its previous dated family. Duplicate active scopes coalesce; different families are merged without erasing unrelated data. These are configured operating rules, not proof of a naturally timed execution or phone delivery.
-
-## Review inbox
-
-What you see:
-
-- Review groups with their original finding, source links and available choices.
-- Pending, follow-up, system-issue and history filters.
-- Named-fix decisions, evaluator questions and existing human-verdict controls.
-- Saved decision status, source-sync receipt and prior source revisions.
-
-Backing data and freshness:
-
-- Complete Life OS review sections and the Suggested Fixes inventory, including applied, denied, superseded and test history.
-- App decisions and review revisions stored durably in D1; saving is immediate.
-- New source reviews and decisions back to Notion use the 12-hour connected mirror or Refresh now.
-- A choice is revision-bound. Recording it does not execute the proposed fix. Missing or changed source evidence blocks an old decision.
 
 ## Overview
 
@@ -47,6 +31,22 @@ Backing data and freshness:
 - Task and review mirrors are configured every 12 hours; app decisions appear immediately after saving.
 - Quality judgments change only when the existing bounded weekly review inspects new or changed evidence. Reimporting a judgment preserves its inspection date.
 - Historical examples are not a whole-account reliability rate, current routing compliance score or model ranking.
+
+## Review inbox
+
+What you see:
+
+- Review groups with their original finding, source links and available choices.
+- Pending, follow-up, system-issue and history filters.
+- Named-fix decisions, evaluator questions and existing human-verdict controls.
+- Saved decision status, source-sync receipt and prior source revisions.
+
+Backing data and freshness:
+
+- Complete Life OS review sections and the Suggested Fixes inventory, including applied, denied, superseded and test history.
+- App decisions and review revisions stored durably in D1; saving is immediate.
+- New source reviews and decisions back to Notion use the 12-hour connected mirror or Refresh now.
+- A choice is revision-bound. Recording it does not execute the proposed fix. Missing or changed source evidence blocks an old decision.
 
 ## Activity & effort
 
