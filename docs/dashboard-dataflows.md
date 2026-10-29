@@ -6,12 +6,12 @@ These diagrams describe the private app. They omit private identifiers, credenti
 
 ```mermaid
 flowchart LR
- N["Notion reviews, tasks and saved assessments"] --> C["Existing connected collector"]
+ N["Notion reviews, tasks, schemas, owning skills and saved assessments"] --> C["Existing connected collector"]
  L["Retained Mac usage logs · weekly or requested"] --> C
  F["Dated ECB exchange rate"] --> C
  C --> V["Validate source identity, coverage and dates"] --> D["Private app database"]
  D --> U["Six dashboard tabs"]
- U -->|"Explicit decisions and imported receipts"| D
+ U -->|"Explicit decisions, usefulness feedback and imported receipts"| D
  D -->|"Pending decisions"| C
  C -->|"Revision check, bounded write, readback"| N
  U --> Q["Refresh request and shared-source confirmation"] --> C
@@ -26,6 +26,7 @@ flowchart TD
  T["Original task records · 12-hour mirror"] --> M["Recorded task total"]
  Q["Validated saved answer-quality projection"] --> E["Dated quality findings"]
  A["Validated routing audit projection"] --> J["Dated routing examples"]
+ H["Saved alerts and task-feedback counts"] --> O
  K --> O["Overview"]
  M --> O
  E --> O
@@ -43,6 +44,9 @@ flowchart TD
  A["Complete Life OS review sections"] --> C["Complete source read and identity validation"]
  B["All Suggested Fixes, including history"] --> C
  C --> R["Current reviews and retained revisions"] --> I["Pending / follow-up / issues / history"]
+ L["Live enum schemas and current owning definitions"] --> A1["Read-only comparison · 12 hours or requested"] --> A2["Deduplicated alerts; resolve after successful check"] --> I
+ A1 -->|"Read failed"| A3["Ingestion error; retain earlier alerts"] --> I
+ F1["Visitor-selected task and evidence revision"] --> F2["Task feedback inbox"] --> F3["Authenticated usefulness response in app only"]
  I --> H["Explicit authenticated choice"] --> D["Durable decision, source revision and actor"]
  D --> P["Connected collector · 12 hours or requested"]
  P --> X{"Source and existing human choice still match?"}
@@ -62,6 +66,7 @@ flowchart TD
  L["Retained Codex logs"] --> G["Existing read-only collector"] --> U["Dated aggregate response/action inventory"]
  T --> H["Search and capability filters"] --> E["Source-linked task detail"]
  U --> A["Activity totals and collection date"]
+ E -->|"Visitor chooses Add to review inbox"| F["Version-bound task-feedback request"]
  E --> P["Activity & effort"]
  A --> P
  X["Missing worker/retry/time/token evidence"] --> Z["Show unavailable; do not infer"] --> P
@@ -95,6 +100,8 @@ flowchart TD
 flowchart TD
  W["Existing workspace maintenance process"] --> N["Suggested Fixes and Life OS findings"]
  N --> C["Complete 12-hour or requested source mirror"] --> R["Shared review records"]
+ L["Seven live schemas and Active owning skills"] --> V["Read-only field-specific definition comparison"] --> A1["Alerts and check dates"] --> M
+ V -->|"Failed read"| A2["Ingestion error; earlier findings retained"] --> M
  R --> M["Notion maintenance proposals"] --> I["Open same item in Review inbox"]
  I --> D["Explicit revision-bound decision"] --> S["Source write and verified receipt"]
  S --> H["Separate approved-fix executor"]
@@ -124,11 +131,11 @@ flowchart TD
 
 | Requested tab | Sources requested | Other tabs that can partly update |
 | --- | --- | --- |
-| Overview | Reviews, tasks, saved quality/routing evidence | Review inbox, Activity & effort, Notion maintenance |
-| Review inbox | Reviews and decisions | Overview, Notion maintenance |
+| Overview | Reviews, tasks, saved quality/routing evidence, label definitions | Review inbox, Activity & effort, Notion maintenance |
+| Review inbox | Reviews, decisions and label definitions | Overview, Notion maintenance |
 | Activity & effort | Tasks and local usage | Overview, Usage & cost |
 | Usage & cost | Local usage and FX | Activity & effort, Workflow lab |
-| Notion maintenance | Reviews and decisions | Review inbox, Overview |
+| Notion maintenance | Reviews, decisions and label definitions | Review inbox, Overview |
 | Workflow lab | Saved lab records and FX | Usage & cost |
 
-The server computes this dependency map. A selected group commits through a validated source import; unrelated usage families are preserved. A failed source keeps its previous dated snapshot and the refresh receipt names the failure. A completed receipt requires saved-data readback. Natural timer execution, restart recovery and signed-in device access require separate observed evidence.
+The server computes this dependency map. A selected group uses validated writers for its source families; label audits have a separate readback from review/task imports; unrelated usage families are preserved. A failed source keeps its previous dated snapshot and the refresh receipt names the failure. A completed receipt requires saved-data readback. Natural timer execution, restart recovery and signed-in device access require separate observed evidence.
