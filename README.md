@@ -1,6 +1,20 @@
 ![Meridian Labs](assets/meridian-labs-banner.svg)
 
-# Meridian Labs | AI Workflows
+# Meridian Labs
+
+This repository contains a runnable AI workflow demo, the code behind its evaluation and routing, n8n workflow sources, and public documentation for a separate private AI Performance Dashboard.
+
+## Start here
+
+| Goal | Go to |
+| --- | --- |
+| Run the public demo | [Setup and download](#start-the-demo) |
+| Understand the implementation | [Code and evidence](#inspect-the-code-and-evidence) |
+| Check what a capability actually supports | [Capability evidence guide](docs/capability-check.md) |
+| Understand the private dashboard | [Dashboard guide](docs/ai-performance-dashboard.md) |
+| Work on the repository with an agent | [AGENTS.md](AGENTS.md) |
+
+## AI Workflows
 
 Five practical AI workflows, with real model answers and the evidence behind them. Follow a customer call into a CRM proposal, review security evidence or inspect a release note. See what the AI produced, which checks passed, where a person needs to review it, and how the model setups compare on quality, time and estimated cost.
 
