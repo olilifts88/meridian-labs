@@ -6,9 +6,9 @@ The interface uses the Meridian dark palette. Source dates and missing measureme
 
 ## Updates and refresh controls
 
-- **Immediate app writes:** review decisions and workflow receipt imports are durable in the app database after saved-data readback.
+- **Immediate app writes:** review decisions, task usefulness feedback and workflow receipt imports are durable in the app database after saved-data readback.
 - **While open:** the dashboard rereads saved app data every minute and on reopening. Manual-refresh status is checked every 15 seconds. These reads do not collect source data.
-- **Every 12 hours:** the existing connected reporting job is configured to mirror reviews, task records, saved quality/routing evidence and dated exchange rates. The Mac, app and connected source access must be available.
+- **Every 12 hours:** the existing connected reporting job is configured to mirror reviews, task records, saved quality/routing evidence, live label-definition checks and dated exchange rates. The Mac, app and connected source access must be available.
 - **Weekly:** the full retained local-log scan keeps its Monday 09:00 Europe/London due gate and existing overdue catch-up. The lightweight mirror reuses that report.
 - **Refresh now:** choose this tab, several tabs or all tabs. A confirmation explains shared sources and other affected tabs. Selecting activity or usage requests a fresh local-log scan. No business workflow or model comparison is replayed.
 
@@ -22,7 +22,7 @@ What you see:
 
 - Review groups awaiting responses, saved decisions and recorded operational tasks.
 - Saved answer-quality findings and routing examples, with inspection dates and scope.
-- Links into the inbox and usage detail.
+- Active label/source alerts, task-feedback counts and links into the inbox and usage detail.
 
 Backing data and freshness:
 
@@ -37,15 +37,20 @@ Backing data and freshness:
 What you see:
 
 - Review groups with their original finding, source links and available choices.
-- Pending, follow-up, system-issue and history filters.
+- Pending, alerts, task feedback, follow-up, system-issue and history filters.
 - Named-fix decisions, evaluator questions and existing human-verdict controls.
 - Saved decision status, source-sync receipt and prior source revisions.
+- One alert for each undefined database/property/option, with the exact label and links to its database and owning skill.
+- Task feedback using Useful unchanged, Needed edits or Not useful.
 
 Backing data and freshness:
 
 - Complete Life OS review sections and the Suggested Fixes inventory, including applied, denied, superseded and test history.
 - App decisions and review revisions stored durably in D1; saving is immediate.
 - New source reviews and decisions back to Notion use the 12-hour connected mirror or Refresh now.
+- Seven registered live Notion schemas are compared with their current Active owning skills. Adding an option does not itself trigger a Notion agent; the connected 12-hour sync and requested refresh perform the check.
+- Read failures create ingestion errors and retain prior label alerts. A complete successful scan resolves definitions added or options removed.
+- Task-feedback requests enter only when the visitor chooses a task in Activity & effort. They are bound to that evidence revision and saved immediately in the app, without changing a Notion outcome or human verdict.
 - A choice is revision-bound. Recording it does not execute the proposed fix. Missing or changed source evidence blocks an old decision.
 
 ## Activity & effort
@@ -56,10 +61,11 @@ What you see:
 - A searchable task history and source-linked task detail.
 - Available attempts, duration, execution environment and measurement coverage.
 - Capability filters on explicitly tagged records and “What can scale with this setup?” guidance.
+- Add a chosen task to the review inbox for usefulness feedback.
 
 Backing data and freshness:
 
-- Original AI Run Metrics rows, projected without replacing their schema or identities.
+- Original AI Run Metrics rows, projected without replacing their schema or identities. The everyday Notion view retains seven useful visible columns; other properties and their data remain stored and hidden.
 - Retained Codex log reports for aggregate response/action inventory; these are separate from task records.
 - Tasks mirror every 12 hours. Local logs are scanned weekly, or explicitly through Refresh now.
 - Capability labels cover inspected records only. Missing attempts, technical retries, worker lineage, duration and whole-task tokens stay unavailable. A follow-up question is not automatically a retry or correction.
@@ -84,15 +90,16 @@ Backing data and freshness:
 
 What you see:
 
-- Existing cleanup proposals with a route into the same review inbox.
+- Existing cleanup proposals and label-definition alerts with a route into the same review inbox.
 - Source detail and the decision state of each proposal.
 - A separate disclosure explaining additional workspace checks, such as homepage links, duplicates, freshness, structure and filing.
 
 Backing data and freshness:
 
-- The same complete Suggested Fixes and Life OS source family as the inbox.
+- The same complete Suggested Fixes and Life OS source family as the inbox, plus the seven registered schema/owning-skill mappings.
 - The configured 12-hour mirror or Refresh now updates that shared family; the confirmation also names Overview and Review inbox.
 - The page consumes existing maintenance findings. Listing possible checks does not establish that a whole-workspace scanner is installed.
+- The label comparison is read-only. It does not repair definitions, edit records, add databases or send email.
 - Decisions and later verified fix application retain separate receipts.
 
 ## Workflow lab
@@ -114,6 +121,6 @@ Backing data and freshness:
 
 The app keeps source records, measurements, derived projections and presentation separate. A review has its original source identity and revision; a decision has the authenticated actor, selected field, choice and receipt. Task projections reuse existing run properties. Usage retains collection date, token categories, rate-card identity and pricing coverage. Every displayed family has its own evidence date.
 
-Only a complete verified source inventory replaces a family. Source failures never turn into an empty inbox or zero usage. Previous review revisions and authenticated decisions are retained. Source access and private Site writer access are verified separately; a Site credential grants no Notion permission.
+Only a complete verified source inventory replaces a family. Source failures never turn into an empty inbox or zero usage. Previous review revisions, resolved alerts and authenticated decisions are retained. Task-feedback history is stored independently of source imports. No database column is deleted to simplify the display. A hidden field remains available for future measurement. Source access and private Site writer access are verified separately; a Site credential grants no Notion permission.
 
 [See the overall and per-tab dataflow diagrams](dashboard-dataflows.md). [Usage and evaluation modules](usage-and-evaluation.md) and [routing components](model-routing.md) explain supporting repository code.
