@@ -87,10 +87,11 @@ If you already have the source checkout, run `python3 showcase_demo.py` from its
 
 For the private owner-review screen and original developer demos, run `python3 demo.py serve --port 8766` instead. Stop the first server before starting another on the same port. Model calls remain disabled by default.
 
-To rebuild the small ZIP, run `python3 scripts/build-workflow-showcase.py`. The [release guide](docs/showcase-release.md) explains its placement, checksum, source version and publication steps. Its explicit allowlist excludes private data, credentials and unrelated projects. No hosted account is needed; Cloudflare is deferred.
+To rebuild the small ZIP, run `python3 scripts/build-workflow-showcase.py`. The [release guide](docs/showcase-release.md) explains its placement, checksum, source version and publication steps. Its explicit allowlist excludes private data, credentials and unrelated projects. No hosted account is needed for the downloadable demo.
 
 ## Inspect the engineering
 
+- **[AI performance dashboard](docs/ai-performance-dashboard.md):** the six private-app tabs, backing sources, refresh timing and measurement boundaries. **[Dataflow diagrams](docs/dashboard-dataflows.md)** show the overall flow and each tab.
 - **[Workflow guide](docs/recorded-workflows.md):** the five workflows, recorded answers, local checks and review boundaries.
 - **[Capability evidence map](docs/capability-check.md):** find the implementation, tests, runnable commands, dated evidence and known gaps for a claim.
 - **[Verification records](docs/verification-studio-routing-costs-2026-10-28.md):** the five workflow demos, routing, estimated costs and standalone-package checks.
@@ -100,10 +101,6 @@ To rebuild the small ZIP, run `python3 scripts/build-workflow-showcase.py`. The 
 - **[Shared evaluation framework](docs/evaluation-framework.md):** one record contract across five workflows, frozen-input saved-output comparisons, individual criterion findings and explicit usage gaps. It reuses existing evaluators, usage modules and feedback validation.
 - **[Workflow guidance](docs/workflow-guidance/README.md):** two scoped example guides and where they are used.
 - **[Repository security](docs/security.md)** and **[deployment boundaries](docs/n8n-deployment.md):** operational controls and optional external integrations.
-
-## AI performance dashboard · coming soon
-
-I'm building a fully automated AI performance dashboard for workflow monitoring, output evaluations, model comparisons, usage and cost tracking, and more. [Read more here](docs/ai-performance-dashboard.md).
 
 ## Repeat the checks
 
