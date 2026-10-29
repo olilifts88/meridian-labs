@@ -1,6 +1,6 @@
 # Capability evidence map
 
-Use [capabilities.json](../capabilities.json) to trace a claim to code, entry point, fixture, test, recorded result and known gap. The read-only checker validates file and Python-symbol references. It never dispatches a model, opens account logs or accesses connected Notion.
+Start with [AGENTS.md](../AGENTS.md) for repository orientation, investigation steps and public/private boundaries. Use [capabilities.json](../capabilities.json) to trace a claim to code, entry point, fixture, test, recorded result and known gap. The read-only checker validates file and Python-symbol references. It never dispatches a model, opens account logs or accesses connected Notion.
 
 ```sh
 python3 scripts/capability_check.py
