@@ -10,9 +10,10 @@ These screenshots use the current interface with fictional sample data. Personal
 
 ## Updates and decisions
 
-- **While open:** the app rereads its saved data every minute and when reopened. Refresh view reads that same saved data immediately.
+- **While open:** the app rereads its saved data every minute and when reopened. This polling does not queue source reads.
 - **Source updates:** the existing Life Sweep is configured for 08:00, 13:00 and 19:00 Europe/London. It reads the original sources, updates Notion and publishes verified tracker, sweep and daily-learning data to the private app. No additional scheduler is introduced.
-- **Refresh source data:** saves an explicit tracker-refresh request for the existing connected publisher. It does not start another mail sweep. The request remains queued until a publisher processes it.
+- **Refresh view:** opens a picker with the current tab selected. Choose this tab, several tabs or all tabs, then confirm. Today, Tasks and Waiting share one tracker read, so the picker shows which other tabs receive the same task data. What’s On queues a separate Calendar-and-tracker request for the chosen date range, up to 92 days. Selecting every tab queues at most these two source requests. They wait for the existing connected updater.
+- **Reload saved data only:** a separate action inside the picker rereads the latest app snapshot without requesting a source update. Cancel or Escape also queues nothing. Lessons and sweep summaries retain the normal sweep cycle; this picker does not start a mail sweep.
 - **Task choices:** Done, Not doing, Pause and Resume are saved immediately in the private app with the authenticated actor, original task ID and evidence revision. The next connected Life Sweep checks the current Notion card, records the bounded change and reads its receipt back. Saved and verified in Notion are distinct states.
 - **Agenda:** generated only for an explicit requested date range. Opening the app or a routine sweep does not silently regenerate it.
 
@@ -21,6 +22,8 @@ The app is available from the cloud; viewing it does not require the Mac or a Te
 Life OS and AI Performance share one private ChatGPT Sites deployment, using Cloudflare Workers and a Cloudflare D1 app database. Hosting the interface does not move Notion records, scheduled ChatGPT work or Mac collectors into Cloudflare. The repository's public AI Workflows route remains the downloadable demo.
 
 A natural 13:00 London run on 30 October 2026 completed in the existing cloud chat. The matching app readback showed successful tracker, sweep and learning publication. The scheduler receipt and app publication were checked separately; an explicit run-ID binding between them was not exposed. Phone notification receipt and the separate Mac desktop-feed update remain unverified. See the [dated verification](verification-life-os-2026-10-30.md).
+
+![Life OS refresh picker with selected tabs, a shared tracker warning and an explicit confirmation, using fictional sample data](../assets/dashboard-previews/life-os-refresh.jpg)
 
 ## Today
 

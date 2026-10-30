@@ -446,7 +446,7 @@
     {
       "id": "life-os-guide",
       "status": "implemented",
-      "claim": "Public Life OS tab, source-timing and dataflow documentation for a separately delivered private app",
+      "claim": "Public Life OS tab, confirmed refresh-selection, source-timing and dataflow documentation for a separately delivered private app",
       "files": [
         "docs/life-os.md",
         "docs/life-os-dataflows.md",
