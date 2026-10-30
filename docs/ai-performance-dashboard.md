@@ -4,6 +4,10 @@ A private Meridian dashboard brings together operational reviews, recorded tasks
 
 The interface uses the Meridian dark palette. Source dates and missing measurements remain visible. A saved task outcome, an automated quality check and a person’s judgment are separate records.
 
+These screenshots use the current interface with fictional sample data. The figures illustrate the layout; they are not measured usage, costs, quality results or achieved savings.
+
+![AI Performance Overview with review counts and saved quality evidence, using fictional sample data](../assets/dashboard-previews/ai-performance-overview.jpg)
+
 ## Updates and refresh controls
 
 - **Immediate app writes:** review decisions, task usefulness feedback and workflow receipt imports are durable in the app database after saved-data readback.
@@ -33,6 +37,8 @@ Backing data and freshness:
 - Historical examples are not a whole-account reliability rate, current routing compliance score or model ranking.
 
 ## Review inbox
+
+![AI Performance Review inbox with original findings, response choices and filters, using fictional sample data](../assets/dashboard-previews/ai-performance-review-inbox.jpg)
 
 What you see:
 
@@ -71,6 +77,8 @@ Backing data and freshness:
 - Capability labels cover inspected records only. Missing attempts, technical retries, worker lineage, duration and whole-task tokens stay unavailable. A follow-up question is not automatically a retry or correction.
 
 ## Usage & cost
+
+![AI Performance Usage and cost with GBP display, pricing coverage and fresh, cached and output token categories, using illustrative sample values](../assets/dashboard-previews/ai-performance-usage-cost.jpg)
 
 What you see:
 

@@ -4,6 +4,10 @@ Life OS is a private Meridian web app for daily tasks, waiting items, personal d
 
 The four tabs are Today, Tasks, Waiting and What’s On. AI evaluations, maintenance proposals and suggested fixes stay in the separate [AI performance dashboard](ai-performance-dashboard.md) Review inbox.
 
+These screenshots use the current interface with fictional sample data. Personal tasks, dates and source records are excluded.
+
+![Life OS Today with the saved lesson, next actions and coming dates, using fictional sample data](../assets/dashboard-previews/life-os-today.jpg)
+
 ## Updates and decisions
 
 - **While open:** the app rereads its saved data every minute and when reopened. Refresh view reads that same saved data immediately.
@@ -39,6 +43,8 @@ The next-actions list is a short selection from the tracker, not a fresh AI judg
 
 ## Tasks
 
+![Life OS Tasks with search, status filters and original-record links, using fictional sample data](../assets/dashboard-previews/life-os-tasks.jpg)
+
 What you see:
 
 - Searchable original tasks with status and priority filters.
@@ -73,6 +79,8 @@ Backing data and freshness:
 A Type of Waiting and a Status of Waiting describe different aspects of the same record. A follow-up question or a newer message is not automatically a correction, new task or completed commitment.
 
 ## What’s On
+
+![Life OS personal agenda with a requested date range and dated commitments, using fictional sample data](../assets/dashboard-previews/life-os-agenda.jpg)
 
 What you see:
 
