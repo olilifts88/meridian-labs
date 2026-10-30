@@ -12,6 +12,7 @@ This repository contains a runnable AI workflow demo, the code behind its evalua
 | Understand the implementation | [Code and evidence](#inspect-the-code-and-evidence) |
 | Check what a capability actually supports | [Capability evidence guide](docs/capability-check.md) |
 | Understand the private dashboard | [Dashboard guide](docs/ai-performance-dashboard.md) |
+| Understand the private Life OS app | [Life OS guide](docs/life-os.md) |
 | Work on the repository with an agent | [AGENTS.md](AGENTS.md) |
 
 ## AI Workflows
@@ -106,6 +107,7 @@ To rebuild the small ZIP, run `python3 scripts/build-workflow-showcase.py`. The 
 ## Inspect the engineering
 
 - **[AI performance dashboard](docs/ai-performance-dashboard.md):** the six private-app tabs, backing sources, refresh timing and measurement boundaries. **[Dataflow diagrams](docs/dashboard-dataflows.md)** show the overall flow and each tab.
+- **[Life OS app](docs/life-os.md):** Today, Tasks, Waiting and What’s On, with Notion behind the app, explicit decisions and source-update timing. **[Life OS dataflows](docs/life-os-dataflows.md)** show the overall path and each tab.
 - **[Workflow guide](docs/recorded-workflows.md):** the five workflows, recorded answers, local checks and review boundaries.
 - **[Capability evidence map](docs/capability-check.md):** find the implementation, tests, runnable commands, dated evidence and known gaps for a claim.
 - **[Verification records](docs/verification-studio-routing-costs-2026-10-28.md):** the five workflow demos, routing, estimated costs and standalone-package checks.

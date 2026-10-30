@@ -45,9 +45,9 @@ What you see:
 
 Backing data and freshness:
 
-- Complete Life OS review sections and the Suggested Fixes inventory, including applied, denied, superseded and test history.
+- Complete review handoffs on their original owning records and the Suggested Fixes inventory, including applied, denied, superseded and test history. The retired Life OS page is not an ingestion source.
 - App decisions and review revisions stored durably in D1; saving is immediate.
-- New source reviews and decisions back to Notion use the 12-hour connected mirror or Refresh now.
+- New source reviews use the existing cloud Life Sweep publisher or 12-hour connected mirror. Decisions back to Notion use the 12-hour mirror or Refresh now; recording a choice and executing a fix remain separate.
 - Seven registered live Notion schemas are compared with their current Active owning skills. Adding an option does not itself trigger a Notion agent; the connected 12-hour sync and requested refresh perform the check.
 - Read failures create ingestion errors and retain prior label alerts. A complete successful scan resolves definitions added or options removed.
 - Task-feedback requests enter only when the visitor chooses a task in Activity & effort. They are bound to that evidence revision and saved immediately in the app, without changing a Notion outcome or human verdict.
@@ -65,7 +65,7 @@ What you see:
 
 Backing data and freshness:
 
-- Original AI Run Metrics rows, projected without replacing their schema or identities. The everyday Notion view retains seven useful visible columns; other properties and their data remain stored and hidden.
+- Original AI Run Metrics rows, projected without replacing their schema or identities. The everyday Notion view shows Run, Run day, Run type, Skill, Execution environment, Strategy, Requested worker model, Outcome and Evidence. A separate Routing & delegation view exposes requested and evidenced actual assignments. Other properties and their data remain stored and hidden.
 - Retained Codex log reports for aggregate response/action inventory; these are separate from task records.
 - Tasks mirror every 12 hours. Local logs are scanned weekly, or explicitly through Refresh now.
 - Capability labels cover inspected records only. Missing attempts, technical retries, worker lineage, duration and whole-task tokens stay unavailable. A follow-up question is not automatically a retry or correction.
@@ -96,7 +96,7 @@ What you see:
 
 Backing data and freshness:
 
-- The same complete Suggested Fixes and Life OS source family as the inbox, plus the seven registered schema/owning-skill mappings.
+- The same complete Suggested Fixes and owning-record review handoffs as the inbox, plus the seven registered schema/owning-skill mappings.
 - The configured 12-hour mirror or Refresh now updates that shared family; the confirmation also names Overview and Review inbox.
 - The page consumes existing maintenance findings. Listing possible checks does not establish that a whole-workspace scanner is installed.
 - The label comparison is read-only. It does not repair definitions, edit records, add databases or send email.

@@ -442,6 +442,28 @@
         "Existing usage receipts not yet joined to candidates; cost/tokens/latency unavailable"
       ],
       "recorded_evidence": "docs/verification-call-crm-2026-10-27.md"
+    },
+    {
+      "id": "life-os-guide",
+      "status": "implemented",
+      "claim": "Public Life OS tab, source-timing and dataflow documentation for a separately delivered private app",
+      "files": [
+        "docs/life-os.md",
+        "docs/life-os-dataflows.md",
+        "docs/verification-life-os-2026-10-30.md"
+      ],
+      "symbols": {},
+      "tests": [],
+      "test_symbols": {},
+      "entrypoint": [
+        "docs/life-os.md"
+      ],
+      "verification_groups": [],
+      "recorded_evidence": "docs/verification-life-os-2026-10-30.md",
+      "known_gaps": [
+        "Documentation only: the private app source, personal records, credentials and hosted access are not included in this repository",
+        "Private workflow and device observations are dated evidence, not a runnable public integration test"
+      ]
     }
   ]
 }

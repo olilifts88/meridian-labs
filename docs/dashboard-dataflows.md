@@ -41,7 +41,7 @@ flowchart TD
 
 ```mermaid
 flowchart TD
- A["Complete Life OS review sections"] --> C["Complete source read and identity validation"]
+ A["Complete owning-record review handoffs"] --> C["Complete source read and identity validation"]
  B["All Suggested Fixes, including history"] --> C
  C --> R["Current reviews and retained revisions"] --> I["Pending / follow-up / issues / history"]
  L["Live enum schemas and current owning definitions"] --> A1["Read-only comparison · 12 hours or requested"] --> A2["Deduplicated alerts; resolve after successful check"] --> I
@@ -98,7 +98,7 @@ flowchart TD
 
 ```mermaid
 flowchart TD
- W["Existing workspace maintenance process"] --> N["Suggested Fixes and Life OS findings"]
+ W["Existing workspace maintenance process"] --> N["Suggested Fixes and owning-record findings"]
  N --> C["Complete 12-hour or requested source mirror"] --> R["Shared review records"]
  L["Seven live schemas and Active owning skills"] --> V["Read-only field-specific definition comparison"] --> A1["Alerts and check dates"] --> M
  V -->|"Failed read"| A2["Ingestion error; earlier findings retained"] --> M
