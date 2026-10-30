@@ -15,6 +15,7 @@ Meridian Labs has a downloadable, local **AI Workflows** demo; source for its wo
 - `capabilities.json` is a claim index, not an exhaustive inventory or a substitute for code inspection. `docs/capability-check.md` explains its checker and evidence fields.
 - `.n8n/` contains editable n8n sources. `exports/n8n/` is generated output. Inspect the source and build path before relying on an export.
 - `docs/ai-performance-dashboard.md` and `docs/dashboard-dataflows.md` describe the private dashboard. Do not infer that its app code or hosted access is in this repository.
+- `docs/life-os.md` and `docs/life-os-dataflows.md` describe the separate Life OS front end, source updates and decision path. Its private app shares hosting with AI Performance; its original Notion records and app code are outside this repository.
 
 ## Standard capability review
 
