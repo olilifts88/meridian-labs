@@ -31,6 +31,14 @@ The public documentation was prepared from repository revision `485bfcebcfb324d4
 
 The HTTP fixtures were isolated from real business records. The one hosted task decision used the named synthetic record described above. None of these checks sent email, changed Calendar, generated candidate-model answers or applied a suggested fix.
 
+## Refresh picker follow-up
+
+Private app version 10, source `da9dd9ee063d8c20ca5377a11ff1f2112074ba83`, adds the confirmed tab picker to Refresh view. The original button reread the saved app snapshot; it did not refresh every source. The picker groups Today, Tasks and Waiting into one tracker request and keeps What’s On as a separate bounded agenda request. No source contract, schedule, task filter or decision behaviour changed.
+
+Focused checks passed for shared-scope deduplication, agenda-only isolation, empty selections, real calendar dates, inclusive 92-day limits and partial retry without resubmitting accepted scopes. The isolated sample-data browser preview verified current-tab and all-tab selection, cancel, Escape, saved-data reload, invalid dates, agenda-only queueing and recovery from a simulated agenda queue failure. It has no live source adapters. Existing Life OS task checks, TypeScript checking and the production build passed.
+
+The native private deployment succeeded. In the authenticated hosted app, Refresh view opened with Today selected, the shared tracker warning and explicit confirmation. Cancelling left the pre-existing pending request identities unchanged. No production source request or business action was started for this UI test. The guide and four screenshots use fictional sample data; private task records and app source remain excluded.
+
 ## Limits
 
 The app polls saved data; it does not continuously scan Notion, Gmail or Calendar. Life Sweep source publication follows the existing three daily cloud runs or an explicit processed request. Performance reporting retains its 12-hour Mac mirror and weekly full local-log scan. An offline Mac delays those local updates.
