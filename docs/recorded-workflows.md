@@ -1,5 +1,7 @@
 # Recorded runs and visitor scenarios
 
+Current routes, model choices, pricing checks and setup are described in [Workflow model routing and cost estimates](workflow-stage-routing.md). The original saved answers remain unchanged.
+
 Home offers **Try a workflow** and **See real AI runs** across all five workflows. Both paths use `run_explorer.html` and its shared result renderer. A third view, **My saved scenarios**, reopens visitor-owned records.
 
 | Path | Evidence and execution | Persistence |

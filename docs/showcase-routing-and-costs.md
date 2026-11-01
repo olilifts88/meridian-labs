@@ -1,4 +1,8 @@
-# Studio demo: routing and estimated costs
+# Workflow routing and estimated costs
+
+The current stage-by-stage route explorer, five-model calculator and pricing preflight are documented in [Workflow model routing and cost estimates](workflow-stage-routing.md). The sections below retain the original pilot valuation and policy for its dated evidence.
+
+## Original Studio pilot
 
 The functional five-AI workflows uses the selected Studio 1 direction: compact Meridian branding, warm surfaces, two home paths, and shared results with Overview, Evidence & answer, Checks, Routing & usage and Compare setups. The older design studies remain references; use `/` for the working product.
 

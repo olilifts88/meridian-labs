@@ -1,6 +1,6 @@
 # Meridian Labs · AI Workflows
 
-Two ways to explore five AI-powered workflows: try a prepared scenario, or inspect the actual recorded model runs and comparisons. This package is a small runnable part of the [full GitHub repository](https://github.com/olilifts88/meridian-labs).
+Explore the workflow routes, compare model choices and review saved answers. This is AI Workflows v1.1.0, with the same routes and interface as the hosted demo. This package is a small runnable part of the [full GitHub repository](https://github.com/olilifts88/meridian-labs).
 
 ## Start here
 
@@ -26,18 +26,25 @@ Requires **Python 3.9 or newer** and a modern desktop browser. No packages to in
 
 ## What to click
 
-- **Try a workflow:** choose a workflow, one of two prepared cases, and follow the routing rule or choose a fixed recorded AI setup. Choose a simulated approval, then run the scenario. The existing Python evaluators check the recorded answer again and simulate the outcome. The result saves in your browser.
-- **See real AI runs:** inspect all 40 genuine model outputs, including failures, their source evidence, original/revised evaluation, time, tokens and a snapshot of the owner's reviews.
-- **My saved scenarios:** reopen your own results or download them as JSON. Each links to its original AI answer and opens in the same result view.
-- **Evaluation & benchmarking:** see the shared check framework, fixture/regression tests and actual model-setup comparison. Older rule-based demos remain accessible from the five workflow cards.
+- **Workflows:** choose a scenario and start with its recommended model route. Open a step for the model choice, effort, quality check and cost.
+- **Customise & compare:** choose a lower-cost or deeper-review route, compare one model throughout, or change a stage's model and token budget.
+- **Real AI runs:** inspect the original saved answers, their instructions, checks and owner feedback. “Task instructions only” and “With workflow guide” describe the instructions given to the model.
+- **Evaluation & benchmarking:** inspect the quality checks, compare the same source cases and explore the cost of different routes.
+- **Saved scenarios:** reopen the route and review choice you saved. Its original prices are preserved; Compare with current prices shows a separate calculation.
 
-All examples are fictional. No CRM, Linear, Slack or other external service is changed. An approval in a visitor scenario affects only the local simulation. A scenario approval cannot override a failed answer check or missing evidence.
+The calculator supports GPT-6 Luna, GPT-6 Sol, GPT-6.1 Sol, GPT-6.1 Terra and GPT-6 Astra. It handles cached reads and writes, processing tiers, context length, region and retry budgets. [How model routing and costs work](workflow-stage-routing.md).
 
-## What is real, and what is replayed?
+## Pricing checks
 
-The 40 recorded AI answers were generated privately on 28 October 2026: ten cases across two requested models and two instruction styles. They include mistakes. You do not generate fresh AI answers when using this download. The scenario runs the ordinary-code checks and simulator on an existing answer, with zero model calls and zero new model tokens.
+The launcher checks OpenAI's public documentation before opening the demo. A scenario save also checks prices. If the web check fails, the last verified rate card is retained. Sources & calculation shows its date and basis.
 
-Your scenario record is not another independent model test. It is kept separately from the 40-answer benchmark. Original generation tokens/time are labelled separately from your new local evaluation time. Estimated API cost values the recorded tokens using dated published rates; it is not a subscription bill. The shared result shows cost, timing, model settings and why the new routing rules choose a model, ordinary code or a hold. These rules run offline and can select a matching saved answer. They were defined after the fixed-setup pilot, so the replay does not prove future routing quality or savings. Technical provenance is expandable.
+To start without a web check, use `python3 showcase_demo.py --offline` (or `py showcase_demo.py --offline` on Windows). No model calls or API keys are needed. The hosted version uses the same calculator and a server-side pricing check.
+
+## Source answers and scenario routes
+
+The original forty AI answers and evaluation records remain available. Choosing a different stage route changes the plan and cost estimate; it does not generate a new AI answer or alter a review. Quality evidence stays linked to the answer and setup it assessed. Costs are token estimates, separate from tool fees and subscription charges.
+
+Workflow decisions operate on sample business data. Approval does not update an external CRM or send a message. Missing evidence and failed checks still hold the relevant action.
 
 ## Where your results are saved
 
@@ -55,7 +62,7 @@ The private owner-review queue and its write endpoint are disabled in this launc
 - [Experiment and checker revisions](../src/workflow_portfolio/ai_pilot.py): frozen cases, original checks and separate recheck. Its model adapter is included for code inspection; this launcher does not use it to generate answers.
 - [Recorded-versus-scenario guide](recorded-workflows.md): scope, safeguards and current limits.
 
-The full repository contains the wider implementation, tests and supporting guides. This ZIP includes only the demo's required source, examples, browser assets and instructions. Hosting is deferred; no Cloudflare account is needed.
+The full repository contains the wider implementation, tests and supporting guides. This ZIP includes only the demo's required source, examples, browser assets and instructions. The hosted demo is available separately; no hosting account is needed to use this download.
 
 
 ## Setup help
