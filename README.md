@@ -20,7 +20,7 @@ This repository contains a runnable AI workflow demo, the code behind its evalua
 Five practical AI workflows, with real model answers and the evidence behind them. Follow a customer call into a CRM proposal, review security evidence or inspect a release note. See what the AI produced, which checks passed, where a person needs to review it, and how the model setups compare on quality, time and estimated cost.
 
 <p>
-  <a href="https://github.com/olilifts88/meridian-labs/releases/download/ai-workflows-v1.0.0/meridian-ai-workflows.zip"><img src="assets/download-ai-workflows.svg" alt="Download AI Workflows ZIP" width="282" height="48"></a>
+  <a href="https://github.com/olilifts88/meridian-labs/releases/download/ai-workflows-v1.1.0/meridian-ai-workflows.zip"><img src="assets/download-ai-workflows.svg" alt="Download AI Workflows ZIP" width="282" height="48"></a>
   <a href="#start-the-demo"><img src="assets/setup-instructions.svg" alt="Setup instructions" width="214" height="48"></a>
 </p>
 
