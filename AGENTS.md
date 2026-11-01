@@ -9,7 +9,7 @@ Meridian Labs has a downloadable, local **AI Workflows** demo; source for its wo
 ## Find the relevant source
 
 - Start with `README.md` for the visitor path, download, folder guide and links to current evidence.
-- `showcase_demo.py` starts the recorded, no-model-call visitor demo. Follow its imports into `src/workflow_portfolio/showcase_server.py` and `recorded_showcase.py`.
+- `showcase_demo.py` starts the no-model-call visitor demo. It serves the current `demo-web/` browser interface through `src/workflow_portfolio/web_demo.py`. The original benchmark and developer server remain in `recorded_showcase.py` and `showcase_server.py`.
 - `src/workflow_portfolio/` holds the workflow engines, review rules, routing, evaluations and usage code. Follow the actual entry point, caller, state and side-effect boundary for the feature at issue.
 - `examples/` holds fictional inputs and public-safe recorded runs. `tests/` holds expected cases. `docs/verification-*.md` records dated checks; it does not establish a fresh run.
 - `capabilities.json` is a claim index, not an exhaustive inventory or a substitute for code inspection. `docs/capability-check.md` explains its checker and evidence fields.

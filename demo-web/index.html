@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<script src="/assets/hosted-replay.js"></script><title>Meridian Labs | Explore the workflows</title>
+<style>
+:root{font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#f2efe8;color:#242426;--muted:#69655f;--line:#d8d2c8;--red:#b8212b}*{box-sizing:border-box}body{margin:0}header{background:#111215;color:#f2efe8;border-bottom:3px solid #ed4146;padding:27px max(24px,calc((100vw - 1200px)/2));display:flex;justify-content:space-between;align-items:center;gap:20px}header strong{letter-spacing:3px;font-size:21px}header span{font-size:12px;letter-spacing:2px;color:#c8c4bc}.wrap{max-width:1248px;margin:auto;padding:48px 24px}h1{font-size:46px;line-height:1.12;letter-spacing:-1.8px;margin:12px 0 18px;max-width:850px}h2{font-size:23px;line-height:1.25;letter-spacing:-.5px;margin:12px 0}.eyebrow{font-size:12px;font-weight:700;letter-spacing:1.7px;text-transform:uppercase;color:var(--red)}.lead{max-width:740px;color:var(--muted);margin:0 0 32px}.path-actions{display:flex;gap:12px;flex-wrap:wrap;margin:24px 0 32px}.secondary-link{margin-top:14px;font-size:13px;color:var(--muted)}.directory{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}.workflow{padding:28px;background:#fff;border:1px solid var(--line);border-radius:6px;display:flex;flex-direction:column;align-items:flex-start}.workflow.featured{grid-column:1/-1;display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:32px}.number{font-size:12px;color:var(--red);letter-spacing:1.3px;font-weight:650}.explain{margin:0 0 20px;color:#55524d;max-width:600px}.detail{font-size:13px;margin:0 0 14px;color:var(--muted)}.detail strong{color:#383633;font-weight:600}.status{display:inline-block;font-size:11px;letter-spacing:.3px;background:#eee9df;padding:3px 8px;border-radius:4px;color:#5c554b;margin-bottom:18px}.button{display:inline-flex;align-items:center;gap:16px;min-height:44px;text-decoration:none;padding:9px 15px;background:#242426;color:white;border-radius:5px;font-size:14px;font-weight:600;margin-top:auto}.button:hover{background:var(--red)}a:focus-visible{outline:3px solid #477db5;outline-offset:4px}.shared{display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-top:36px;padding-top:28px;border-top:1px solid var(--line)}.shared h2{font-size:17px;margin-top:0}.shared p{font-size:13px;color:var(--muted);margin:0}footer{margin-top:32px;font-size:12px;color:var(--muted)}@media(max-width:720px){header span{display:none}.wrap{padding:30px 18px}h1{font-size:34px;letter-spacing:-1px}.directory,.shared{grid-template-columns:1fr}.workflow.featured{grid-column:auto;display:flex;gap:0}.workflow{padding:23px}.button{margin-top:8px}}
+
+.home-intro h1{font-size:44px;margin-top:0}.home-intro .lead{max-width:800px;margin-bottom:24px}.home-pages{display:flex;gap:28px;flex-wrap:wrap;padding-bottom:30px;margin-bottom:28px;border-bottom:1px solid var(--line)}.home-pages a{text-decoration:none;color:inherit;flex:1;min-width:180px}.home-pages strong{display:block;font-size:15px}.home-pages span{display:block;font-size:13px;color:var(--muted);margin-top:4px}.home-pages a:hover strong{color:var(--red)}.evaluation-feature{display:grid;grid-template-columns:1.3fr 1fr;gap:40px;padding:30px;background:#fff;border:1px solid var(--line);border-left:4px solid var(--red);border-radius:6px;margin-bottom:36px}.shared-label{color:var(--red)!important;font-size:12px!important;font-weight:600;margin-bottom:10px!important}.evaluation-feature h2{margin-top:0;font-size:26px}.evaluation-feature p{font-size:14px;color:#5b5750;margin:0 0 20px;max-width:580px}.evaluation-actions{display:flex;align-items:center;gap:18px;flex-wrap:wrap}.evaluation-actions .button{margin:0}.text-link{font-size:13px;font-weight:600;color:var(--red)}.evaluation-evidence{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;align-content:center}.evaluation-evidence strong{display:block;font-size:34px;line-height:1.2}.evaluation-evidence span{display:block;font-size:12px;color:var(--muted);margin-top:6px}.evaluation-evidence p{grid-column:1/-1;font-size:13px;margin:0}.workflow .route-mini{order:initial}.workflow.featured .route-mini{grid-column:1/-1}.workflow h2{margin-top:0}.workflow .button{margin-top:6px}@media(max-width:760px){.home-intro h1{font-size:34px}.home-pages{gap:16px}.home-pages a{min-width:140px}.evaluation-feature{grid-template-columns:1fr;gap:24px;padding:22px}.evaluation-evidence strong{font-size:28px}.evaluation-feature h2{font-size:23px}}
+</style>
+<link rel="stylesheet" href="/assets/demo-banner.css"><link rel="stylesheet" href="/assets/studio.css"><link rel="stylesheet" href="/assets/workflow-routing.css">
+<header class="site-banner studio-header"><a class="banner-home" href="/" aria-label="Meridian Labs home"><img src="/assets/meridian-labs-lockup.svg" alt="Meridian Labs" width="255" height="55"></a><nav class="banner-nav" aria-label="Main navigation"><a href="/">Workflows</a><a href="/saved-results.html">Saved results</a></nav></header>
+<link rel="stylesheet" href="/assets/company-workspace.css">
+<main class="wrap">
+<section class="home-intro">
+<h1>AI Workflows</h1>
+<p class="lead">Choose a task, review the evidence and follow the work through to a finished output. Each workflow brings together model routing, cost estimates and source checks, with approval before the output pages are created.</p>
+<nav class="home-pages" aria-label="Explore the workflows"><a href="#workflow-directory"><strong>Choose a workflow</strong><span>Review its sources, route and proposed outputs</span></a><a href="/saved-results.html"><strong>Saved results</strong><span>Return to your reviews and approved pages</span></a></nav></section>
+<div class="studio-section-title"><h2>Choose a workflow</h2></div>
+<nav id="workflow-directory" class="directory" aria-label="Choose a workflow">
+<article class="workflow">
+<h2>Release notes</h2>
+<p class="explain">Turn confirmed product changes into a release note for the right audience. Check what shipped, who can use it and which claims need review before delivery.</p>
+<p class="detail"><strong>Try it:</strong> choose a shipped feature, pilot, bug fix or API migration.</p>
+<span class="status">Release evidence and review</span>
+<a class="button" href="/scenarios.html?workflow=release-notes" aria-label="Try release notes scenario">Open workflow <span aria-hidden="true">→</span></a>
+</article>
+<article class="workflow">
+<h2>Vulnerability review</h2>
+<p class="explain">Match pinned software packages to supplied advisories, then organise findings by severity, owner, deadline and available fix. Missing coverage stays visible.</p>
+<p class="detail"><strong>Try it:</strong> review 40 findings, remediation deadlines and exception requests.</p>
+<span class="status">Advisory and version checks</span>
+<a class="button" href="/scenarios.html?workflow=vulnerabilities" aria-label="Try vulnerability review scenario">Open workflow <span aria-hidden="true">→</span></a>
+</article>
+<article class="workflow">
+<h2>Security questionnaires</h2>
+<p class="explain">Prepare cited answers from approved security policies. Hold back unsupported or conflicting claims so a reviewer can see exactly what evidence is missing.</p>
+<p class="detail"><strong>Try it:</strong> review 20 answers and their policy citations.</p>
+<span class="status">Source-backed drafts · human review required</span>
+<a class="button" href="/scenarios.html?workflow=questionnaire" aria-label="Try security questionnaire scenario">Open workflow <span aria-hidden="true">→</span></a>
+</article>
+<article class="workflow">
+<h2>SOC 2 evidence review</h2>
+<p class="explain">Review a control register for missing owners, stale evidence, incorrect periods and pending approvals. Turn gaps into clear follow-up work for a reviewer.</p>
+<p class="detail"><strong>Try it:</strong> inspect 16 controls and the follow-ups they need.</p>
+<span class="status">Evidence checks and follow-ups</span>
+<a class="button" href="/scenarios.html?workflow=soc2" aria-label="Try SOC 2 evidence review scenario">Open workflow <span aria-hidden="true">→</span></a>
+</article>
+<article class="workflow featured">
+<div><h2>Transcript to action</h2>
+<p class="explain">Turn conversations into account updates, engineering signals, pricing follow-ups and team posts. Keep the source quotes attached and search the conversation library.</p></div>
+<div><p class="detail"><strong>Try it:</strong> choose a BD call, customer review or internal meeting. Open the output pages after approval.</p>
+<span class="status">Transcript, decisions and connected outputs</span><br>
+<a class="button" href="/scenarios.html?workflow=call-crm" aria-label="Try calls to Notion CRM scenario">Open workflow <span aria-hidden="true">→</span></a><br><a class="secondary-link" href="/scenarios.html?workflow=call-crm">Open transcript workflow</a></div>
+</article>
+</nav>
+<footer><details><summary>How these workflows are reviewed</summary><p>Each output keeps its source evidence and review decision. Automated checks cover fixed rules; a person judges usefulness and approves the result. <a href="/evaluation.html">Read the review method</a> · <a href="/runs.html">Supporting model evidence</a></p></details>Meridian Labs · AI workflows. <a href="https://github.com/olilifts88/meridian-labs">View the source</a></footer>
+</main>
+<script type="module">import {compactRoute} from "/assets/workflow-routing.mjs";document.querySelectorAll("#workflow-directory article").forEach(card=>{const a=card.querySelector("a[href*=workflow]");if(a)compactRoute(card,new URL(a.href).searchParams.get("workflow"));});</script>
+</html>

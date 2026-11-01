@@ -1,6 +1,6 @@
 # Meridian Labs · AI Workflows
 
-Explore the workflow routes, compare model choices and review saved answers. This is AI Workflows v1.1.0, with the same routes and interface as the hosted demo. This package is a small runnable part of the [full GitHub repository](https://github.com/olilifts88/meridian-labs).
+Explore the workflow routes, compare model choices and review saved answers. This is AI Workflows v1.2.0, with the same routes and interface as the hosted demo. This package is a small runnable part of the [full GitHub repository](https://github.com/olilifts88/meridian-labs).
 
 ## Start here
 
@@ -26,11 +26,13 @@ Requires **Python 3.9 or newer** and a modern desktop browser. No packages to in
 
 ## What to click
 
-- **Workflows:** choose a scenario and start with its recommended model route. Open a step for the model choice, effort, quality check and cost.
-- **Customise & compare:** choose a lower-cost or deeper-review route, compare one model throughout, or change a stage's model and token budget.
-- **Real AI runs:** inspect the original saved answers, their instructions, checks and owner feedback. “Task instructions only” and “With workflow guide” describe the instructions given to the model.
-- **Evaluation & benchmarking:** inspect the quality checks, compare the same source cases and explore the cost of different routes.
-- **Saved scenarios:** reopen the route and review choice you saved. Its original prices are preserved; Compare with current prices shows a separate calculation.
+- **Workflows:** choose a task, inspect the source evidence and click **Run workflow**.
+- **Adjust route & token budgets:** change the model route or per-step assumptions before running. The comparison names the one-model alternative and shows the signed cost difference.
+- **Review decision:** inspect the checks, approve the output pages or request a supported revision. A written note alone is saved as feedback; it does not generate an arbitrary rewrite.
+- **Output pages:** release notes open a branded product update. Transcript to action opens CRM, an issue board, a revenue tracker, a team post and a searchable call library. Other workflows open their registers and follow-ups.
+- **Saved results:** return to the route, sources, decisions and approved pages stored in this browser.
+
+Try four release examples, four transcript scenarios, 40 vulnerability findings, 20 security questions and 16 SOC 2 controls. Source details link to the supporting evidence and review method.
 
 The calculator supports GPT-6 Luna, GPT-6 Sol, GPT-6.1 Sol, GPT-6.1 Terra and GPT-6 Astra. It handles cached reads and writes, processing tiers, context length, region and retry budgets. [How model routing and costs work](workflow-stage-routing.md).
 
@@ -42,7 +44,7 @@ To start without a web check, use `python3 showcase_demo.py --offline` (or `py s
 
 ## Source answers and scenario routes
 
-The original forty AI answers and evaluation records remain available. Choosing a different stage route changes the plan and cost estimate; it does not generate a new AI answer or alter a review. Quality evidence stays linked to the answer and setup it assessed. Costs are token estimates, separate from tool fees and subscription charges.
+The original forty AI answers and evaluation records remain available as supporting evidence. New prepared business outputs are separate from that benchmark. Choosing a different stage route changes the plan and cost estimate; it does not generate a new AI answer or alter a review. Quality evidence stays linked to the answer and setup it assessed. Costs are token estimates, separate from tool fees and subscription charges.
 
 Workflow decisions operate on sample business data. Approval does not update an external CRM or send a message. Missing evidence and failed checks still hold the relevant action.
 
@@ -50,12 +52,14 @@ Workflow decisions operate on sample business data. Approval does not update an 
 
 Visitor results use this browser's local storage for this localhost address. They are not uploaded or written to the repo's model results. Another browser or port has a separate history. Clearing browser data removes them, so download JSON results you want to keep. Up to 50 results are retained; nothing is silently evicted. If saving is unavailable or storage is full, you can still download the completed result.
 
-The private owner-review queue and its write endpoint are disabled in this launcher. Owner review labels shown in the recorded library are a snapshot; private review comments and raw execution receipts are not included.
+The launcher serves only the bundled public demo and the pricing check. It has no owner-review write endpoint. Owner review labels shown in the recorded library are a snapshot; private review comments and raw execution receipts are not included.
 
 ## Inspect the code and method
 
 - [Source snapshot and scenario runner](../src/workflow_portfolio/recorded_showcase.py): real recorded answers, receipt provenance, re-evaluation and approval gates.
-- [Shared results viewer](../src/workflow_portfolio/run_explorer.mjs): both public paths use the same display.
+- [Current browser interface](../demo-web/assets/run-explorer.mjs): workflow navigation and saved results.
+- [Business scenario sources](../demo-web/assets/business-data.mjs): prepared records and source-linked outputs.
+- [Local browser server](../src/workflow_portfolio/web_demo.py): loopback assets and pricing checks.
 - [Routing and estimated costs](../src/workflow_portfolio/showcase_measurement.py): versioned rules and an adapter to the reusable token calculator.
 - [Visitor storage](../src/workflow_portfolio/visitor_results.mjs): browser-owned results, validation and downloads.
 - [Domain evaluators](../src/workflow_portfolio/showcase_assurance.py) and [call/CRM engine](../src/workflow_portfolio/call_crm.py): workflow rules and evidence/approval checks.

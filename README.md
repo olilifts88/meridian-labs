@@ -17,16 +17,16 @@ This repository contains a runnable AI workflow demo, the code behind its evalua
 
 ## AI Workflows
 
-Five practical AI workflows, with real model answers and the evidence behind them. Follow a customer call into a CRM proposal, review security evidence or inspect a release note. See what the AI produced, which checks passed, where a person needs to review it, and how the model setups compare on quality, time and estimated cost.
+Explore AI workflows from source evidence to finished outputs. Review a release announcement, a remediation plan, a security response, a SOC 2 evidence pack or the records created from a transcript. Each workflow includes model routes, editable cost estimates, source checks and a review decision.
 
 <p>
-  <a href="https://github.com/olilifts88/meridian-labs/releases/download/ai-workflows-v1.1.0/meridian-ai-workflows.zip"><img src="assets/download-ai-workflows.svg" alt="Download AI Workflows ZIP" width="282" height="48"></a>
+  <a href="https://github.com/olilifts88/meridian-labs/releases/download/ai-workflows-v1.2.0/meridian-ai-workflows.zip"><img src="assets/download-ai-workflows.svg" alt="Download AI Workflows ZIP" width="282" height="48"></a>
   <a href="#start-the-demo"><img src="assets/setup-instructions.svg" alt="Setup instructions" width="214" height="48"></a>
 </p>
 
 [Explore the code and evidence](#inspect-the-code-and-evidence)
 
-The download contains just the demo. **Python 3.9+ and a desktop browser are all you need.** No package installation, AI account or API key. Visitors replay recorded AI answers, so trying scenarios makes no new AI calls.
+The download contains just the demo. **Python 3.9+ and a desktop browser are all you need.** No package installation, AI account or API key. The scenarios use recorded answers and prepared business outputs; trying them makes no new AI calls.
 
 ![The Meridian Labs AI Workflows, using the Studio interface](assets/studio-applied-home.png)
 
@@ -52,14 +52,13 @@ The download contains just the demo. **Python 3.9+ and a desktop browser are all
 
 If Python is not installed, install it from [python.org](https://www.python.org/downloads/) first. If you get stuck opening the folder or starting Python, use the [step-by-step setup and troubleshooting guide](docs/showcase-quickstart.md#setup-help).
 
-## Two ways to explore
+## What to explore
 
-| Start with | What you can do |
-| --- | --- |
-| **Try a workflow** | Pick a prepared scenario. Follow the routing rule or select a recorded setup, inspect the evidence, run the checks and choose a simulated approval. Save the result in your browser or download it. |
-| **Real AI runs** | Inspect all 40 actual model answers, including mistakes. See the original and revised checks, recorded human-review labels and matched model comparisons. |
+Choose a workflow, inspect its sources and route, then click **Run workflow**. Review the proposed output, open a source-linked check and approve the output pages. **Request changes** offers a supported revision or lets you save a reviewer note. **Saved results** keeps the route, evidence and decision together.
 
-Both paths use the same results view: **Overview → Evidence & answer → Checks → Routing & usage → Compare setups**. The home page also links to **Evaluation** and your **Saved scenarios**.
+The release workflow includes four scenarios and a branded release-note page. Transcript to action includes BD, customer-success and internal-meeting scenarios; its output hub opens CRM updates, engineering signals, pricing follow-ups, a company post and a searchable call library. Vulnerability review covers 40 asset findings, the security questionnaire has 20 questions, and SOC 2 covers 16 controls.
+
+The main navigation focuses on workflows and saved results. The review-method page links to the original forty model answers as supporting evidence.
 
 ## The five workflows
 
@@ -69,7 +68,7 @@ Both paths use the same results view: **Overview → Evidence & answer → Check
 | **[Vulnerability review](docs/workflow-guidance/pilot-vulnerabilities.md)** | Match installed versions to supplied advisories and organise supported findings. |
 | **[Security questionnaires](docs/workflow-guidance/pilot-questionnaire.md)** | Answer from policy evidence and hold unsupported claims. |
 | **[SOC 2 evidence review](docs/workflow-guidance/pilot-soc2.md)** | Check evidence dates, ownership and approval; identify follow-up work. |
-| **[Calls to Notion CRM](docs/call-crm.md)** | Extract customer intent, propose CRM changes, connect engineering signals and keep uncertain changes behind human approval. Includes Notion, Linear and Slack mock views. |
+| **[Transcript to action](docs/call-crm.md)** | Turn a transcript into CRM updates, issue records, commercial follow-ups, team posts and searchable call knowledge. |
 
 All data is fictional. Approvals affect the local simulation; they do not send messages or update external services. Your saved scenarios stay in this browser and are separate from the original benchmark.
 
@@ -81,11 +80,11 @@ Each workflow has a recommended model route. Expand a step for its model, effort
 
 The recorded pilot contains **10 examples × 2 models × 2 instruction styles = 40 answers**. It preserves the original answers and failures. The original checks passed 31/40; a separate checker correction passed 33/40. Nine answers have owner-review labels; the others are unreviewed.
 
-The result and evaluation pages connect those answers to measured tokens, generation time and **estimated API cost per answer and per check-passing answer**, including failed attempts in the cost. Estimates use a dated rate card and are separate from subscription bills. Automated checks and human judgments remain separate.
+The supporting model evidence connects those answers to measured tokens, generation time and **estimated API cost per answer and per check-passing answer**, including failed attempts in the cost. Estimates use a dated rate card and are separate from subscription bills. Automated checks and human judgments remain separate.
 
 The new routing rules choose a smaller or stronger model, use ordinary code, or hold for missing evidence. They can select a matching recorded answer. These rules were written after the fixed-setup pilot, so their replay is an exploratory comparison, not a fresh routing experiment or proof of savings.
 
-**[See the evaluation method](docs/evaluation-framework.md)** · **[Inspect routing rules and cost calculations](docs/showcase-routing-and-costs.md)** · **[Read the latest verification](docs/verification-studio-routing-costs-2026-10-28.md)**
+**[See the evaluation method](docs/evaluation-framework.md)** · **[Inspect routing rules and cost calculations](docs/showcase-routing-and-costs.md)** · **[Read the latest verification](docs/verification-workflow-hub-2026-11-01.md)**
 
 ## Inspect the code and evidence
 
@@ -95,7 +94,9 @@ The ZIP includes the source needed to run the demo. The full repository contains
 | --- | --- |
 | Recorded answers and local scenario execution | [recorded_showcase.py](src/workflow_portfolio/recorded_showcase.py) |
 | Routing rules and estimated costs | [showcase_measurement.py](src/workflow_portfolio/showcase_measurement.py), reusing the [router](src/workflow_portfolio/routing/router.py) and [token calculator](src/workflow_portfolio/usage/token_cost.py) |
-| Shared results and browser-owned history | [run_explorer.mjs](src/workflow_portfolio/run_explorer.mjs) and [visitor_results.mjs](src/workflow_portfolio/visitor_results.mjs) |
+| Current workflow UI and output pages | [demo-web/assets/](demo-web/assets/) |
+| Local browser server | [web_demo.py](src/workflow_portfolio/web_demo.py) |
+| Original results and browser-owned history | [run_explorer.mjs](src/workflow_portfolio/run_explorer.mjs) and [visitor_results.mjs](src/workflow_portfolio/visitor_results.mjs) |
 | Workflow checks and CRM simulation | [showcase_assurance.py](src/workflow_portfolio/showcase_assurance.py) and [call_crm.py](src/workflow_portfolio/call_crm.py) |
 | Frozen experiment and versioned rechecks | [ai_pilot.py](src/workflow_portfolio/ai_pilot.py) and the [recorded answers](examples/recorded-runs/pilot-2026-10-28.json) |
 | Tests | [Python and JavaScript tests](tests/) |
@@ -130,7 +131,7 @@ python3 demo.py benchmark
 python3 scripts/capability_check.py
 ```
 
-The shared evaluation runs 19 workflow scenarios and 17 deliberately corrupted outputs across all five workflows, including Calls to Notion CRM. The shared benchmark compares reference and corrupted saved outputs across all five workflows; these are checker probes, not a live model leaderboard. Calls adds tests for cumulative evidence, stale approvals, selective/bulk review and corrupted records. [Call and benchmark verification](docs/verification-call-crm-2026-10-27.md) records the observed checks. The capability checker reports code/test references and recorded evidence; it does not infer passing tests from their presence. Its `--verify` mode runs the offline checks, requiring Node 24+ as well as Python. See the [guide](docs/capability-check.md).
+The shared evaluation runs 19 workflow scenarios and 17 deliberately corrupted outputs across all five workflows, including Transcript to action. The shared benchmark compares reference and corrupted saved outputs across all five workflows; these are checker probes, not a live model leaderboard. Calls adds tests for cumulative evidence, stale approvals, selective/bulk review and corrupted records. [Call and benchmark verification](docs/verification-call-crm-2026-10-27.md) records the observed checks. The capability checker reports code/test references and recorded evidence; it does not infer passing tests from their presence. Its `--verify` mode runs the offline checks, requiring Node 24+ as well as Python. See the [guide](docs/capability-check.md).
 
 The [portfolio map](docs/portfolio-map.md) and [implementation plan](docs/rebuild-plan.md) retain historical context and future work. Hosted source connections, external publication, questionnaire submission, universal model routing and achieved cost savings are not claimed by these demos.
 

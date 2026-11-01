@@ -3,7 +3,7 @@ import argparse
 import sys
 from pathlib import Path
 sys.path.insert(0,str(Path(__file__).resolve().parent/'src'))
-from workflow_portfolio.showcase_server import make_server
+from workflow_portfolio.web_demo import make_server
 
 if __name__=='__main__':
     parser=argparse.ArgumentParser(description=__doc__)
@@ -12,10 +12,10 @@ if __name__=='__main__':
     args=parser.parse_args()
     if not args.offline:
         from workflow_portfolio.usage.pricing_preflight import preflight
-        result=preflight(Path(__file__).resolve().parent/'src/workflow_portfolio/usage/openai-rate-card.json')
+        result=preflight(Path(__file__).resolve().parent/'demo-web/data/rate-card.json')
         print('Pricing: '+result['status']+' · '+result['verified_on'],flush=True)
-    with make_server(args.port,owner_review_enabled=False) as server:
+    with make_server(args.port,offline=args.offline) as server:
         print(f'Open http://127.0.0.1:{server.server_port}',flush=True)
-        print('Recorded AI answers only. No sign-in, API key or model calls. Press Ctrl+C to stop.',flush=True)
+        print('Workflow demo ready. Results stay in this browser. Press Ctrl+C to stop.',flush=True)
         try:server.serve_forever()
         except KeyboardInterrupt:pass
