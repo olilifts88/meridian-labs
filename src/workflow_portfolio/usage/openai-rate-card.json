@@ -1,0 +1,158 @@
+{
+  "schema": 2,
+  "id": "openai-usd-2026-11-01T161820Z-verified",
+  "verified_on": "2026-11-01",
+  "currency": "USD",
+  "basis": "Current published API-equivalent token value; not a subscription charge. Tool charges excluded.",
+  "source": "https://developers.openai.com/api/docs/pricing",
+  "cache_source": "https://developers.openai.com/api/docs/guides/prompt-caching",
+  "reasoning_source": "https://developers.openai.com/api/docs/guides/reasoning",
+  "regional_multiplier": 1.1,
+  "models": {
+    "gpt-6-luna": {
+      "label": "GPT-6 Luna",
+      "input": 0.1,
+      "cached": 0.01,
+      "output": 0.5,
+      "write_30m": 0.125,
+      "write_12h": 0.25,
+      "efforts": [
+        "none",
+        "low",
+        "medium",
+        "high",
+        "xhigh",
+        "max"
+      ],
+      "tiers": {
+        "standard": 1,
+        "flex": 0.5,
+        "batch": 0.5,
+        "fast": 2
+      },
+      "long_context_threshold": 272000,
+      "long_input_multiplier": 2,
+      "long_output_multiplier": 1.5,
+      "source": "https://developers.openai.com/api/docs/models/gpt-6-luna",
+      "unsupported_regional_tiers": []
+    },
+    "gpt-6.1-terra": {
+      "label": "GPT-6.1 Terra",
+      "input": 1.0,
+      "cached": 0.05,
+      "output": 5.0,
+      "write_30m": 1.25,
+      "write_12h": 2.5,
+      "efforts": [
+        "none",
+        "low",
+        "medium",
+        "high",
+        "xhigh",
+        "max"
+      ],
+      "tiers": {
+        "standard": 1,
+        "flex": 0.5,
+        "batch": 0.5,
+        "fast": 2
+      },
+      "long_context_threshold": 272000,
+      "long_input_multiplier": 2,
+      "long_output_multiplier": 1.5,
+      "source": "https://developers.openai.com/api/docs/models/gpt-6.1-terra",
+      "unsupported_regional_tiers": []
+    },
+    "gpt-6-sol": {
+      "label": "GPT-6 Sol",
+      "input": 2.0,
+      "cached": 0.2,
+      "output": 10.0,
+      "write_30m": 2.5,
+      "write_12h": 5.0,
+      "efforts": [
+        "none",
+        "low",
+        "medium",
+        "high",
+        "xhigh",
+        "max"
+      ],
+      "tiers": {
+        "standard": 1,
+        "flex": 0.5,
+        "batch": 0.5,
+        "fast": 2
+      },
+      "long_context_threshold": 272000,
+      "long_input_multiplier": 2,
+      "long_output_multiplier": 1.5,
+      "source": "https://developers.openai.com/api/docs/models/gpt-6-sol",
+      "unsupported_regional_tiers": [
+        "fast"
+      ]
+    },
+    "gpt-6.1-sol": {
+      "label": "GPT-6.1 Sol",
+      "input": 2.0,
+      "cached": 0.1,
+      "output": 10.0,
+      "write_30m": 2.5,
+      "write_12h": 5.0,
+      "efforts": [
+        "low",
+        "medium",
+        "high",
+        "xhigh",
+        "max"
+      ],
+      "tiers": {
+        "standard": 1,
+        "flex": 0.5,
+        "batch": 0.5,
+        "fast": 2,
+        "ultrafast": 6
+      },
+      "long_context_threshold": 272000,
+      "long_input_multiplier": 2,
+      "long_output_multiplier": 1.5,
+      "source": "https://developers.openai.com/api/docs/models/gpt-6.1-sol",
+      "unsupported_regional_tiers": []
+    },
+    "gpt-6-astra": {
+      "label": "GPT-6 Astra",
+      "input": 10.0,
+      "cached": 1.0,
+      "output": 50.0,
+      "write_30m": 12.5,
+      "write_12h": 25.0,
+      "efforts": [
+        "low",
+        "medium",
+        "high",
+        "xhigh",
+        "max"
+      ],
+      "tiers": {
+        "standard": 1,
+        "flex": 0.5,
+        "batch": 0.5,
+        "fast": 2,
+        "ultrafast": 6
+      },
+      "long_context_threshold": 272000,
+      "long_input_multiplier": 2,
+      "long_output_multiplier": 1.5,
+      "source": "https://developers.openai.com/api/docs/models/gpt-6-astra",
+      "unsupported_regional_tiers": []
+    }
+  },
+  "source_digests": {
+    "gpt-6-luna": "fb9069b2f6b48d2a3fd70e12b19f80af5eb536db6732f6a11851c342b19196f7",
+    "gpt-6.1-terra": "49d129dd6892196f2d982e8a78d26b3a6554ae4fd3808c59b99e3c5901400e54",
+    "gpt-6-sol": "ef6a1eed491a217a6c18cd38af1ca7b88aa6f655603b89e9f387a57d0eddad27",
+    "gpt-6.1-sol": "b43b44ec1395f06bc8af1aa67b9cf452fa3a6cfc071e8a04901da250affaa561",
+    "gpt-6-astra": "0509e97af2526cca0bc82e8679a4027406d33e3f4be6238e4ed0ecb6fc7e276b"
+  },
+  "checked_at": "2026-11-01T16:18:20.738614+00:00"
+}

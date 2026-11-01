@@ -464,6 +464,32 @@
         "Documentation only: the private app source, personal records, credentials and hosted access are not included in this repository",
         "Private workflow and device observations are dated evidence, not a runnable public integration test"
       ]
+    },
+    {
+      "id": "workflow-stage-routing-and-costs",
+      "claim": "Predetermined stage routes across five workflows with optional model/effort controls, editable cost budgets and official pricing preflight",
+      "files": [
+        "src/workflow_portfolio/workflow_routing.mjs",
+        "src/workflow_portfolio/pricing.mjs",
+        "src/workflow_portfolio/usage/pricing_engine.py",
+        "src/workflow_portfolio/usage/pricing_preflight.py",
+        "docs/workflow-stage-routing.md"
+      ],
+      "symbols": {},
+      "tests": [
+        "tests/test_expanded_pricing.py"
+      ],
+      "test_symbols": {},
+      "entrypoint": [
+        "python3",
+        "showcase_demo.py",
+        "--offline"
+      ],
+      "known_gaps": [
+        "Staged routes are scenario plans; measured quality stays attached to the original forty pilot answers.",
+        "Browser history is device-local; token estimates exclude tool fees and actual subscription charges."
+      ],
+      "recorded_evidence": "docs/workflow-stage-routing.md"
     }
   ]
 }

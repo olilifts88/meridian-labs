@@ -12,6 +12,9 @@ CARD = json.loads(Path(__file__).with_name('example-rate-card.json').read_text()
 
 def estimate(row, card=None):
     card = CARD if card is None else card
+    if card.get('schema') == 2:
+        from .pricing_engine import estimate as estimate_v2
+        return estimate_v2(row, card)
     rate = card['models'].get(row.get('recorded_model'))
     if not rate: return None, 'Unknown or unsupported recorded model'
     keys = ['input_tokens','cached_input_tokens','output_tokens','total_tokens','cache_write_input_tokens','reasoning_output_tokens']

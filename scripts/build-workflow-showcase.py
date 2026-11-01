@@ -9,6 +9,7 @@ from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 MODULES=['__init__.py','domain.py','store.py','service.py','showcase.py','showcase_server.py',
  'showcase_assurance.py','showcase_evaluation.py','evals.py','call_crm.py','ai_pilot.py','recorded_showcase.py','showcase_measurement.py','studio.css',
+ 'workflow_routing.mjs','workflow_routing.css','pricing.mjs','usage/pricing_engine.py','usage/pricing_preflight.py','usage/openai-rate-card.json',
  'usage/__init__.py','usage/token_cost.py','usage/example-rate-card.json',
  'showcase.html','call_crm.html','evaluation.html','workflow_home.html','demo_banner.css',
  'run_explorer.html','run_explorer.css','run_explorer.mjs','visitor_results.mjs',

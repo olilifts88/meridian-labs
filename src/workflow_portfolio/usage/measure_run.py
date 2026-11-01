@@ -144,7 +144,7 @@ def measure_response_set(manifest, source):
             actions[str(item.get('server')) + '.' + str(item.get('tool'))] += 1
         elif typ in ('CommandExecution', 'DynamicToolCall', 'CollabToolCall', 'FileChange', 'ImageView', 'Extension'):
             actions[typ] += 1
-    result['response_records'] = [{'session_id': p.get('session_id'), 'response_id': p['response_id'], 'thread_id': thread_id, 'turn_id': p.get('turn_id'), 'usage': p['usage']} for p in usage_records.values()]
+    result['response_records'] = [{'session_id': p.get('session_id'), 'response_id': p['response_id'], 'thread_id': thread_id, 'turn_id': p.get('turn_id'), 'usage': p['usage'], 'recorded_model': next(iter(contexts.get(p.get('turn_id'), set())))[0] if len(contexts.get(p.get('turn_id'), set())) == 1 else None, 'recorded_effort': next(iter(contexts.get(p.get('turn_id'), set())))[1] if len(contexts.get(p.get('turn_id'), set())) == 1 else None} for p in usage_records.values()]
     result.update(measurement_status='measured', measurement_scope='explicitly bound response set' if response_ids else 'verified run-specific turn set',
                   availability_reason=None, usage=sums, response_ids=sorted(observed_ids),
                   actions=[{'name': name, 'count': n, 'tokens': None} for name, n in sorted(actions.items())],
@@ -224,6 +224,21 @@ def measure(manifest, source):
             values = [x['usage'].get(field) for x in known.values()]
             subtotal[field] = sum(values) if all(type(v) is int for v in values) else None
     complete = complete and bool(known) and not gaps
+    # API-equivalent valuation is separate from actual billing evidence.
+    try:
+        from .pricing_engine import estimate_task
+        card_path = Path(__file__).with_name('openai-rate-card.json')
+    except ImportError:
+        import sys
+        sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+        from pricing_engine import estimate_task
+        card_path = Path(__file__).resolve().parents[2] / 'token-rate-card.json'
+    card = json.loads(card_path.read_text())
+    roles = {b['binding_id']: b['role'] for b in bindings}
+    price_rows = [{**record['usage'], 'session_id': key[0], 'response_id': key[1],
+                   'recorded_model': record.get('recorded_model'), 'effort': record.get('recorded_effort'),
+                   'role': roles.get(owner[key], 'unassigned')} for key, record in known.items()]
+    token_estimate = estimate_task(price_rows, card, inventory_complete=complete)
     return {'schema_version': 2, 'run_id': manifest['run_id'], 'environment': manifest['environment'],
             'measurement_status': 'measured' if known else 'unavailable',
             'usage_coverage': 'Complete' if complete else ('Partial' if known else 'Unavailable'),
@@ -232,6 +247,7 @@ def measure(manifest, source):
             'usage': subtotal, 'measured_subtotal': subtotal,
             'task_usage': subtotal if complete else {field: None for field in FIELDS},
             'cost': None, 'cost_coverage': 'Unavailable',
+            'estimated_api_equivalent': token_estimate,
             'response_records': list(known.values()),
             'response_ids': sorted({x['response_id'] for x in known.values()}),
             'bindings': bindings, 'actual_models': [], 'actual_reasoning_efforts': [],
@@ -246,10 +262,9 @@ def measure(manifest, source):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('manifest', type=Path)
-    parser.add_argument('--source', type=Path, required=True, help='Explicit local catalog directory; never scans the default account')
+    parser.add_argument('--source', type=Path, default=Path.home() / '.codex')
     parser.add_argument('--output', type=Path, required=True)
     args = parser.parse_args()
     data = measure(json.loads(args.manifest.read_text()), args.source)
-    args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(data, indent=2), encoding='utf-8')
     print(json.dumps({'output': str(args.output.resolve()), 'status': data['measurement_status'], 'reason': data['availability_reason']}))

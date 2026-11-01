@@ -126,6 +126,11 @@ class Handler(BaseHTTPRequestHandler):
             return self.reply(403, '{"error":"Local origin required"}')
         path = urlsplit(self.path).path
         assets = {
+            '/data/rate-card.json': (HTML.with_name('usage') / 'openai-rate-card.json', 'application/json; charset=utf-8'),
+            '/assets/pricing.mjs': (HTML.with_name('pricing.mjs'), 'text/javascript; charset=utf-8'),
+            '/assets/workflow-routing.mjs': (HTML.with_name('workflow_routing.mjs'), 'text/javascript; charset=utf-8'),
+            '/assets/workflow-routing.css': (HTML.with_name('workflow_routing.css'), 'text/css; charset=utf-8'),
+
             '/assets/studio.css': (HTML.with_name('studio.css'), 'text/css; charset=utf-8'),
             '/assets/meridian-labs-banner.svg': (ASSET_ROOT / 'meridian-labs-banner.svg', 'image/svg+xml; charset=utf-8'),
             '/assets/meridian-labs-lockup.svg': (ASSET_ROOT / 'meridian-labs-lockup.svg', 'image/svg+xml; charset=utf-8'),
@@ -152,6 +157,11 @@ class Handler(BaseHTTPRequestHandler):
             if not design.is_file():
                 return self.reply(404, '{"error":"Design studies are separate from the workflow download."}')
             return self.reply(200, design.read_text(encoding='utf-8'), 'text/html; charset=utf-8')
+        if path == '/api/pricing/preflight':
+            from .usage.pricing_preflight import preflight
+            card_path = HTML.with_name('usage') / 'openai-rate-card.json'
+            status = preflight(card_path)
+            return self.reply(200, json.dumps(dict(status, card=json.loads(card_path.read_text()))))
         if path == '/api/recorded-runs':
             from .recorded_showcase import catalog
             try:

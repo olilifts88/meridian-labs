@@ -73,6 +73,10 @@ Both paths use the same results view: **Overview → Evidence & answer → Check
 
 All data is fictional. Approvals affect the local simulation; they do not send messages or update external services. Your saved scenarios stay in this browser and are separate from the original benchmark.
 
+## Model routing and costs
+
+Each workflow has a recommended model route. Expand a step for its model, effort, quality check and cost. Compare lower-cost or deeper-review presets, or customise the route. The calculator supports GPT-6 Luna, GPT-6 Sol, GPT-6.1 Sol, GPT-6.1 Terra and GPT-6 Astra, with an official pricing check and saved rate snapshots. [How routing and costs work](docs/workflow-stage-routing.md).
+
 ## What the evaluation shows
 
 The recorded pilot contains **10 examples × 2 models × 2 instruction styles = 40 answers**. It preserves the original answers and failures. The original checks passed 31/40; a separate checker correction passed 33/40. Nine answers have owner-review labels; the others are unreviewed.
