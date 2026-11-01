@@ -30,7 +30,7 @@ export function calculatePlan(plan){
 export function compactRoute(parent,workflow){
  const spec=WORKFLOWS[workflow];if(!spec)return;
  const box=add(parent,'div','',{class:'route-mini'});add(box,'strong','Model route');
- add(box,'p',spec.stages.map(s=>s[1].replace('gpt-','').replace('-',' ')+' · '+s[2]).join(' → '));
+ add(box,'p',spec.stages.map(s=>s[1].replace(/^gpt-([\d.]+)-(.+)$/,(_,v,n)=>'GPT-'+v+' '+n[0].toUpperCase()+n.slice(1))+' · '+s[2]).join(' → '));
  add(box,'a','Explore stages & costs →',{href:'/scenarios.html?workflow='+workflow+'#model-routing'});
 }
 export function renderPlanner(parent,workflow,record,card,{savedPlan=null,readonly=false,records=[],onChange=()=>{}}={}){

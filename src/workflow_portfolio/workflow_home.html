@@ -4,55 +4,64 @@
 <title>Meridian Labs | Explore the workflows</title>
 <style>
 :root{font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#f2efe8;color:#242426;--muted:#69655f;--line:#d8d2c8;--red:#b8212b}*{box-sizing:border-box}body{margin:0}header{background:#111215;color:#f2efe8;border-bottom:3px solid #ed4146;padding:27px max(24px,calc((100vw - 1200px)/2));display:flex;justify-content:space-between;align-items:center;gap:20px}header strong{letter-spacing:3px;font-size:21px}header span{font-size:12px;letter-spacing:2px;color:#c8c4bc}.wrap{max-width:1248px;margin:auto;padding:48px 24px}h1{font-size:46px;line-height:1.12;letter-spacing:-1.8px;margin:12px 0 18px;max-width:850px}h2{font-size:23px;line-height:1.25;letter-spacing:-.5px;margin:12px 0}.eyebrow{font-size:12px;font-weight:700;letter-spacing:1.7px;text-transform:uppercase;color:var(--red)}.lead{max-width:740px;color:var(--muted);margin:0 0 32px}.path-actions{display:flex;gap:12px;flex-wrap:wrap;margin:24px 0 32px}.secondary-link{margin-top:14px;font-size:13px;color:var(--muted)}.directory{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}.workflow{padding:28px;background:#fff;border:1px solid var(--line);border-radius:6px;display:flex;flex-direction:column;align-items:flex-start}.workflow.featured{grid-column:1/-1;display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:32px}.number{font-size:12px;color:var(--red);letter-spacing:1.3px;font-weight:650}.explain{margin:0 0 20px;color:#55524d;max-width:600px}.detail{font-size:13px;margin:0 0 14px;color:var(--muted)}.detail strong{color:#383633;font-weight:600}.status{display:inline-block;font-size:11px;letter-spacing:.3px;background:#eee9df;padding:3px 8px;border-radius:4px;color:#5c554b;margin-bottom:18px}.button{display:inline-flex;align-items:center;gap:16px;min-height:44px;text-decoration:none;padding:9px 15px;background:#242426;color:white;border-radius:5px;font-size:14px;font-weight:600;margin-top:auto}.button:hover{background:var(--red)}a:focus-visible{outline:3px solid #477db5;outline-offset:4px}.shared{display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-top:36px;padding-top:28px;border-top:1px solid var(--line)}.shared h2{font-size:17px;margin-top:0}.shared p{font-size:13px;color:var(--muted);margin:0}footer{margin-top:32px;font-size:12px;color:var(--muted)}@media(max-width:720px){header span{display:none}.wrap{padding:30px 18px}h1{font-size:34px;letter-spacing:-1px}.directory,.shared{grid-template-columns:1fr}.workflow.featured{grid-column:auto;display:flex;gap:0}.workflow{padding:23px}.button{margin-top:8px}}
+
+.home-intro h1{font-size:44px;margin-top:0}.home-intro .lead{max-width:800px;margin-bottom:24px}.home-pages{display:flex;gap:28px;flex-wrap:wrap;padding-bottom:30px;margin-bottom:28px;border-bottom:1px solid var(--line)}.home-pages a{text-decoration:none;color:inherit;flex:1;min-width:180px}.home-pages strong{display:block;font-size:15px}.home-pages span{display:block;font-size:13px;color:var(--muted);margin-top:4px}.home-pages a:hover strong{color:var(--red)}.evaluation-feature{display:grid;grid-template-columns:1.3fr 1fr;gap:40px;padding:30px;background:#fff;border:1px solid var(--line);border-left:4px solid var(--red);border-radius:6px;margin-bottom:36px}.shared-label{color:var(--red)!important;font-size:12px!important;font-weight:600;margin-bottom:10px!important}.evaluation-feature h2{margin-top:0;font-size:26px}.evaluation-feature p{font-size:14px;color:#5b5750;margin:0 0 20px;max-width:580px}.evaluation-actions{display:flex;align-items:center;gap:18px;flex-wrap:wrap}.evaluation-actions .button{margin:0}.text-link{font-size:13px;font-weight:600;color:var(--red)}.evaluation-evidence{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;align-content:center}.evaluation-evidence strong{display:block;font-size:34px;line-height:1.2}.evaluation-evidence span{display:block;font-size:12px;color:var(--muted);margin-top:6px}.evaluation-evidence p{grid-column:1/-1;font-size:13px;margin:0}.workflow .route-mini{order:initial}.workflow.featured .route-mini{grid-column:1/-1}.workflow h2{margin-top:0}.workflow .button{margin-top:6px}@media(max-width:760px){.home-intro h1{font-size:34px}.home-pages{gap:16px}.home-pages a{min-width:140px}.evaluation-feature{grid-template-columns:1fr;gap:24px;padding:22px}.evaluation-evidence strong{font-size:28px}.evaluation-feature h2{font-size:23px}}
 </style>
 <link rel="stylesheet" href="/assets/demo-banner.css"><link rel="stylesheet" href="/assets/studio.css"><link rel="stylesheet" href="/assets/workflow-routing.css">
 <header class="site-banner studio-header"><a class="banner-home" href="/" aria-label="Meridian Labs home"><img src="/assets/meridian-labs-lockup.svg" alt="Meridian Labs" width="255" height="55"></a><nav class="banner-nav" aria-label="Main navigation"><a href="/">Workflows</a><a href="/runs">Real AI runs</a><a href="/evaluation">Evaluation</a><a href="/saved-results">Saved scenarios</a></nav></header>
 <main class="wrap">
-<div class="eyebrow">A working collection / 01–05</div>
-<h1>Explore the workflows.</h1>
-<p class="lead">Try a prepared workflow and save your result, or inspect 40 real AI answers and their evaluations. Explore model routing, effort and token budgets across all five workflows. Saved answers and workflow outcomes remain available; no new model calls are made.</p>
-<section class="studio-intro"><div class="studio-paths"><article class="studio-path"><span class="eyebrow">01 / Try the workflow</span><h2>Try a workflow.</h2><p>Choose a prepared scenario, inspect the evidence and explore an approval.</p><a class="button" href="/scenarios">Try a workflow ↗</a></article><article class="studio-path"><span class="eyebrow">02 / Inspect the real work</span><h2>See the answers.</h2><p>Explore actual AI outputs, honest failures and matched model comparisons.</p><a class="button secondary" href="/runs">Explore real AI runs →</a></article></div><aside class="studio-feature"><span class="eyebrow">Inside a customer call</span><h2>“The budget might be around £32,000.”</h2><p>Evidence <strong>Tentative</strong></p><p>CRM proposal <strong>Held for approval</strong></p><p>Engineering signal <strong>Not established</strong></p><a href="/results?run=sol-guided--call-crm-2">Follow the decision →</a></aside></section><div class="studio-section-title"><h2>Choose a workflow</h2><span>Same shared evaluation method</span></div>
+<section class="home-intro">
+<h1>AI Workflows</h1>
+<p class="lead">Explore how AI can support everyday work, from customer calls to security reviews. Choose a workflow to see the model route, review the answer and compare the cost.</p>
+<nav class="home-pages" aria-label="Explore the demo">
+<a href="#workflow-directory"><strong>Workflows</strong><span>Choose a task and follow its steps</span></a>
+<a href="/runs"><strong>Real AI runs</strong><span>Read the saved answers and reviews</span></a>
+<a href="/saved-results"><strong>Saved scenarios</strong><span>Return to your routes and decisions</span></a>
+</nav>
+</section>
+<section class="evaluation-feature" aria-label="Evaluation and benchmarking">
+<div><p class="shared-label">Shared across all workflows</p><h2>Evaluation &amp; benchmarking</h2><p>Check the quality of the answer before comparing its cost. See the test cases, review findings and model comparisons behind these workflows.</p><div class="evaluation-actions"><a class="button" href="/evaluation">Explore evaluation</a><a class="text-link" href="/evaluation#stage-routing">Compare model routes and costs</a></div></div>
+<div class="evaluation-evidence"><div><strong>40</strong><span>saved AI answers</span></div><div><strong>10</strong><span>source cases</span></div><div><strong>5</strong><span>workflows</span></div><p>Compare the same task with and without a workflow guide. Inspect automated checks alongside owner feedback.</p></div>
+</section>
+<div class="studio-section-title"><h2>Choose a workflow</h2></div>
 <nav id="workflow-directory" class="directory" aria-label="Choose a workflow">
 <article class="workflow">
-<span class="number">01 / PRODUCT COMMUNICATION</span><h2>Release notes</h2>
+<h2>Release notes</h2>
 <p class="explain">Turn confirmed product changes into a release note for the right audience. Check what shipped, who can use it and which claims need review before delivery.</p>
 <p class="detail"><strong>Try it:</strong> compare a confirmed release with a pilot-only announcement.</p>
-<span class="status">Recorded AI answer · local checks</span>
+<span class="status">Release evidence and review</span>
 <a class="button" href="/scenarios?workflow=release-notes" aria-label="Try release notes scenario">Try a scenario <span aria-hidden="true">→</span></a>
 </article>
 <article class="workflow">
-<span class="number">02 / ENGINEERING OPERATIONS</span><h2>Vulnerability review</h2>
+<h2>Vulnerability review</h2>
 <p class="explain">Match pinned software packages to supplied advisories, then organise findings by severity, owner, deadline and available fix. Missing coverage stays visible.</p>
 <p class="detail"><strong>Try it:</strong> compare an affected package with an unaffected installed version.</p>
-<span class="status">Fictional advisory snapshot · no live scan</span>
+<span class="status">Advisory and version checks</span>
 <a class="button" href="/scenarios?workflow=vulnerabilities" aria-label="Try vulnerability review scenario">Try a scenario <span aria-hidden="true">→</span></a>
 </article>
 <article class="workflow">
-<span class="number">03 / CUSTOMER TRUST</span><h2>Security questionnaires</h2>
+<h2>Security questionnaires</h2>
 <p class="explain">Prepare cited answers from approved security policies. Hold back unsupported or conflicting claims so a reviewer can see exactly what evidence is missing.</p>
 <p class="detail"><strong>Try it:</strong> compare a supported answer with a question that lacks evidence.</p>
 <span class="status">Source-backed drafts · human review required</span>
 <a class="button" href="/scenarios?workflow=questionnaire" aria-label="Try security questionnaire scenario">Try a scenario <span aria-hidden="true">→</span></a>
 </article>
 <article class="workflow">
-<span class="number">04 / EVIDENCE OPERATIONS</span><h2>SOC 2 evidence review</h2>
+<h2>SOC 2 evidence review</h2>
 <p class="explain">Review a control register for missing owners, stale evidence, incorrect periods and pending approvals. Turn gaps into clear follow-up work for a reviewer.</p>
 <p class="detail"><strong>Try it:</strong> compare current evidence with an overdue evidence review.</p>
-<span class="status">Demonstration controls · no audit verdict</span>
+<span class="status">Evidence checks and follow-ups</span>
 <a class="button" href="/scenarios?workflow=soc2" aria-label="Try SOC 2 evidence review scenario">Try a scenario <span aria-hidden="true">→</span></a>
 </article>
 <article class="workflow featured">
-<div><span class="number">05 / CUSTOMER INTELLIGENCE</span><h2>Calls to Notion CRM</h2>
+<div><h2>Calls to Notion CRM</h2>
 <p class="explain">Use customer calls to advance deals, connect engineering signals and spot recurring issues. Bring uncertain changes into a daily approval digest, then reuse the evidence for reports and meeting preparation.</p></div>
 <div><p class="detail"><strong>Try it:</strong> compare explicit pilot approval with tentative interest and an unapproved budget. The full mock also shows cumulative signals.</p>
-<span class="status">Notion-shaped CRM · Linear &amp; Slack mock views</span><br>
+<span class="status">CRM proposals and issue links</span><br>
 <a class="button" href="/scenarios?workflow=call-crm" aria-label="Try calls to Notion CRM scenario">Try a scenario <span aria-hidden="true">→</span></a><br><a class="secondary-link" href="/scenarios?workflow=call-crm">Replay the CRM scenario</a></div>
 </article>
 </nav>
-<section class="shared" aria-label="Shared foundations">
-<div><span class="eyebrow">Shared across all five</span><h2>Evaluation &amp; benchmarking</h2><p>See what each workflow checks, inspect regression results and compare saved outputs on identical inputs. Follow individual findings back to the evidence and rules behind them.</p><p style="margin-top:16px"><a class="button" href="/evaluation">Explore evaluation <span aria-hidden="true">→</span></a></p></div>
-<div><h2>Inspect what actually happened</h2><p>Both paths use the same result view: evidence, recorded AI output, original/revised checks, workflow outcome and model comparison. Your saved scenarios stay in this browser and do not add new samples to the 40-answer benchmark.</p></div>
-</section>
-<footer>Meridian Labs · AI workflow design, routing and evaluation. Source: github.com/olilifts88/meridian-labs.</footer>
-<section id="routing-home" class="routing-home card"><div class="eyebrow">One task / the right model at each step</div><h2>Research → draft → review → format.</h2><p>Explore a staged model route for every workflow. Compare the token estimate with one model throughout, adjust effort and budgets, and save the route with your scenario.</p><a class="button" href="/scenarios?workflow=call-crm#model-routing">Explore CRM model routing →</a></section></main>
-<script type="module">import {compactRoute} from "/assets/workflow-routing.mjs";document.querySelectorAll("#workflow-directory article").forEach(card=>{const a=card.querySelector("a[href*=workflow]");if(a)compactRoute(card,new URL(a.href).searchParams.get("workflow"));});</script></html>
+<footer>Meridian Labs · AI workflow design, routing and evaluation. <a href="https://github.com/olilifts88/meridian-labs">View the source</a></footer>
+</main>
+<script type="module">import {compactRoute} from "/assets/workflow-routing.mjs";document.querySelectorAll("#workflow-directory article").forEach(card=>{const a=card.querySelector("a[href*=workflow]");if(a)compactRoute(card,new URL(a.href).searchParams.get("workflow"));});</script>
+</html>

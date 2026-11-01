@@ -44,7 +44,7 @@ function library(){
  heading('Real model evidence','Explore real AI runs.','Forty recorded answers, including failures. Inspect the evidence, checks and owner feedback, then compare models and instructions on the same example.');
  const metrics=add(app,'div','',{class:'metrics'});stat(metrics,'recorded AI answers',40);stat(metrics,'original checks passed',catalog.records.filter(r=>r.original_checks.outcome==='Pass').length+'/40');stat(metrics,'revised checks passed',catalog.records.filter(r=>checkSet(r).outcome==='Pass').length+'/40');
  const controls=add(app,'div','',{class:'controls'}),params=new URLSearchParams(location.search);
- const wf=choice(controls,'Workflow',[['all','All five workflows'],...Object.entries(names)],params.get('workflow')||'all');
+ const wf=choice(controls,'Workflow',[['all','All workflows'],...Object.entries(names)],params.get('workflow')||'all');
  const config=choice(controls,'Setup',[['all','All instruction setups'],...catalog.configurations.map(c=>[c.id,setup({requested_model:c.model,configuration:c.id})])],'all');
  const status=choice(controls,'Show',[['all','All recorded answers'],['flagged','Originally flagged'],['changed','Check result changed']],'all');
  const count=add(app,'p','',{class:'muted'}),grid=add(app,'div','',{class:'grid'});
