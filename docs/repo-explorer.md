@@ -1,6 +1,9 @@
 # Repo Explorer
 
-[Open Repo Explorer](https://olilifts88.github.io/meridian-labs/) to search the source map and open revision-bound code and test links. Use its DeepWiki link for free public-repository code Q&A. The page searches indexed evidence; AI explanations run on DeepWiki, not against an OpenAI API key. DeepWiki indexing and availability are separate from the offline repository checks.
+[Open Repo Explorer](https://olilifts88.github.io/meridian-labs/) and ask a question. The page shows a short answer first, with fuller detail and supporting source files underneath. Answers use DeepWiki's free public-repository Q&A endpoint directly from the browser, without an OpenAI API key or paid model plan. Questions are sent to that service when submitted; the offline checker itself makes no model calls. DeepWiki's indexed revision can differ from the source-map revision shown on the page.
+
+The page discovers the service's answer tool, handles JSON and event-stream replies, caches repeated questions for the current page session, cancels an answer when the question changes, and shows an explicit failure if the service cannot answer. It does not execute returned content. A source-grounded release-approval summary keeps the browser publication boundary clear; other answers use the provider's opening explanation. Full answers remain expandable. The workflow demo's saved scenarios and outputs are unchanged.
+
 
 Start with the [Meridian Labs Repo Guide](../AGENTS.md) for repository orientation, source locations and public/private boundaries. This guide owns the detailed capability-review procedure. Use it for questions about what Meridian supports, how a feature works and what a visitor can actually use.
 

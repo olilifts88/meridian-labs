@@ -550,14 +550,16 @@
     },
     {
       "id": "repo-explorer",
-      "claim": "Repo Explorer: searchable public evidence map with revision-bound code links and a DeepWiki Q&A handoff",
+      "claim": "Repo Explorer: short inline code answers through free DeepWiki Q&A, searchable public evidence and revision-bound source links",
       "files": [
         "repo-explorer/index.html",
         "repo-explorer/app.mjs",
         "repo-explorer/core.mjs",
         "repo-explorer/build.mjs",
         ".github/workflows/repo-explorer.yml",
-        "docs/repo-explorer.md"
+        "docs/repo-explorer.md",
+        "repo-explorer/qa.mjs",
+        "repo-explorer/answer-format.mjs"
       ],
       "symbols": {},
       "tests": [
@@ -571,9 +573,9 @@
         "web"
       ],
       "known_gaps": [
-        "The static page searches the capability index; it does not generate an AI answer itself.",
-        "DeepWiki provides external code Q&A after repository indexing; its availability and answer quality need separate checks.",
-        "Public source only; no private Notion records or API credentials are sent from the page."
+        "AI answers require the external DeepWiki service and its indexed repository; source-map lookup remains available separately.",
+        "The answer may use a different indexed revision from the pinned source map. No availability, quality or current deployment is inferred from a reference check.",
+        "Only the submitted question and public repository identifier go to DeepWiki; no private Notion records or API credentials are sent."
       ],
       "recorded_evidence": "docs/repo-explorer.md"
     }

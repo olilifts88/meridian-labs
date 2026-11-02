@@ -4,7 +4,7 @@ Applies across this repository. Follow the user's task and any more specific rep
 
 ## Where to work
 
-- `repo-explorer/` is the GitHub Pages source map and DeepWiki handoff. Its build binds source links to the deployed commit.
+- `repo-explorer/` is the GitHub Pages source map and inline free DeepWiki Q&A. Its build binds source links to the deployed commit.
 - `demo-web/` is the current visitor interface, including workflow outputs, quality reviews, routing and cost controls. Keep shared behaviour in shared modules.
 - `showcase_demo.py` serves that interface through `src/workflow_portfolio/web_demo.py`.
 - `src/workflow_portfolio/` also contains the Python workflow engines and original recorded-run tooling. Trace the relevant entry point before choosing what to change.
