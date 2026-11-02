@@ -1,3 +1,4 @@
+import {renderRecoveryWorkbench} from './recovery-workbench.mjs';
 import {renderBusinessWorkbench} from './business-workbench.mjs?v=branch-folds-20261102';
 import {renderPlanner,compactRoute,requestPrices,calculatePlan} from './workflow-routing.mjs?v=branch-folds-20261102';
 import {validateCard} from './pricing.mjs';
@@ -5,9 +6,9 @@ import {readResults,saveResult,removeResult} from './visitor-results.mjs';
 import {renderReleaseWorkbench} from './release-workbench.mjs?v=branch-folds-20261102';
 import {validatePublication,publicationUrl} from './release-publication.mjs';
 const app=document.getElementById('app'),message=document.getElementById('message');
-const names={'release-notes':'Release notes',vulnerabilities:'Vulnerability review',questionnaire:'Security questionnaires',soc2:'SOC 2 evidence','call-crm':'Transcript to action'};
+const names={'customer-recovery':'Bounceback','release-notes':'Release notes',vulnerabilities:'Vulnerability review',questionnaire:'Security questionnaires',soc2:'SOC 2 evidence','call-crm':'Transcript to action'};
 const ownerLabels={Pass:'Correct','Needs improvement':'Needs changes',Unverified:'Unsure'};
-const states={held_by_checks:'Held by checks',needs_evidence:'Needs evidence',awaiting_approval:'Awaiting approval',simulated_complete:'Scenario complete',simulated_rejected:'Proposal rejected'};
+const states={recovered:'Back to work',reopened:'Reopened',needs_specialist:'Needs investigation',held_by_checks:'Held by checks',needs_evidence:'Needs evidence',awaiting_approval:'Awaiting approval',simulated_complete:'Scenario complete',simulated_rejected:'Proposal rejected'};
 let catalog,pricing;
 function cost(r){return r.estimated_cost?.amount==null?'Unavailable':'$'+r.estimated_cost.amount.toFixed(5);}
 function routeLabel(r){const x=r.routing_preview;return !x?'Unavailable':x.action==='model'?x.model+' · '+x.tier+' task':x.action==='code'?'Ordinary code · no model':'Hold · needs evidence';}
@@ -47,7 +48,7 @@ function library(){
  heading('Supporting evidence','Original model answers','Forty recorded answers, including failures. Inspect the evidence, checks and owner feedback, then compare models and instructions on the same example.');
  const metrics=add(app,'div','',{class:'metrics'});stat(metrics,'recorded AI answers',40);stat(metrics,'original checks passed',catalog.records.filter(r=>r.original_checks.outcome==='Pass').length+'/40');stat(metrics,'revised checks passed',catalog.records.filter(r=>checkSet(r).outcome==='Pass').length+'/40');
  const controls=add(app,'div','',{class:'controls'}),params=new URLSearchParams(location.search);
- const wf=choice(controls,'Workflow',[['all','All workflows'],...Object.entries(names)],params.get('workflow')||'all');
+ const wf=choice(controls,'Workflow',[['all','All workflows'],...Object.entries(names).filter(([key])=>catalog.cases.some(c=>c.workflow===key))],params.get('workflow')||'all');
  const config=choice(controls,'Setup',[['all','All instruction setups'],...catalog.configurations.map(c=>[c.id,setup({requested_model:c.model,configuration:c.id})])],'all');
  const status=choice(controls,'Show',[['all','All recorded answers'],['flagged','Originally flagged'],['changed','Check result changed']],'all');
  const count=add(app,'p','',{class:'muted'}),grid=add(app,'div','',{class:'grid'});
@@ -57,7 +58,9 @@ function library(){
  wf.onchange=config.onchange=status.onchange=draw;draw();
 }
 function scenario(){
- const request=new URLSearchParams(location.search),source=catalog.records.find(r=>r.id===request.get('record'));
+ const request=new URLSearchParams(location.search);
+ if(request.get('workflow')==='customer-recovery'){renderRecoveryWorkbench(app,pricing,{say});return;}
+ const source=catalog.records.find(r=>r.id===request.get('record'));
  if((source?title(source).workflow:request.get('workflow')||'release-notes')==='release-notes'){renderReleaseWorkbench(app,catalog,pricing,{say,records:catalog.records,cases:catalog.cases});return;}
  renderBusinessWorkbench(app,source?title(source).workflow:request.get('workflow')||'call-crm',pricing,{say,records:catalog.records,cases:catalog.cases});
 }
@@ -68,6 +71,7 @@ function comparison(parent,record){
  const body=add(table,'tbody');for(const r of catalog.records.filter(r=>r.case_id===record.case_id)){const row=add(body,'tr');const cell=add(row,'td');add(cell,'a',setup(r),{href:'/results.html?run='+encodeURIComponent(r.id)});for(const v of [r.original_checks.outcome==='Pass'?'Passed':'Flagged',checkSet(r).outcome==='Pass'?'Passed':'Flagged',ownerLabels[r.owner_review]||'Not reviewed',(r.generation_duration_ms/1000).toFixed(1)+'s',tokens(r)?.toLocaleString()??'Unavailable',cost(r)])add(row,'td',v);}
 }
 function resultView(session){
+ if(session?.record.kind==='prepared_recovery_output'){renderRecoveryWorkbench(app,pricing,{say,saved:session});return;}
  if(session?.record.kind==='prepared_business_output'){renderBusinessWorkbench(app,session.case.workflow,pricing,{say,saved:session,records:catalog.records,cases:catalog.cases});return;}
  if(session?.case.workflow==='release-notes'){renderReleaseWorkbench(app,catalog,pricing,{say,saved:session,records:catalog.records,cases:catalog.cases});return;}
  const params=new URLSearchParams(location.search),record=session?.record||catalog.records.find(r=>r.id===params.get('run'));if(!record){heading('Result unavailable','This result could not be found.','Visitor results live in the browser that saved them.');link(app,'Open saved scenarios','/saved-results.html');return;}

@@ -47,7 +47,7 @@ def verify(archive):
             base = "http://127.0.0.1:" + port_file.read_text().strip()
             # Ignore HTTP proxy variables for this local-only verification.
             http = urllib.request.build_opener(urllib.request.ProxyHandler({}))
-            for route in ["/", "/scenarios.html?workflow=call-crm", "/workspace.html", "/assets/route-settings.mjs", "/assets/release-workbench.mjs"]:
+            for route in ["/", "/scenarios.html?workflow=call-crm", "/workspace.html", "/assets/route-settings.mjs", "/assets/release-workbench.mjs", "/scenarios.html?workflow=customer-recovery", "/assets/recovery-workbench.mjs", "/assets/recovery-engine.mjs", "/assets/recovery-data.mjs", "/assets/recovery.css"]:
                 with http.open(base + route, timeout=5) as response:
                     assert response.status == 200, route
             with http.open(base + "/api/pricing/preflight", timeout=5) as response:
@@ -62,7 +62,7 @@ def verify(archive):
                     assert error.code == status
                 else:
                     raise AssertionError("Unexpected server access: " + str(request))
-            print(json.dumps({"manifest_files": len(manifest), "asset_parity": True, "http_paths": 5, "offline_pricing": True, "recorded_answers": 40, "writes_blocked": True}))
+            print(json.dumps({"manifest_files": len(manifest), "asset_parity": True, "http_paths": 10, "offline_pricing": True, "recorded_answers": 40, "writes_blocked": True}))
         finally:
             process.terminate()
             process.wait(timeout=5)

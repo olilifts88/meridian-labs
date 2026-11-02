@@ -71,7 +71,7 @@ The release workflow includes four scenarios and a branded release-note page. Tr
 
 The main navigation focuses on workflows and saved results. The review-method page links to the original forty model answers as supporting evidence.
 
-## The five workflows
+## The six workflows
 
 | Workflow | What it demonstrates |
 | --- | --- |
@@ -79,7 +79,10 @@ The main navigation focuses on workflows and saved results. The review-method pa
 | **[Vulnerability review](docs/workflow-guidance/pilot-vulnerabilities.md)** | Match installed versions to supplied advisories and organise supported findings. |
 | **[Security questionnaires](docs/workflow-guidance/pilot-questionnaire.md)** | Answer from policy evidence and hold unsupported claims. |
 | **[SOC 2 evidence review](docs/workflow-guidance/pilot-soc2.md)** | Check evidence dates, ownership and approval; identify follow-up work. |
+| **[Bounceback](docs/customer-recovery.md)** | Play through customer recovery, a technical exception and automatic reuse of a checked fix. |
 | **[Transcript to action](docs/call-crm.md)** | Turn a transcript into CRM updates, issue records, commercial follow-ups, team posts and searchable call knowledge. |
+
+Bounceback adds three fictional login-support cases with a conversation view, recovery checks and versioned learning. Run it locally at `/scenarios.html?workflow=customer-recovery`; the public site changes only after deployment.
 
 All data is fictional. Approvals affect the local simulation; they do not send messages or update external services. Saved results stay in the browser and address you used. The public site, a local copy, another browser and private browsing each have separate histories. They do not sync with one another or add results to the original benchmark.
 
