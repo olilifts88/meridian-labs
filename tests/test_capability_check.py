@@ -1,4 +1,6 @@
 import importlib.util
+import contextlib
+import io
 from pathlib import Path
 import json
 import tempfile
@@ -12,6 +14,16 @@ SPEC.loader.exec_module(checker)
 
 
 class CapabilityCheckTests(unittest.TestCase):
+    def test_stage_route_verification_has_a_dispatchable_check_plan(self):
+        output=io.StringIO()
+        def fake_verify(groups):
+            self.assertEqual(groups,{'python','web'})
+            return {group:{'passed':True} for group in groups}
+        with patch.object(checker,'verify',side_effect=fake_verify),contextlib.redirect_stdout(output):
+            self.assertEqual(checker.main(['--capability','workflow-stage-routing-and-costs','--verify']),0)
+        report=json.loads(output.getvalue())
+        self.assertTrue(report['capabilities'][0]['observed_passing_this_run'])
+
     def test_current_manifest_references_resolve_and_plans_are_not_code(self):
         manifest=json.loads((ROOT/'capabilities.json').read_text())
         for cap in manifest['capabilities']:

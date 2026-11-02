@@ -41,8 +41,23 @@ Keep private receipts, credentials and personal data out of shared answers. If c
 
 ## Checker commands
 
+### Current repository map
+
+Use `ai-workflows-browser` for the current visitor demo and `workflow-stage-routing-and-costs` for its route planner, pricing and quality controls. Entries labelled **Original Python demo** retain the earlier engines and benchmarks; they do not describe the current browser workbenches.
+
+| Visitor workflow | Current implementation | Completed artefact |
+| --- | --- | --- |
+| Release notes | [Release workbench](../demo-web/assets/release-workbench.mjs), [source cases](../demo-web/assets/release-examples.mjs), [checks](../demo-web/assets/release-quality.mjs) | [Release publication](../demo-web/assets/release-publication.mjs) and [release-note page](../demo-web/assets/release-note.mjs) |
+| Transcript to action | [Business workbench](../demo-web/assets/business-workbench.mjs), [transcripts and scenarios](../demo-web/assets/business-data.mjs), [checks and approval](../demo-web/assets/business-engine.mjs) | [Company workspace](../demo-web/assets/company-workspace.mjs): CRM, issue board, revenue tracker, company message board and call library |
+| Vulnerability review | Same business workbench and engine, with the vulnerability inventory and remediation policy in the business data | Company workspace: vulnerability review records |
+| Security questionnaires | Same business workbench and engine, with questions and approved policy evidence in the business data | Company workspace: completed security response |
+| SOC 2 evidence review | Same business workbench and engine, with controls and evidence records in the business data | Company workspace: evidence review pack |
+
+[run-explorer.mjs](../demo-web/assets/run-explorer.mjs) selects the workbench. [quality-review.mjs](../demo-web/assets/quality-review.mjs) provides the shared review interface. The [local server](../src/workflow_portfolio/web_demo.py) serves these browser files; the [ZIP builder](../scripts/build-workflow-showcase.py) packages them. Public hosting is a separate delivery surface and needs its own deployment evidence.
+
 ```sh
 python3 scripts/capability_check.py
+python3 scripts/capability_check.py --capability ai-workflows-browser
 python3 scripts/capability_check.py --capability release-notes
 python3 scripts/capability_check.py --search 'model_called_this_run|output_gate'
 python3 scripts/capability_check.py --verify
@@ -53,6 +68,8 @@ The first two commands inspect references only. `--search` searches tracked and 
 Inventory and verification also work from a downloaded source archive: commit and working-tree state remain unavailable. Search requires a Git checkout so repository ignore rules can be respected.
 
 `--verify` explicitly runs mapped offline checks: Python tests, deterministic scenarios, JavaScript checks and n8n export consistency. Python 3.9+ and Node 24+ are required for the complete suite. It reports results observed in that invocation. The optional `MERIDIAN_NODE` environment variable selects a Node executable when needed. An unavailable runtime fails its check; no model or paid fallback runs.
+
+The `web` group runs the same browser-module test files as `npm run test:web`; the older `javascript` group covers n8n and calibration checks. A browser-module pass does not verify the ZIP or public deployment. Use `npm run test:download` for the package checks and inspect the hosted version separately when the claim concerns that surface.
 
 ## Interpreting the report
 

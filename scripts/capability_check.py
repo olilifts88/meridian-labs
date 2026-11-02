@@ -102,6 +102,7 @@ def verify(groups):
     node=os.environ.get('MERIDIAN_NODE') or shutil.which('node')
     commands={'python':[sys.executable,'-m','unittest','discover','-s','tests'],
               'scenarios':[sys.executable,'demo.py','evaluate'],
+              'web':[node,'--test',*[p.relative_to(ROOT).as_posix() for p in sorted((ROOT/'tests').glob('*.test.mjs'))]],
               'javascript':[node,'--test','tests/n8n.test.mjs','tests/n8n-deploy.test.mjs','tests/n8n-mirror.test.mjs','tests/calibration-feedback.test.cjs'],
               'exports':[node,'scripts/build-n8n.mjs','--check']}
     env=dict(os.environ,PYTHONPATH=str(ROOT/'src'))

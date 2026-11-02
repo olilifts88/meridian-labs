@@ -2,6 +2,52 @@
   "schema_version": 1,
   "capabilities": [
     {
+      "id": "ai-workflows-browser",
+      "claim": "Current browser demo: release notes, Transcript to action, vulnerability review, security questionnaires and SOC 2 evidence review, with source checks, approvals and completed artefacts",
+      "files": [
+        "demo-web/scenarios.html",
+        "demo-web/assets/run-explorer.mjs",
+        "demo-web/assets/release-workbench.mjs",
+        "demo-web/assets/business-workbench.mjs",
+        "demo-web/assets/release-examples.mjs",
+        "demo-web/assets/business-data.mjs",
+        "demo-web/assets/business-engine.mjs",
+        "demo-web/assets/release-quality.mjs",
+        "demo-web/assets/release-publication.mjs",
+        "demo-web/assets/company-workspace.mjs",
+        "demo-web/assets/visitor-results.mjs",
+        "showcase_demo.py",
+        "src/workflow_portfolio/web_demo.py",
+        "scripts/build-workflow-showcase.py"
+      ],
+      "symbols": {
+        "src/workflow_portfolio/web_demo.py": [
+          "make_server"
+        ]
+      },
+      "tests": [
+        "tests/web-business-workflows.test.mjs",
+        "tests/web-release-publication.test.mjs",
+        "tests/quality-rollout.test.mjs",
+        "scripts/verify-showcase-download.py"
+      ],
+      "test_symbols": {},
+      "entrypoint": [
+        "python3",
+        "showcase_demo.py",
+        "--offline"
+      ],
+      "verification_groups": [
+        "web"
+      ],
+      "known_gaps": [
+        "Uses saved answers and prepared outputs; changing models does not generate a fresh answer.",
+        "Approval opens demo artefacts; no external business-system write.",
+        "Saved history is browser-local. The web verification group tests browser modules, not deployed hosting or the published ZIP; verify those separately."
+      ],
+      "recorded_evidence": "docs/verification-quality-review-2026-11-02.md"
+    },
+    {
       "id": "integrated-release-agent",
       "claim": "Bounded subscription-model release draft, source checks, model review and usage record",
       "files": [
@@ -49,7 +95,7 @@
     },
     {
       "id": "release-notes",
-      "claim": "Routine release automation and new-material review",
+      "claim": "Original Python demo: Routine release automation and new-material review",
       "files": [
         "src/workflow_portfolio/showcase.py",
         "examples/showcase/knowledge.json",
@@ -89,7 +135,7 @@
     },
     {
       "id": "vulnerabilities",
-      "claim": "Exact-version advisory triage",
+      "claim": "Original Python demo: Exact-version advisory triage",
       "files": [
         "src/workflow_portfolio/showcase.py",
         "examples/showcase/knowledge.json",
@@ -129,7 +175,7 @@
     },
     {
       "id": "questionnaire",
-      "claim": "Cited policy answers and evidence gaps",
+      "claim": "Original Python demo: Cited policy answers and evidence gaps",
       "files": [
         "src/workflow_portfolio/showcase.py",
         "examples/showcase/knowledge.json",
@@ -165,7 +211,7 @@
     },
     {
       "id": "soc2",
-      "claim": "Control evidence and ownership follow-ups",
+      "claim": "Original Python demo: Control evidence and ownership follow-ups",
       "files": [
         "src/workflow_portfolio/showcase.py",
         "examples/showcase/knowledge.json",
@@ -205,7 +251,7 @@
     },
     {
       "id": "output-evaluation",
-      "claim": "Independent source-based checks and corrupted-output probes",
+      "claim": "Original Python demo: Independent source-based checks and corrupted-output probes",
       "files": [
         "src/workflow_portfolio/showcase_assurance.py",
         "src/workflow_portfolio/showcase_evaluation.py"
@@ -363,7 +409,7 @@
     },
     {
       "id": "call-notion-crm",
-      "claim": "Evidence-bound call journey with cumulative engineering signals and simulated selective approvals",
+      "claim": "Original Python demo: Evidence-bound call journey with cumulative engineering signals and simulated selective approvals",
       "files": [
         "src/workflow_portfolio/call_crm.py",
         "src/workflow_portfolio/call_crm.html",
@@ -402,7 +448,7 @@
     },
     {
       "id": "shared-workflow-evaluation",
-      "claim": "Shared criterion record and matched saved-output benchmark reusing the five browser workflow evaluators",
+      "claim": "Original Python demo: Shared criterion record and matched saved-output benchmark reusing the five browser workflow evaluators",
       "files": [
         "src/workflow_portfolio/evals.py",
         "src/workflow_portfolio/showcase_assurance.py",
@@ -469,8 +515,10 @@
       "id": "workflow-stage-routing-and-costs",
       "claim": "Predetermined stage routes across five workflows with editable token budgets, official pricing preflight, source-case answer comparisons and per-scenario quality review",
       "files": [
-        "src/workflow_portfolio/workflow_routing.mjs",
-        "src/workflow_portfolio/pricing.mjs",
+        "demo-web/assets/workflow-routing.mjs",
+        "demo-web/assets/pricing.mjs",
+        "demo-web/assets/route-settings.mjs",
+        "demo-web/assets/route-evidence.mjs",
         "src/workflow_portfolio/usage/pricing_engine.py",
         "src/workflow_portfolio/usage/pricing_preflight.py",
         "docs/workflow-stage-routing.md",
@@ -494,7 +542,11 @@
         "Browser history is device-local; token estimates exclude tool fees and actual subscription charges.",
         "Prepared scenario checks and recorded model comparisons retain separate source cases; no new per-step model performance is inferred."
       ],
-      "recorded_evidence": "docs/workflow-stage-routing.md"
+      "recorded_evidence": "docs/workflow-stage-routing.md",
+      "verification_groups": [
+        "python",
+        "web"
+      ]
     }
   ]
 }
