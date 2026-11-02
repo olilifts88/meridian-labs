@@ -1,5 +1,5 @@
 import {renderOutputEvaluation,revealResults} from './output-evaluation.mjs';
-import {renderPlanner,makePlan,calculatePlan,requestPrices} from './workflow-routing.mjs';
+import {renderPlanner,makePlan,calculatePlan,requestPrices} from './workflow-routing.mjs?v=transcript-branches-20261102';
 import {saveResult,readResults} from './visitor-results.mjs';
 import {approvePublication,validatePublication,findPublication,publicationUrl,releasePRContext,releaseTitle} from './release-publication.mjs';
 import {assessRelease,releaseEvidence,releaseDecisions} from './release-quality.mjs';

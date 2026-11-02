@@ -99,3 +99,5 @@ On Windows, replace `python3` with `py`. Then open **http://127.0.0.1:8768**. A 
 **The browser page will not open**
 
 Keep the terminal running and use the exact address printed there. This is a local desktop app: opening the address on another device will not connect to it.
+
+Transcript to action branches into five destination paths, each with its own model, effort and token budget. Click a path for its proposed records, source excerpts and checks. The paths join for shared review before output formatting. The calculator includes every branch, the shared steps and any retry budget.

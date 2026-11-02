@@ -1,7 +1,7 @@
 import {readResults} from './visitor-results.mjs';
 import {validateBusiness,outputURL} from './business-engine.mjs';
 import {NAMES,POLICIES,TRANSCRIPTS} from './business-data.mjs';
-import {add,badge,fold,link,select} from './workbench-shared.mjs';
+import {add,badge,fold,link,select} from './workbench-shared.mjs?v=transcript-branches-20261102';
 document.body.classList.add('release-page');
 const app=document.getElementById('app'),message=document.getElementById('message');
 function table(parent,headers,rows){const wrap=add(parent,'div','',{class:'table-wrap'}),table=add(wrap,'table'),h=add(add(table,'thead'),'tr');for(const name of headers)add(h,'th',name,{scope:'col'});const body=add(table,'tbody');for(const row of rows){const tr=add(body,'tr');for(const value of row)add(tr,'td',String(value??'—'));}return body;}
