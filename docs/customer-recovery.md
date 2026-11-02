@@ -4,6 +4,8 @@ Bounceback is an interactive customer-support story inside AI Workflows. It uses
 
 The demo is self-contained: fictional cases, prepared responses, local browser state, no new model calls and no external writes. It illustrates an operating model; it is not a connected support service or evidence of model accuracy or churn reduction.
 
+[Three-page annotated quick guide](../demo-web/bounceback-guide.html) is available from the app header. It follows a routine fix, a technical exception and learned reuse.
+
 ## Play through the story
 
 1. **REC-101: routine fix.** Run the workflow. Approved guidance addresses an expired session; account, access, task and customer-confirmation checks must all pass before recovery is recorded.
