@@ -88,69 +88,109 @@ Each workflow has a recommended model route. Expand a step for its model, effort
 
 ## What the evaluation shows
 
-The recorded pilot contains **10 examples × 2 models × 2 instruction styles = 40 answers**. It preserves the original answers and failures. The original checks passed 31/40; a separate checker correction passed 33/40. Nine answers have owner-review labels; the others are unreviewed.
+After **Run workflow**, each scenario shows source checks beside its output. **Quality and evidence** lets you:
 
-The supporting model evidence connects those answers to measured tokens, generation time and **estimated API cost per answer and per check-passing answer**, including failed attempts in the cost. Estimates use a dated rate card and are separate from subscription bills. Automated checks and human judgments remain separate.
+- **Compare answers:** inspect recorded model answers against the same source case, including their checks, tokens, generation time and dated cost estimates.
+- **See what changed:** compare wording or output records and the checks affected by those changes.
+- **Check a change:** try a specific source conflict and see why the checks flag it.
+- **Inspect a step:** follow the evidence, required checks and output records for the selected model route.
 
-The new routing rules choose a smaller or stronger model, use ordinary code, or hold for missing evidence. They can select a matching recorded answer. These rules were written after the fixed-setup pilot, so their replay is an exploratory comparison, not a fresh routing experiment or proof of savings.
+Expanded scenarios use their own source checks. The model-comparison selector names the original source case being compared. A reviewer still judges clarity and usefulness before approving the finished artefact. Route costs use editable token estimates.
 
-**[See the evaluation method](docs/evaluation-framework.md)** · **[Inspect routing rules and cost calculations](docs/showcase-routing-and-costs.md)** · **[Read the latest verification](docs/verification-quality-review-2026-11-02.md)**
+[Review method](https://meridian-ai-workflows-oli.misty-moon-5776.chatgpt.site/evaluation.html) · [Latest verification](docs/verification-quality-review-2026-11-02.md)
+
+<details>
+<summary>Original model pilot and supporting evidence</summary>
+
+The original pilot contains **10 source cases × 2 models × 2 instruction styles = 40 recorded answers**. These remain available in the [supporting model library](https://meridian-ai-workflows-oli.misty-moon-5776.chatgpt.site/runs.html), through the review-method page and in matching answer comparisons. They are separate from the expanded business scenarios.
+
+The original checks passed 31/40 answers; a versioned checker correction passed 33/40. Nine answers have owner-review labels. Recorded tokens and generation times belong to those original answers. Cost estimates use a dated rate card and remain separate from subscription bills. The pilot does not establish the measured performance of every configurable model route.
+
+[Original recorded data](examples/recorded-runs/pilot-2026-10-28.json) · [Experiment and checker implementation](src/workflow_portfolio/ai_pilot.py) · [Pilot routing and cost method](docs/showcase-routing-and-costs.md)
+
+</details>
 
 ## Inspect the code and evidence
 
-The ZIP includes the source needed to run the demo. The full repository contains the wider implementation, tests and supporting guides.
+Start with the files behind the current hosted and downloadable demo:
 
 | Follow this part | Source |
 | --- | --- |
-| Recorded answers and local scenario execution | [recorded_showcase.py](src/workflow_portfolio/recorded_showcase.py) |
-| Routing rules and estimated costs | [showcase_measurement.py](src/workflow_portfolio/showcase_measurement.py), reusing the [router](src/workflow_portfolio/routing/router.py) and [token calculator](src/workflow_portfolio/usage/token_cost.py) |
-| Current workflow UI and output pages | [demo-web/](demo-web/), with shared [route settings](demo-web/assets/route-settings.mjs) and [run-button state](demo-web/assets/run-button.mjs) |
-| Local browser server | [web_demo.py](src/workflow_portfolio/web_demo.py) |
-| Current saved results and supporting original answers | [visitor-results.mjs](demo-web/assets/visitor-results.mjs) and [run-explorer.mjs](demo-web/assets/run-explorer.mjs) |
-| Workflow checks and CRM simulation | [showcase_assurance.py](src/workflow_portfolio/showcase_assurance.py) and [call_crm.py](src/workflow_portfolio/call_crm.py) |
-| Frozen experiment and versioned rechecks | [ai_pilot.py](src/workflow_portfolio/ai_pilot.py) and the [recorded answers](examples/recorded-runs/pilot-2026-10-28.json) |
-| Tests | [Python and JavaScript tests](tests/) |
+| Workflow pages and user actions | [demo-web/](demo-web/), [release workbench](demo-web/assets/release-workbench.mjs) and [business workbench](demo-web/assets/business-workbench.mjs) |
+| Scenario data, output records and approvals | [Business data](demo-web/assets/business-data.mjs), [business engine](demo-web/assets/business-engine.mjs) and [release publication](demo-web/assets/release-publication.mjs) |
+| Source checks and quality review | [Release checks](demo-web/assets/release-quality.mjs), [business checks](demo-web/assets/business-engine.mjs), [quality review](demo-web/assets/quality-review.mjs) and [comparison/change checks](demo-web/assets/quality-core.mjs) |
+| Model routes and token cost estimates | [Workflow routes](demo-web/assets/workflow-routing.mjs), [pricing calculator](demo-web/assets/pricing.mjs) and [route settings](demo-web/assets/route-settings.mjs) |
+| Saved results and completed artefacts | [Browser history](demo-web/assets/visitor-results.mjs), [release-note page](demo-web/assets/release-note.mjs) and [business output pages](demo-web/assets/company-workspace.mjs) |
+| Local startup and downloadable package | [Launcher](showcase_demo.py), [local server](src/workflow_portfolio/web_demo.py) and [ZIP builder](scripts/build-workflow-showcase.py) |
+| Automated checks | [Workflow regression checks](tests/quality-rollout.test.mjs), [all tests](tests/) and [download verification](scripts/verify-showcase-download.py) |
+
+<details>
+<summary>Original Python workflow engines and recorded-run tooling</summary>
+
+The wider repository also retains the [recorded scenario engine](src/workflow_portfolio/recorded_showcase.py), [original routing measurements](src/workflow_portfolio/showcase_measurement.py), [Python router](src/workflow_portfolio/routing/router.py), [token calculator](src/workflow_portfolio/usage/token_cost.py), [assurance checks](src/workflow_portfolio/showcase_assurance.py) and [CRM simulation](src/workflow_portfolio/call_crm.py). These support the original developer journeys and recorded evidence; the current visitor interface uses the browser modules above.
+
+</details>
 
 ## Working from the full repository
 
-If you already have the source checkout, run `python3 showcase_demo.py` from its root and open the same address. The standalone path works without installing the project.
+If you already have the source checkout, run `python3 showcase_demo.py` from its root and open the printed address. This starts the same browser interface as the download, without installing the project. Python 3.9+ is required. Use `--offline` to keep the saved pricing snapshot without a web check.
 
-For the private owner-review screen and original developer demos, run `python3 demo.py serve --port 8766` instead. Stop the first server before starting another on the same port. Model calls remain disabled by default.
+To rebuild the ZIP, run `python3 scripts/build-workflow-showcase.py`. The [release guide](docs/showcase-release.md) covers packaging, checksums and the online/local visitor paths. The package allowlist excludes private records, credentials and unrelated projects.
 
-To rebuild the small ZIP, run `python3 scripts/build-workflow-showcase.py`. The [release guide](docs/showcase-release.md) explains its placement, checksum, source version and publication steps. Its explicit allowlist excludes private data, credentials and unrelated projects. No hosted account is needed for the downloadable demo.
+<details>
+<summary>Original developer server</summary>
 
-## Inspect the engineering
+`python3 demo.py serve --port 8766` starts the older developer demos and local owner-review screen. Stop another server using that port first. Live model reviews require their explicit configuration and call budget; they are disabled by default.
 
-- **[AI performance dashboard](docs/ai-performance-dashboard.md):** the six private-app tabs, backing sources, refresh timing and measurement boundaries. **[Dataflow diagrams](docs/dashboard-dataflows.md)** show the overall flow and each tab.
-- **[Life OS app](docs/life-os.md):** Today, Tasks, Waiting and What’s On, with Notion behind the app, explicit decisions and source-update timing. **[Life OS dataflows](docs/life-os-dataflows.md)** show the overall path and each tab.
-- **[Workflow guide](docs/recorded-workflows.md):** the five workflows, recorded answers, local checks and review boundaries.
-- **[Capability evidence map](docs/capability-check.md):** find the implementation, tests, runnable commands, dated evidence and known gaps for a claim.
-- **[Verification records](docs/verification-studio-routing-costs-2026-10-28.md):** the five workflow demos, routing, estimated costs and standalone-package checks.
+</details>
+
+<a id="inspect-the-engineering"></a>
+
+## Engineering guides
+
+- **[Evaluation and source checks](docs/evaluation-framework.md):** criteria, matched source cases and the boundary between automated checks and reviewer judgment. [Current verification](docs/verification-quality-review-2026-11-02.md) records the UI and artefact checks.
+- **[Workflow routing and costs](docs/workflow-stage-routing.md):** model choices, effort, token budgets, comparison estimates and pricing refresh.
+- **[Online and local delivery](docs/showcase-release.md):** the public site, download build, asset alignment and release checks. [Setup help](docs/showcase-quickstart.md#setup-help) covers local startup problems.
+- **[Capability evidence guide](docs/capability-check.md):** how to trace a claim to its entry point, implementation, tests and known limits.
+
+<details>
+<summary>Other projects and additional implementation references</summary>
+
+- **[AI Performance Dashboard](docs/ai-performance-dashboard.md)** and its [dataflows](docs/dashboard-dataflows.md): public documentation for the separate private app.
+- **[Life OS](docs/life-os.md)** and its [dataflows](docs/life-os-dataflows.md): the separate private front end and source-update paths.
+- **[Workflow guide](docs/recorded-workflows.md):** current visitor paths and original recorded-run tooling.
 - **[Release engineering](docs/release-workflows.md)** and **[architecture](docs/architecture.md):** domain contracts, the older SQLite service and separate n8n stages.
-- **[Model routing](docs/model-routing.md):** policy compilation, direct-first planning and subscription execution boundaries.
-- **[Usage and evaluation](docs/usage-and-evaluation.md):** supplied-log measurement, token-cost estimation and matched saved-output comparisons.
-- **[Shared evaluation framework](docs/evaluation-framework.md):** one record contract across five workflows, frozen-input saved-output comparisons, individual criterion findings and explicit usage gaps. It reuses existing evaluators, usage modules and feedback validation.
-- **[Workflow guidance](docs/workflow-guidance/README.md):** two scoped example guides and where they are used.
-- **[Repository security](docs/security.md)** and **[deployment boundaries](docs/n8n-deployment.md):** operational controls and optional external integrations.
+- **[Local subscription routing](docs/model-routing.md):** the separate policy compiler and execution pilot.
+- **[Usage measurement](docs/usage-and-evaluation.md):** supplied-log measurement, token calculations and feedback modules.
+- **[Supporting workflow guides](docs/workflow-guidance/README.md):** two scoped reference guides used by the wider implementation.
+- **[Repository security](docs/security.md)** and **[n8n deployment](docs/n8n-deployment.md):** operational controls and optional integrations.
+- **[Earlier Studio verification](docs/verification-studio-routing-costs-2026-10-28.md)** and **[call/benchmark verification](docs/verification-call-crm-2026-10-27.md):** dated records for earlier implementations.
+- **[Portfolio map](docs/portfolio-map.md)** and **[implementation plan](docs/rebuild-plan.md):** historical context and proposed work.
 
-## Repeat the checks
+</details>
 
-The repository checks include the browser logic and a fresh build of the downloadable demo. The download check verifies file hashes and asset parity, starts the extracted server offline on a free port, checks its pages and pricing fallback, and confirms server-side writes remain blocked.
+<a id="repeat-the-checks"></a>
 
-```sh
-npm run test:web
-npm run test:download
-```
+## Developer checks
 
-```sh
-python3 demo.py evaluate
-python3 demo.py benchmark
-python3 scripts/capability_check.py
-```
+These commands check the software when someone changes it. Visitors can use the online site or download without running them. Node 24+ and Python 3.9+ are needed for these commands.
 
-The shared evaluation runs 19 workflow scenarios and 17 deliberately corrupted outputs across all five workflows, including Transcript to action. The shared benchmark compares reference and corrupted saved outputs across all five workflows; these are checker probes, not a live model leaderboard. Calls adds tests for cumulative evidence, stale approvals, selective/bulk review and corrupted records. [Call and benchmark verification](docs/verification-call-crm-2026-10-27.md) records the observed checks. The capability checker reports code/test references and recorded evidence; it does not infer passing tests from their presence. Its `--verify` mode runs the offline checks, requiring Node 24+ as well as Python. See the [guide](docs/capability-check.md).
+| Command | What it checks |
+| --- | --- |
+| `npm run test:web` | JavaScript checks, including source conflicts, route accounting, approvals and saved results |
+| `npm run test:download` | Builds and extracts the ZIP, verifies its file hashes, starts it offline and checks pages, pricing fallback and blocked server writes |
+| `python3 scripts/capability_check.py` | Confirms that mapped code and test references exist; it does not run the feature tests |
 
-The [portfolio map](docs/portfolio-map.md) and [implementation plan](docs/rebuild-plan.md) retain historical context and future work. Hosted source connections, external publication, questionnaire submission, universal model routing and achieved cost savings are not claimed by these demos.
+The [GitHub checks](.github/workflows/ci.yml) run the automated suites on pushes and pull requests.
+
+<details>
+<summary>Original evaluation and benchmark commands</summary>
+
+`python3 demo.py evaluate` runs the original shared workflow scenarios and deliberately corrupted outputs. `python3 demo.py benchmark` compares saved reference and corrupted outputs on matched cases. These check the original evaluators; they do not generate a live model leaderboard.
+
+For a broader offline capability check, use the capability checker's `--verify` option as described in the [guide](docs/capability-check.md).
+
+</details>
 
 ## Folder guide
 
@@ -168,4 +208,4 @@ The [portfolio map](docs/portfolio-map.md) and [implementation plan](docs/rebuil
 | [`.github/workflows/`](.github/workflows/) | Automated checks and the manual code-only example |
 | [`workflow_portfolio/`](workflow_portfolio/) | Small source-checkout launcher for the older module commands; implementation remains in `src/` |
 
-`demo.py` starts the AI workflows, including the separate `/calls` journey. `capabilities.json` maps claims to their supporting files. Private receipts, workspace identifiers and local release records are ignored by Git and are not part of the shared repository.
+`showcase_demo.py` starts the current visitor interface. `demo.py` retains the original developer journeys, including `/calls`. `capabilities.json` maps claims to their supporting files. Private receipts, workspace identifiers and local release records are ignored by Git and are not part of the shared repository.
