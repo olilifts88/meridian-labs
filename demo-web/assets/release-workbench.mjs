@@ -1,6 +1,7 @@
-import {renderRouteEvidence} from './route-evidence.mjs?v=route-cleanup-20261102';
+import {attachRunButton} from './run-button.mjs?v=run-complete-20261102';
+import {renderRouteEvidence} from './route-evidence.mjs?v=run-complete-20261102';
 import {renderOutputEvaluation,revealResults} from './output-evaluation.mjs';
-import {renderPlanner,makePlan,calculatePlan,requestPrices} from './workflow-routing.mjs?v=route-cleanup-20261102';
+import {renderPlanner,makePlan,calculatePlan,requestPrices} from './workflow-routing.mjs?v=run-complete-20261102';
 import {saveResult,readResults} from './visitor-results.mjs';
 import {approvePublication,validatePublication,findPublication,publicationUrl,releasePRContext,releaseTitle} from './release-publication.mjs';
 import {assessRelease,releaseEvidence,releaseDecisions} from './release-quality.mjs';
@@ -28,6 +29,7 @@ export function renderReleaseWorkbench(app,catalog,card,{say=()=>{},saved=null}=
  const cases=select(choices,'Scenario',allCases.filter(c=>c.workflow==='release-notes').map(c=>[c.id,c.title]),initial?.case_id||'release-notes:2');
  const run=add(bar,'button','Run workflow',{type:'button',class:'primary rw-run'});
  const resultDeck=add(app,'section','',{class:'rw-result-deck','aria-label':'Workflow result'}),evaluation=add(resultDeck,'section','',{class:'rw-panel rw-evaluation','aria-label':'Output evaluation'});resultDeck.hidden=true;
+ const completion=attachRunButton(run,resultDeck,()=>execute());
  const settingsBar=add(app,'div','',{class:'rw-settings-bar'}),openSettings=add(settingsBar,'button','Adjust route & token budgets',{type:'button',class:'rw-settings-trigger','aria-haspopup':'dialog','aria-controls':'route-settings-dialog'});
  bar.after(settingsBar);
  const route=add(app,'section','',{class:'rw-route',id:'model-routing','aria-labelledby':'rw-route-title'}),routeHeader=add(route,'div','',{class:'row'});add(routeHeader,'h2','Model route',{id:'rw-route-title'});const routeType=badge(routeHeader,'Recommended route');
@@ -48,7 +50,7 @@ export function renderReleaseWorkbench(app,catalog,card,{say=()=>{},saved=null}=
  function selected(){return initial?.case_id===cases.value?initial:allRecords.find(r=>r.case_id===cases.value&&(r.configuration==='sol-guided'||r.kind==='prepared_release_output'));}
  function disable(value){busy=value;run.disabled=value;workflow.disabled=value;cases.disabled=value;inputMode.disabled=value;openSettings.disabled=value;}
  function invalidate(){session=null;revision++;showPlaceholder();}
- function showPlaceholder(){resultDeck.hidden=true;evaluation.replaceChildren();sourceFold.open=true;output.replaceChildren();add(output,'h2','Release draft',{id:'rw-output-title'});badge(output,'Ready to run');const empty=add(output,'div','',{class:'rw-empty'});add(empty,'div','↗',{class:'rw-empty-mark','aria-hidden':'true'});add(empty,'h3','Your draft will appear here');add(empty,'p','Run the workflow to see the announcement, source decisions and quality checks.');}
+ function showPlaceholder(){completion.reset();resultDeck.hidden=true;evaluation.replaceChildren();sourceFold.open=true;output.replaceChildren();add(output,'h2','Release draft',{id:'rw-output-title'});badge(output,'Ready to run');const empty=add(output,'div','',{class:'rw-empty'});add(empty,'div','↗',{class:'rw-empty-mark','aria-hidden':'true'});add(empty,'h3','Your draft will appear here');add(empty,'p','Run the workflow to see the announcement, source decisions and quality checks.');}
  function drawRoute(){
   routeEvidenceHost.replaceChildren();renderRouteEvidence(routeEvidenceHost,catalog.records,card.models,{preset:plan.preset});
   const estimate=calculatePlan(plan);stageCards.replaceChildren();routeStats.replaceChildren();routeType.textContent=plan.preset==='custom'?'Custom route':plan.preset==='economy'?'Lower-cost route':plan.preset==='deep'?'Deeper review':!plan.preset||plan.preset==='routed'?'Recommended route':card.models[plan.preset]?.label+' throughout';
@@ -84,7 +86,7 @@ export function renderReleaseWorkbench(app,catalog,card,{say=()=>{},saved=null}=
   if(parent.querySelector('.revision-form'))return;const form=add(parent,'div','',{class:'revision-form'});add(form,'h3','Request a revision');add(form,'p','Restore or clarify the customer action using the release evidence.');const label=add(form,'label','Reviewer note'),note=add(label,'textarea','',{'aria-label':'Reviewer note',rows:'3'});const revise=add(form,'button','Review revised draft',{type:'button',class:'primary'});revise.onclick=()=>{const text=note.value.trim();prepareRevision(false);record.reviewer_note=text;execute();};const save=add(form,'button','Save note only',{type:'button'});save.onclick=()=>{if(!note.value.trim()){say('Add a note before saving.',true);return;}record={...structuredClone(record),id:'prepared-feedback--'+record.id,kind:'prepared_release_output',revision_source_id:record.revision_source_id||record.id,reviewer_note:note.value.trim()};execute('reject');};
  }
  function drawOutput(result,{storageError=null,animate=false}={}){
-  output.replaceChildren();const a=assessRelease(record,{missingAvailability:inputMode.value==='missing'});renderOutputEvaluation(evaluation,{checks:a.checks,record,records:catalog.records,models:card.models,revision:record.editorial_revision===2?'Customer action clarified; the source conditions and required steps have been checked again.':null,scope:'Release notes · '+allCases.find(c=>c.id===cases.value).title});resultDeck.hidden=false;sourceFold.open=false;const head=add(output,'div','',{class:'row'});add(head,'h2','Release draft',{id:'rw-output-title'});
+  output.replaceChildren();if(result)completion.complete();else completion.held();const a=assessRelease(record,{missingAvailability:inputMode.value==='missing'});renderOutputEvaluation(evaluation,{checks:a.checks,record,records:catalog.records,models:card.models,revision:record.editorial_revision===2?'Customer action clarified; the source conditions and required steps have been checked again.':null,scope:'Release notes · '+allCases.find(c=>c.id===cases.value).title});resultDeck.hidden=false;sourceFold.open=false;const head=add(output,'div','',{class:'row'});add(head,'h2','Release draft',{id:'rw-output-title'});
   if(!a.available){badge(head,'Needs evidence','warn');add(output,'h3','Confirm availability before drafting');add(output,'p','The release pack identifies the change and customer action, but does not confirm who can use it. Ask the release owner for the rollout stage and audience.');sourceLink(output,'release-source-availability','Review the missing evidence');add(output,'p','Draft held. No approval is available until the evidence is complete.',{class:'rw-hold'});if(animate)revealResults(resultDeck,{scroll:false});return;}
   badge(head,a.ready?'Checks passed':'Needs review',a.ready?'good':'warn');const state=!a.ready?'Held by checks':result?.publication&&!storageError?'Release note published':result?.review_choice==='approve'?'Ready to publish':result?.review_choice==='reject'?'Changes requested':'Awaiting approval';badge(output,state,result?.review_choice==='approve'?'good':'neutral');
   const draft=add(output,'article','',{class:'rw-draft'});add(draft,'div','Product update',{class:'eyebrow'});add(draft,'h3',releaseTitle(record));const copy=releaseCopy(record);renderCopy(draft,copy);if(record.editorial_revision===2){badge(output,'Revised draft','good');const changed=fold(output,'What changed');add(changed,'p','The customer action now has explicit steps. Confirmed availability and product claims are retained.');if(previousDraft){add(changed,'h4','Previous draft');renderCopy(changed,previousDraft);}if(record.reviewer_note)add(changed,'p','Reviewer note: '+record.reviewer_note);}
@@ -96,12 +98,12 @@ export function renderReleaseWorkbench(app,catalog,card,{say=()=>{},saved=null}=
   if(storageError)add(output,'p','Browser save failed: '+storageError+'. Download the result to keep it.',{role:'alert',class:'error'});
   const method=fold(output,'Output source & method');badge(method,card.models[record.requested_model]?.label||'Workflow output','model');add(method,'p','Source answer: '+record.id+'. The draft is formatted from the supplied release context; original answers are preserved. The model route is a configurable plan; its costs use entered token budgets.',{class:'muted'});json(method,'Recorded answer and checks',{answer:record.answer,checks:record.revised_checks||record.original_checks});if(animate)revealResults(resultDeck,{scroll:false});
  }
- function change(){previousDraft=null;record=selected();invalidate();drawEvidence();plan=makePlan('release-notes',record,card);drawRoute();drawComparisons();pricingStatus.textContent='';run.textContent='Run workflow';say('');}
+ function change(){previousDraft=null;record=selected();invalidate();drawEvidence();plan=makePlan('release-notes',record,card);drawRoute();drawComparisons();pricingStatus.textContent='';say('');}
  async function execute(reviewChoice='pending'){
   if(busy)return;const a=assessRelease(record,{missingAvailability:inputMode.value==='missing'});
   if(!a.available){session=null;drawOutput(null,{animate:true});say('Workflow held: confirm the release audience and rollout stage.');return;}
   if(reviewChoice==='approve'&&!a.ready)return;
-  disable(true);run.textContent='Preparing result…';say('Checking the saved output and latest prices…');const runRevision=revision;
+  disable(true);const runTicket=completion.begin();say('Checking the saved output and latest prices…');const runRevision=revision;
   try{
    if(reviewChoice==='approve'){const existing=findPublication(readResults(localStorage),record);if(existing){location.assign(publicationUrl(existing));return;}}
    let value;if(record.kind==='prepared_release_output'){value=preparedReleaseResult(record,allCases.find(c=>c.id===record.case_id),reviewChoice);}else{const response=await fetch('/api/scenario',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({record_id:record.id,review_choice:reviewChoice})});value=await response.json();if(!response.ok)throw Error(value.error||'The workflow result could not be loaded.');}
@@ -109,9 +111,9 @@ export function renderReleaseWorkbench(app,catalog,card,{say=()=>{},saved=null}=
    savedPlan.estimate=calculatePlan(savedPlan);value.routing_plan=savedPlan;if(reviewChoice==='approve')value=approvePublication(value);
    if(previousDraft)value.previous_draft=previousDraft;let storageError=null;try{saveResult(localStorage,value);if(value.publication)validatePublication(readResults(localStorage).find(r=>r.id===value.id));}catch(error){storageError=error.message;}
    if(runRevision!==revision)return;session=value;drawOutput(value,{storageError,animate:reviewChoice!=='approve'});pricingStatus.textContent=savedPlan.pricing_check?.status==='saved_rates'?'Latest prices could not be verified. The calculator uses the saved '+savedPlan.rate_card.verified_on+' rate card.':'';say(storageError?'Result ready. Browser saving is unavailable.':'Result ready · saved in this browser.');if(value.publication&&!storageError)location.assign(publicationUrl(value));
-  }catch(error){say(error.message,true);}finally{disable(false);run.textContent='Run workflow';if(session)for(const b of output.querySelectorAll('.rw-review button'))b.disabled=(b.textContent==='Request changes'&&session.review_choice==='reject');}
+  }catch(error){completion.fail(runTicket);say(error.message,true);}finally{disable(false);if(session)for(const b of output.querySelectorAll('.rw-review button'))b.disabled=(b.textContent==='Request changes'&&session.review_choice==='reject');}
  }
  workflow.onchange=()=>location.assign('/scenarios.html?workflow='+workflow.value);cases.onchange=change;
- inputMode.onchange=()=>{invalidate();drawEvidence();drawRoute();if(inputMode.value==='missing')drawOutput(null);say('');};run.onclick=()=>execute();change();if(saved){session=saved;record=structuredClone(saved.record);previousDraft=saved.previous_draft||null;plan=saved.routing_plan||makePlan('release-notes',record,card);drawEvidence();drawRoute();drawOutput(saved);}
+ inputMode.onchange=()=>{invalidate();drawEvidence();drawRoute();if(inputMode.value==='missing')drawOutput(null);say('');};change();if(saved){session=saved;record=structuredClone(saved.record);previousDraft=saved.previous_draft||null;plan=saved.routing_plan||makePlan('release-notes',record,card);drawEvidence();drawRoute();drawOutput(saved);}
  return {element:app};
 }

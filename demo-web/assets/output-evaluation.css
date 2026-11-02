@@ -4,3 +4,5 @@
 
 .release-page #message{display:block}
 .route-evidence{margin:9px 0 20px}.route-evidence>summary{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;font-size:12px;font-weight:400;color:#69655f}.route-evidence-link{color:#9e2530;text-decoration:underline;text-underline-offset:3px;white-space:nowrap}.route-evidence>p{font-size:12px}.route-evidence .table-wrap table{min-width:0;font-size:12px}.route-evidence th,.route-evidence td{overflow-wrap:anywhere}.route-evidence li{font-size:12px;margin:8px 0}.route-evidence li a{margin-right:12px}
+
+.rw-run{display:inline-flex;align-items:center;justify-content:center;gap:9px}.rw-run.is-complete{background:#315f43;border-color:#315f43;color:#fff}.rw-run.is-complete:hover{background:#264c35;border-color:#264c35}.rw-run-check{display:inline-flex;align-items:center;justify-content:center;width:19px;height:19px;flex:0 0 19px;border:1.5px solid currentColor;border-radius:50%;font-size:12px;line-height:1}.rw-run.is-held{background:#825c20;border-color:#825c20;color:#fff}.rw-result-deck{scroll-margin-top:24px}
