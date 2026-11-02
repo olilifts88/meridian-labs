@@ -20,7 +20,7 @@ This repository contains a runnable AI workflow demo, the code behind its evalua
 Explore AI workflows from source evidence to finished outputs. Review a release announcement, a remediation plan, a security response, a SOC 2 evidence pack or the records created from a transcript. Each workflow includes model routes, editable cost estimates, source checks and a review decision.
 
 <p>
-  <a href="https://github.com/olilifts88/meridian-labs/releases/download/ai-workflows-v1.2.0/meridian-ai-workflows.zip"><img src="assets/download-ai-workflows.svg" alt="Download AI Workflows ZIP" width="282" height="48"></a>
+  <a href="https://github.com/olilifts88/meridian-labs/releases/download/ai-workflows-v1.2.1/meridian-ai-workflows.zip"><img src="assets/download-ai-workflows.svg" alt="Download AI Workflows ZIP" width="282" height="48"></a>
   <a href="#start-the-demo"><img src="assets/setup-instructions.svg" alt="Setup instructions" width="214" height="48"></a>
 </p>
 
@@ -54,7 +54,7 @@ If Python is not installed, install it from [python.org](https://www.python.org/
 
 ## What to explore
 
-Choose a workflow, inspect its sources and route, then click **Run workflow**. Review the proposed output, open a source-linked check and approve the output pages. **Request changes** offers a supported revision or lets you save a reviewer note. **Saved results** keeps the route, evidence and decision together.
+Choose a workflow, inspect its sources and route, then click **Run workflow**. The output evaluation and artefact appear automatically beneath the run controls. Review the source-linked checks and approve the output pages. **Request changes** offers a supported revision or lets you save a reviewer note. **Saved results** keeps the route, evidence and decision together.
 
 The release workflow includes four scenarios and a branded release-note page. Transcript to action includes BD, customer-success and internal-meeting scenarios; its output hub opens CRM updates, engineering signals, pricing follow-ups, a company post and a searchable call library. Vulnerability review covers 40 asset findings, the security questionnaire has 20 questions, and SOC 2 covers 16 controls.
 

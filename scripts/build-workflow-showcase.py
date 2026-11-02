@@ -20,7 +20,7 @@ FILES += ['examples/showcase/'+name for name in ['calls.json','knowledge.json','
 FILES += ['docs/workflow-guidance/pilot-'+flow+'.md' for flow in ['release-notes','vulnerabilities','questionnaire','soc2','call-crm']]
 FILES += ['src/workflow_portfolio/'+name for name in MODULES]
 FILES += [p.relative_to(ROOT).as_posix() for p in (ROOT/'demo-web').rglob('*') if p.is_file() and 'rate-history' not in p.parts]
-FILES += ['docs/verification-workflow-hub-2026-11-01.md']
+FILES += ['docs/verification-workflow-hub-2026-11-01.md','docs/verification-output-evaluation-2026-11-02.md']
 
 
 def build(destination):

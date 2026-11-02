@@ -2,11 +2,11 @@
 
 ## Placement
 
-The small demo ZIP belongs in **GitHub Releases**, not in Git's source history and not behind a hosted app. The first release uses `ai-workflows-v1.2.0`.
+The small demo ZIP belongs in **GitHub Releases**, not in Git's source history and not behind a hosted app. The first release uses `ai-workflows-v1.2.1`.
 
-- Release page: https://github.com/olilifts88/meridian-labs/releases/tag/ai-workflows-v1.2.0
+- Release page: https://github.com/olilifts88/meridian-labs/releases/tag/ai-workflows-v1.2.1
 - Named asset: `meridian-ai-workflows.zip`
-- Direct download: https://github.com/olilifts88/meridian-labs/releases/download/ai-workflows-v1.2.0/meridian-ai-workflows.zip
+- Direct download: https://github.com/olilifts88/meridian-labs/releases/download/ai-workflows-v1.2.1/meridian-ai-workflows.zip
 - Checksum asset: `meridian-ai-workflows.zip.sha256`
 
 The README's primary link uses the versioned asset. That avoids silently switching the demo link to a later release for a different project in this repository. Update the link when a new demo release is published. [GitHub's release-link documentation](https://docs.github.com/en/repositories/releasing-projects-on-github/linking-to-releases) describes direct asset links.
@@ -41,10 +41,10 @@ No new schedule or automatic publishing job is introduced. Publishing is an expl
 1. Review and commit the authorised demo implementation, tests, documentation and public-safe assets. Keep unrelated local work and ignored private records out of the commit. The tag must point to a commit containing the source that actually built this ZIP, not the earlier repository HEAD.
 2. Build from that reviewed commit and repeat the extraction smoke check. Preserve the artifact hash with the verification notes.
 3. Push the reviewed changes through the repository's review process. Create the version tag from the accepted source commit; do not replace an existing tag or asset silently.
-4. Create a draft release titled **AI Workflows v1.2.0**. Attach the named ZIP and checksum, with the prepared release notes in `docs/releases/workflow-showcase-v1.2.0.md`.
+4. Create a draft release titled **AI Workflows v1.2.1**. Attach the named ZIP and checksum, with the prepared release notes in `docs/releases/workflow-showcase-v1.2.1.md`.
 5. Check the release source/tag, named assets and README links. Publish after Oli's approval.
 6. Verify the direct download and checksum without a signed-in GitHub session. Extract that downloaded artifact and repeat the visitor setup. Only then describe the public download as live.
 
 Source code remains available in GitHub. Publishing the ZIP does not host a model endpoint or give visitors access to Oli's AI allowance. GitHub profile and CV-library updates remain a later, separate sharing step.
 
-The v1.2.0 package serves the same assets and prepared data as the hosted workbench from `demo-web/`. The public directory is added explicitly by the package builder; source-repository hosting configuration and runtime credentials are not included. The launcher uses `web_demo.py`; the original developer server remains available separately.
+The v1.2.1 package serves the same assets and prepared data as the hosted workbench from `demo-web/`. The public directory is added explicitly by the package builder; source-repository hosting configuration and runtime credentials are not included. The launcher uses `web_demo.py`; the original developer server remains available separately.

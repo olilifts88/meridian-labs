@@ -1,8 +1,8 @@
-import {renderBusinessWorkbench} from './business-workbench.mjs';
+import {renderBusinessWorkbench} from './business-workbench.mjs?v=evaluation-20261102';
 import {renderPlanner,compactRoute,requestPrices,calculatePlan} from './workflow-routing.mjs';
 import {validateCard} from './pricing.mjs';
 import {readResults,saveResult,removeResult} from './visitor-results.mjs';
-import {renderReleaseWorkbench} from './release-workbench.mjs';
+import {renderReleaseWorkbench} from './release-workbench.mjs?v=evaluation-20261102';
 import {validatePublication,publicationUrl} from './release-publication.mjs';
 const app=document.getElementById('app'),message=document.getElementById('message');
 const names={'release-notes':'Release notes',vulnerabilities:'Vulnerability review',questionnaire:'Security questionnaires',soc2:'SOC 2 evidence','call-crm':'Transcript to action'};
@@ -67,15 +67,9 @@ function comparison(parent,record){
  const wrap=add(parent,'div','',{class:'table-wrap'}),table=add(wrap,'table'),head=add(table,'thead'),hr=add(head,'tr');for(const text of ['Setup','Original checks','Recheck','Owner review','Recorded time','Recorded tokens','Estimated API cost'])add(hr,'th',text);
  const body=add(table,'tbody');for(const r of catalog.records.filter(r=>r.case_id===record.case_id)){const row=add(body,'tr');const cell=add(row,'td');add(cell,'a',setup(r),{href:'/results.html?run='+encodeURIComponent(r.id)});for(const v of [r.original_checks.outcome==='Pass'?'Passed':'Flagged',checkSet(r).outcome==='Pass'?'Passed':'Flagged',ownerLabels[r.owner_review]||'Not reviewed',(r.generation_duration_ms/1000).toFixed(1)+'s',tokens(r)?.toLocaleString()??'Unavailable',cost(r)])add(row,'td',v);}
 }
-function preparedReleaseView(session){
- const r=session.record,c=session.case;document.title='Saved release workflow | Meridian Labs';document.body.classList.add('release-page');heading('Your saved scenario',c.title,'Review the release evidence, output and approval.');
- const actions=add(app,'div','',{class:'controls'});link(actions,'Open release workflow','/scenarios.html?record='+encodeURIComponent(r.id));link(actions,'Saved scenarios','/saved-results.html');if(session.publication){try{validatePublication(session);link(actions,'View release note',publicationUrl(session),true);}catch{say('The saved release does not match its approved draft.',true);}}
- add(app,'p',readableOutcome(session),{class:'notice'});const grid=add(app,'div','',{class:'grid'}),input=add(grid,'section','',{class:'card'}),output=add(grid,'section','',{class:'card'});add(input,'h2','Release evidence');showEvidence(input,r);add(output,'h2','Release draft');showAnswer(output,r);
- const checked=add(app,'section','',{class:'card'});add(checked,'h2','Quality checks');listChecks(checked,session.fresh_checks.criteria);renderPlanner(app,'release-notes',r,pricing,{savedPlan:session.routing_plan,readonly:true});details(app,'Workflow record and method',{provenance:r.provenance,execution:session.execution,outcome:session.outcome,publication:session.publication||null});
-}
 function resultView(session){
  if(session?.record.kind==='prepared_business_output'){renderBusinessWorkbench(app,session.case.workflow,pricing,{say,saved:session});return;}
- if(session?.record.kind==='prepared_release_output'){preparedReleaseView(session);return;}
+ if(session?.case.workflow==='release-notes'){renderReleaseWorkbench(app,catalog,pricing,{say,saved:session});return;}
  const params=new URLSearchParams(location.search),record=session?.record||catalog.records.find(r=>r.id===params.get('run'));if(!record){heading('Result unavailable','This result could not be found.','Visitor results live in the browser that saved them.');link(app,'Open saved scenarios','/saved-results.html');return;}
  if(!record.routing_preview){const current=catalog.records.find(r=>r.id===record.id);if(current)Object.assign(record,{estimated_cost:current.estimated_cost,routing_preview:current.routing_preview,recorded_route:current.recorded_route});}
  const c=session?.case||title(record),visitor=!!session;

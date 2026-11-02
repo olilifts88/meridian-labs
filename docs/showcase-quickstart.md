@@ -1,6 +1,6 @@
 # Meridian Labs · AI Workflows
 
-Explore the workflow routes, compare model choices and review saved answers. This is AI Workflows v1.2.0, with the same routes and interface as the hosted demo. This package is a small runnable part of the [full GitHub repository](https://github.com/olilifts88/meridian-labs).
+Explore the workflow routes, compare model choices and review saved answers. This is AI Workflows v1.2.1, with the same routes and interface as the hosted demo. This package is a small runnable part of the [full GitHub repository](https://github.com/olilifts88/meridian-labs).
 
 ## Start here
 
@@ -28,6 +28,7 @@ Requires **Python 3.9 or newer** and a modern desktop browser. No packages to in
 
 - **Workflows:** choose a task, inspect the source evidence and click **Run workflow**.
 - **Adjust route & token budgets:** change the model route or per-step assumptions before running. The comparison names the one-model alternative and shows the signed cost difference.
+- **Output evaluation:** after Run workflow, the source checks and artefact appear automatically. Matching recorded model answers are expandable where available. A brief reveal respects reduced-motion preferences.
 - **Review decision:** inspect the checks, approve the output pages or request a supported revision. A written note alone is saved as feedback; it does not generate an arbitrary rewrite.
 - **Output pages:** release notes open a branded product update. Transcript to action opens CRM, an issue board, a revenue tracker, a team post and a searchable call library. Other workflows open their registers and follow-ups.
 - **Saved results:** return to the route, sources, decisions and approved pages stored in this browser.
