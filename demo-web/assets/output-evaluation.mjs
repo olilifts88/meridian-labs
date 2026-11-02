@@ -1,3 +1,4 @@
+import {inspectSource} from './app-ui.mjs';
 // Per-output checks and matched recorded answers. Never invent model scores.
 export function evaluationSummary(checks){
  if(!Array.isArray(checks)||checks.some(c=>typeof c.pass!=='boolean'||typeof c.label!=='string'))throw Error('Evaluation checks are invalid.');
@@ -11,7 +12,7 @@ export function matchedComparisons(records,record){
 }
 function add(p,t,text='',attrs={}){const n=document.createElement(t);n.textContent=text;for(const[k,v]of Object.entries(attrs))n.setAttribute(k,v);p.append(n);return n;}
 export function sourceAnchor(parent,id,label='View source'){
- if(!id)return;const a=add(parent,'a',label,{href:'#'+id,class:'rw-source-link'});a.onclick=()=>{const target=document.getElementById(id);let n=target;while(n){if(n.tagName==='DETAILS')n.open=true;n=n.parentElement;}target?.scrollIntoView({block:'center',behavior:'auto'});};return a;
+ if(!id)return;const a=add(parent,'a',label,{href:'#'+id,class:'rw-source-link'});a.onclick=e=>{const target=document.getElementById(id);if(inspectSource(target,a)){e.preventDefault();return;}let n=target;while(n){if(n.tagName==='DETAILS')n.open=true;n=n.parentElement;}target?.scrollIntoView({block:'center',behavior:'auto'});};return a;
 }
 export function renderOutputEvaluation(parent,{checks,record=null,records=[],models={},revision=null,title='This output’s evaluation',scope='Current output'}={}){
  parent.replaceChildren();const summary=evaluationSummary(checks),head=add(parent,'div','',{class:'oe-heading'});add(head,'h2',title);add(head,'span',summary.ready?'Source checks passed':'Needs attention',{class:'rw-badge '+(summary.ready?'good':'warn')});

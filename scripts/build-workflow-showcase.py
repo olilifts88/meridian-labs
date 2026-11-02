@@ -19,6 +19,7 @@ FILES=['docs/workflow-stage-routing.md','showcase_demo.py','docs/recorded-workfl
 FILES += ['examples/showcase/'+name for name in ['calls.json','knowledge.json','questionnaire.json','soc2.json','vulnerabilities.json','pilot-guidance.json']]
 FILES += ['docs/workflow-guidance/pilot-'+flow+'.md' for flow in ['release-notes','vulnerabilities','questionnaire','soc2','call-crm']]
 FILES += ['src/workflow_portfolio/'+name for name in MODULES]
+FILES += ['assets/ui-refresh/workflows-home-annotated.jpg', 'assets/ui-refresh/workflows-route-annotated.jpg', 'assets/ui-refresh/workflows-records-annotated.jpg', 'assets/ui-refresh/workflows-inspector-annotated.jpg', 'assets/ui-refresh/workflows-checks-annotated.jpg', 'assets/ui-refresh/workflows-questionnaire-annotated.jpg', 'assets/ui-refresh/workflows-soc2-annotated.jpg', 'assets/ui-refresh/workflows-transcript-annotated.jpg', 'assets/ui-refresh/workflows-release-annotated.jpg', 'assets/ui-refresh/workflows-failure-annotated.jpg', 'assets/ui-refresh/workflows-approved-annotated.jpg']
 FILES += [p.relative_to(ROOT).as_posix() for p in (ROOT/'demo-web').rglob('*') if p.is_file() and 'rate-history' not in p.parts]
 FILES += ['docs/verification-quality-review-2026-11-02.md','docs/verification-maintenance-2026-11-02.md','docs/verification-workflow-hub-2026-11-01.md','docs/verification-output-evaluation-2026-11-02.md','docs/verification-transcript-route-2026-11-02.md']
 

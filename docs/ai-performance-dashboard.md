@@ -1,8 +1,58 @@
 # AI performance dashboard
 
+## Illustrated UI refresh · 2 November 2026
+
+Implementation review edition. Saved source/build is distinct from production publication. Every screenshot uses fictional sample data; counts and dates illustrate the controls, not current account facts. The yellow QA banner belongs only to the development fixture route.
+
+| Coverage | UI refresh edition | Publication |
+| --- | --- | --- |
+| performance | 2 November 2026 source | Pending separate decision |
+
+Follow this short route from the first step. Light and Dark retain the same actions and data.
+
+### Step 1 · Start with Overview and appearance
+
+Open AI Performance. Choose Light or Dark in the compact header. Overview shows retained counts and entry points; expand Quality and routing reports for the full saved evidence.
+
+**Expected result and background:** The choice is saved on this browser and shared with Life OS on the same origin. Counts and reports keep their original definitions and source dates.
+
+![Annotated screenshot: Start with Overview and appearance](../assets/ui-refresh/performance-overview-annotated.jpg)
+
+### Step 2 · Read a review beside its queue
+
+Open Review inbox, keep the appropriate status/type filter and select a review. Read the finding, source link, source-backed Problem, Current, Proposed and Reason, then Exact source scope.
+
+**Expected result and background:** Technical decision key and Full source review retain identity, revisions and detailed history. If an explanation was not supplied, the app says so; it does not infer a fix from an ID.
+
+![Annotated screenshot: Read a review beside its queue](../assets/ui-refresh/performance-review-annotated.jpg)
+
+### Step 3 · Save one explicit response
+
+Choose the named response, add Feedback or correction if needed, then Save decision. Read the saved choice and its sync state. History retains previous decisions.
+
+**Expected result and background:** Saving records that one revision-bound choice. It does not execute a fix or approve other items. Saved in dashboard and Synced to Notion are different states. The screenshot is an isolated memory-only example.
+
+![Annotated screenshot: Save one explicit response](../assets/ui-refresh/performance-saved-annotated.jpg)
+
+### If something looks wrong
+
+- No matching records: clear search and status filters. A selected detail can remain visible while its queue is filtered.
+- Old source date or failed update: retain the last dated result and inspect the specific failure; do not interpret it as an empty successful read.
+- Saved choice still pending: read its sync state before repeating it. A saved decision is not proof its source was updated.
+- Theme does not persist: storage may be unavailable. The current page remains usable; choose the mode again after reopening.
+- On a phone: use Back to return from selected detail, or Close/Escape for a dialog. Physical-device delivery remains a separate check.
+
+### Terms
+
+**Snapshot:** the last saved source read. **Source check:** a fixed rule checked against supplied evidence. **Exact scope:** the change a named choice refers to. **Sync pending:** saved here, not yet verified in the source. **Prepared scenario:** a deterministic replay, not a new AI call.
+
+
+## Retained operating reference and earlier release context
+
+
 A private Meridian dashboard brings together operational reviews, recorded tasks, usage estimates and workflow evidence. It opens on Overview, followed by Review inbox, Activity & effort, Usage & cost, Notion maintenance and Workflow lab. The public repository documents its design and data contracts; the owner’s hosted app, personal records and source access are separate from the downloadable workflow demo.
 
-The interface uses the Meridian dark palette. Source dates and missing measurements remain visible. A saved task outcome, an automated quality check and a person’s judgment are separate records.
+The interface offers saved Light and Dark modes. Source dates and missing measurements remain visible. A saved task outcome, an automated quality check and a person’s judgment are separate records.
 
 These screenshots use the current interface with fictional sample data. The figures illustrate the layout; they are not measured usage, costs, quality results or achieved savings.
 

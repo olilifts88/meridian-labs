@@ -1,5 +1,119 @@
 # Meridian Labs · AI Workflows
 
+## Illustrated UI refresh · 2 November 2026
+
+Implementation review edition. Saved source/build is distinct from production publication. Every screenshot uses fictional sample data; counts and dates illustrate the controls, not current account facts. The yellow QA banner belongs only to the development fixture route.
+
+| Coverage | UI refresh edition | Publication |
+| --- | --- | --- |
+| workflows | 2 November 2026 source | Pending separate decision |
+
+Follow this short route from the first step. Light and Dark retain the same actions and data.
+
+### Step 1 · Choose a workflow
+
+Open Workflows, then choose Open workflow on the task you want. Use Appearance to choose Light or Dark.
+
+**Expected result and background:** The directory opens a prepared, fictional scenario. Changing appearance saves a browser preference; it does not change a result.
+
+![Annotated screenshot: Choose a workflow](../assets/ui-refresh/workflows-home-annotated.jpg)
+
+### Step 2 · Inspect the route before reviewing
+
+Choose a Scenario. Open Model route & cost for its plan, or Adjust route & token budgets for the editor. Cancel leaves the selected plan unchanged; Use this route applies the displayed assumptions.
+
+**Expected result and background:** The calculator retains the existing models, efforts, rates and token calculations. A route estimate is not a new model run or measured saving.
+
+![Annotated screenshot: Inspect the route before reviewing](../assets/ui-refresh/workflows-route-annotated.jpg)
+
+### Step 3 · Review the finding that matters
+
+Click Review prepared scenario. In Output, use Find a record and Source status, then select a row. Installed version, original deadline, owner and closure evidence stay with that record.
+
+**Expected result and background:** The same 40 supplied findings and deterministic checks are used. Search changes the visible queue; selecting a row does not approve it. On phones, Back to records retains the filters.
+
+![Annotated screenshot: Review the finding that matters](../assets/ui-refresh/workflows-records-annotated.jpg)
+
+### Step 4 · Read the supporting evidence
+
+Choose Inspect source beside the selected finding. Read its inventory and advisory excerpt. Use Close evidence or Escape to return to the same control.
+
+**Expected result and background:** The inspector displays the existing source excerpt. It does not retrieve fresh external evidence or modify the inventory.
+
+![Annotated screenshot: Read the supporting evidence](../assets/ui-refresh/workflows-inspector-annotated.jpg)
+
+### Step 5 · Separate checks from judgment
+
+Choose Source checks. Read each Passed or Flagged rule and its View source link. Open Quality & evidence separately for recorded-answer comparisons where matching evidence exists.
+
+**Expected result and background:** Fixed checks, original model answers and reviewer judgment remain separate. Missing matching answers do not become a score.
+
+![Annotated screenshot: Separate checks from judgment](../assets/ui-refresh/workflows-checks-annotated.jpg)
+
+### Step 6 · Review a cited questionnaire answer
+
+Choose Security questionnaires, then Review prepared scenario. Select an answer and inspect its supporting policy. Retain Qualified and Needs evidence responses.
+
+**Expected result and background:** The existing 20 questions and 12 policy sources supply the answers. Approval does not send the response to a customer.
+
+![Annotated screenshot: Review a cited questionnaire answer](../assets/ui-refresh/workflows-questionnaire-annotated.jpg)
+
+### Step 7 · Check a control and its period
+
+Choose SOC 2 evidence review and Review prepared scenario. Select a control. Compare Required period, Evidence period, owner and review note before accepting the pack.
+
+**Expected result and background:** The existing 16 controls retain stale, wrong-period, missing-owner and pending-approval states. A newer layout does not resolve those gaps.
+
+![Annotated screenshot: Check a control and its period](../assets/ui-refresh/workflows-soc2-annotated.jpg)
+
+### Step 8 · Switch between connected destinations
+
+Choose Transcript to action and Review prepared scenario. Use Account updates, Engineering signals, Pricing follow-ups, Meeting report and Transcript knowledge to inspect each branch.
+
+**Expected result and background:** All five existing destinations remain available. Indicative budget is distinct from approval; a reported issue is distinct from a verified diagnosis. Source quotes remain linked.
+
+![Annotated screenshot: Switch between connected destinations](../assets/ui-refresh/workflows-transcript-annotated.jpg)
+
+### Step 9 · Review the announcement as a draft
+
+Choose Release notes and a scenario, then Review prepared scenario. Start in Draft; open Source checks and Quality & evidence when needed. Review rollout conditions before Approve & publish.
+
+**Expected result and background:** This approval opens a sample release-note page in browser storage. It does not publish a real release or change external product availability.
+
+![Annotated screenshot: Review the announcement as a draft](../assets/ui-refresh/workflows-release-annotated.jpg)
+
+### Step 10 · Resolve a failed check
+
+In Try a review issue, choose Load an issue for review. Open Source checks to read the flagged deadline rule. Return to Output, choose Request changes, then Review revised draft for the supported correction.
+
+**Expected result and background:** Failed checks disable approval. Supported revisions retain before/after evidence; arbitrary notes remain feedback rather than an invented rewrite.
+
+![Annotated screenshot: Resolve a failed check](../assets/ui-refresh/workflows-failure-annotated.jpg)
+
+### Step 11 · Open approved outputs and return later
+
+After reviewing a valid draft, choose Approve & open outputs, then a destination such as Remediation register. Back to review returns to its saved evidence. Saved results in the header reopens browser-local history.
+
+**Expected result and background:** Existing approval and publication payloads are unchanged. Results belong to this browser and origin. Download result preserves a JSON copy; no external business system is written.
+
+![Annotated screenshot: Open approved outputs and return later](../assets/ui-refresh/workflows-approved-annotated.jpg)
+
+### If something looks wrong
+
+- No matching records: clear search and status filters. A selected detail can remain visible while its queue is filtered.
+- Old source date or failed update: retain the last dated result and inspect the specific failure; do not interpret it as an empty successful read.
+- Saved choice still pending: read its sync state before repeating it. A saved decision is not proof its source was updated.
+- Theme does not persist: storage may be unavailable. The current page remains usable; choose the mode again after reopening.
+- On a phone: use Back to return from selected detail, or Close/Escape for a dialog. Physical-device delivery remains a separate check.
+
+### Terms
+
+**Snapshot:** the last saved source read. **Source check:** a fixed rule checked against supplied evidence. **Exact scope:** the change a named choice refers to. **Sync pending:** saved here, not yet verified in the source. **Prepared scenario:** a deterministic replay, not a new AI call.
+
+
+## Retained operating reference and earlier release context
+
+
 Explore the workflow routes, compare model choices and review saved answers. This is AI Workflows v1.2.1, with the same routes and interface as the hosted demo. This package is a small runnable part of the [full GitHub repository](https://github.com/olilifts88/meridian-labs).
 
 ## Choose how to use it
