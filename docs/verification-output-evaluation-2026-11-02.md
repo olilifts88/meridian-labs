@@ -16,3 +16,5 @@ After results are ready, headings, source checks and the artefact reveal in a sh
 - Browser: transcript, vulnerability and SOC2 outputs show their own checks automatically.
 - Browser: saved release result reopens with evaluation and draft, then approves into the finished release page. Asset entrypoints carry a revision query to avoid the previous cached viewer.
 - Original model answers, output exports, pricing arithmetic, approval gates, audience, schedules and external-write boundaries remain unchanged.
+
+Route placement correction: route and token settings precede Run workflow across all five workflows; evaluation and artefact remain immediately below the run controls.
