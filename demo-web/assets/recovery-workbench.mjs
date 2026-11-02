@@ -11,7 +11,7 @@ export function renderRecoveryWorkbench(app,card,{say=()=>{},saved=null}={}){
  const css=document.createElement('link');css.rel='stylesheet';css.href='/assets/recovery.css';document.head.append(css);
  app.classList.add('bounceback');
  const head=add(app,'section','',{class:'bb-heading'}),intro=add(head,'div');add(intro,'div','CUSTOMER RECOVERY',{class:'bb-kicker'});add(intro,'h1','Bounceback');add(intro,'p','Resolve the problem. Check they can work. Learn for next time.');
- const tools=add(head,'div','',{class:'controls'});link(tools,'Saved results','/saved-results.html');
+ const tools=add(head,'div','',{class:'controls'});link(tools,'Quick guide','/bounceback-guide.html');link(tools,'Saved results','/saved-results.html');
  const restart=add(tools,'button','Reset demo',{type:'button'});restart.hidden=readonly;
  const scope=add(app,'p',readonly?'Saved snapshot · Changes here cannot affect the working demo.':'Interactive demo · Fictional cases and prepared responses. No live AI calls or customer changes.',{class:'bb-scope'});
  const notice=add(app,'p','',{class:'bb-notice',role:'status','aria-live':'polite'});notice.hidden=true;
