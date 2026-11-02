@@ -20,3 +20,5 @@ After results are ready, headings, source checks and the artefact reveal in a sh
 Route placement correction: route and token settings precede Run workflow across all five workflows; evaluation and artefact remain immediately below the run controls.
 
 Run workflow uses the shared red button style across all workflows. Questionnaire browser run confirms the model route remains above the run controls and automatic results.
+
+Final placement per Oli: Run workflow and selectors first; token settings directly below, then model route and all estimates, then automatic results. Running no longer auto-scrolls the page; the status line reserves its space. This supersedes the preceding route-above-run arrangement.

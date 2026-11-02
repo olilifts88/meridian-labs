@@ -1,8 +1,8 @@
-import {renderBusinessWorkbench} from './business-workbench.mjs?v=route-top-red-20261102';
+import {renderBusinessWorkbench} from './business-workbench.mjs?v=run-first-20261102';
 import {renderPlanner,compactRoute,requestPrices,calculatePlan} from './workflow-routing.mjs';
 import {validateCard} from './pricing.mjs';
 import {readResults,saveResult,removeResult} from './visitor-results.mjs';
-import {renderReleaseWorkbench} from './release-workbench.mjs?v=route-top-red-20261102';
+import {renderReleaseWorkbench} from './release-workbench.mjs?v=run-first-20261102';
 import {validatePublication,publicationUrl} from './release-publication.mjs';
 const app=document.getElementById('app'),message=document.getElementById('message');
 const names={'release-notes':'Release notes',vulnerabilities:'Vulnerability review',questionnaire:'Security questionnaires',soc2:'SOC 2 evidence','call-crm':'Transcript to action'};
