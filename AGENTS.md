@@ -1,51 +1,33 @@
-# Meridian Labs: guidance for coding agents
+# Meridian Labs Repo Guide
 
-This file applies to the whole repository. Follow the user's task and any more specific instructions first. Keep this file focused on repository facts; personal workflow and model-routing guidance lives outside this public repo.
+Applies across this repository. Follow the user's task and any more specific repository instructions. Read `README.md` for the public site, local download and current project map.
 
-## What this repository contains
+## Where to work
 
-Meridian Labs has a downloadable, local **AI Workflows** demo; source for its workflow checks, routing, evaluation, usage and n8n examples; and public guides to a separate **private AI Performance Dashboard**. The five demo workflows use fictional business data. The dashboard app, personal records and credentials are not included in this repository. Historical plans in `docs/portfolio-map.md` and `docs/rebuild-plan.md` are context, not proof that a feature is implemented.
+- `demo-web/` is the current visitor interface, including workflow outputs, quality reviews, routing and cost controls. Keep shared behaviour in shared modules.
+- `showcase_demo.py` serves that interface through `src/workflow_portfolio/web_demo.py`.
+- `src/workflow_portfolio/` also contains the Python workflow engines and original recorded-run tooling. Trace the relevant entry point before choosing what to change.
+- `examples/` holds public-safe inputs and recorded answers; `tests/` holds expected behaviour.
+- Edit n8n sources in `.n8n/`, then regenerate `exports/n8n/`. Do not hand-edit generated exports.
+- AI Performance Dashboard and Life OS guides describe separate private apps. Their app code and personal records are not included here.
 
-## Find the relevant source
+## Run and check
 
-- Start with `README.md` for the visitor path, download, folder guide and links to current evidence.
-- `showcase_demo.py` starts the no-model-call visitor demo. It serves the current `demo-web/` browser interface through `src/workflow_portfolio/web_demo.py`. The original benchmark and developer server remain in `recorded_showcase.py` and `showcase_server.py`.
-- `src/workflow_portfolio/` holds the workflow engines, review rules, routing, evaluations and usage code. Follow the actual entry point, caller, state and side-effect boundary for the feature at issue.
-- `examples/` holds fictional inputs and public-safe recorded runs. `tests/` holds expected cases. `docs/verification-*.md` records dated checks; it does not establish a fresh run.
-- `capabilities.json` is a claim index, not an exhaustive inventory or a substitute for code inspection. `docs/capability-check.md` explains its checker and evidence fields.
-- `.n8n/` contains editable n8n sources. `exports/n8n/` is generated output. Inspect the source and build path before relying on an export.
-- `docs/ai-performance-dashboard.md` and `docs/dashboard-dataflows.md` describe the private dashboard. Do not infer that its app code or hosted access is in this repository.
-- `docs/life-os.md` and `docs/life-os-dataflows.md` describe the separate Life OS front end, source updates and decision path. Its private app shares hosting with AI Performance; its original Notion records and app code are outside this repository.
+Python 3.9+ runs the local demo. Developer checks also need Node 24+.
 
-## Standard capability review
+- Start: `python3 showcase_demo.py` (`--offline` uses saved prices).
+- Browser checks: `npm run test:web`.
+- Download checks: `npm run test:download`.
+- Capability references: `python3 scripts/capability_check.py` (checks references, not behaviour).
 
-Use this sequence for "can it do X?" questions and before changing a public capability claim. It is a source-review procedure, not a requirement to run every test.
+Run checks appropriate to the change. Start with focused tests; use download checks when packaged content changes. Report what ran and any unresolved failure.
 
-1. **Fix the evidence revision.** In a checkout, record `git rev-parse HEAD` and `git status --short`; in GitHub, record the inspected commit. Treat uncommitted files as provisional. Read this file, the current `README.md` and the relevant domain guide.
-2. **Name the surface and user action.** Decide whether the claim concerns the downloadable ZIP, the full local source, a connected/private system or a plan. Find the button, URL, command or caller a user would actually reach. A source file with no reachable entry point is not an available feature.
-3. **Trace one complete path.** Follow inputs and source selection through validation, routing, evaluation, approval, state and the final side effect. Locate the exact writer or confirm the result is a simulation. Check relevant flags, configuration and permissions. For a download, follow the package allowlist, release asset and startup path.
-4. **Search narrowly, then once broadly.** Search the likely area first, for example `rg -n 'term|alternate_term' src/workflow_portfolio tests docs`. If that is inconclusive, do one bounded repository-wide search. A capped or missing result is not proof of absence.
-5. **Check evidence at the right level.** Read the matching test and fixture, then the latest relevant dated verification. Distinguish expected behaviour in code from a test run observed now. A recorded AI answer, local receipt or simulated approval does not prove a fresh model call or an external write.
-6. **Report the boundary.** State what is available, conditional, unsupported in the inspected scope or not verified. Include the inspected commit, entry point, code/test links, checks actually run and the remaining gap. If code access is missing, label the answer documentation-only.
+## Working rules
 
-Use `capabilities.json` to locate mapped claims, then inspect the code and search beyond the manifest. The checker inspects mapped references without executing tests:
+Follow nearby code and keep changes within the task. Use `docs/capability-check.md` for the capability-review method, availability verdicts and five-part answer format. Inspect the reachable code path; `capabilities.json` is an index, not proof of implementation. Update affected claims, tests and guides when behaviour changes.
 
-```sh
-python3 scripts/capability_check.py
-python3 scripts/capability_check.py --capability call-notion-crm
-```
+Keep recorded-answer identities and source-bound evaluations intact. Separate planned costs from measured usage and source checks from model comparisons. Dated verification records do not establish a fresh run.
 
-Use `--verify` only when a fresh offline check is relevant and authorised; it runs mapped Python, JavaScript, scenario and export checks and needs the documented Python and Node runtimes. Do not run tests for a requested no-testing review. Never start live model calls, publication, deployment, mirror writes or business-system writes merely to answer a capability question.
+For release changes, verify the package allowlist, release asset, checksum and setup instructions. A local change does not establish a hosted deployment.
 
-## Keep changes and claims in sync
-
-Use the same evidence revision for code, capability records and public wording. Before editing, identify the affected manifest entry and guide. After editing:
-
-- **Behaviour or entry point changed:** update the implementation, a focused test when useful, the `capabilities.json` claim/known gaps and the relevant domain guide. Update `README.md` only when a visitor's path or public claim changes.
-- **Evidence or status changed without repo code:** update the affected claim and dated guide without implying the code moved into this repository. The Performance Dashboard is a separate private app; its public guide is here.
-- **n8n workflow changed:** edit `.n8n/` source first, regenerate `exports/n8n/` through the documented build path and check consistency. Do not hand-edit generated exports.
-- **Release or package changed:** check the explicit package allowlist, release asset name, checksum and README instructions against the actual artifact.
-
-Run `python3 scripts/capability_check.py` after changing the manifest when the runtime is available. Run a fresh `--verify` or focused test only when the change warrants it and the user has not excluded testing. Record what ran and what did not. If a cross-file update cannot be completed, leave a specific gap in the same change; do not silently publish conflicting claims.
-
-Keep fictional and public-safe data boundaries. Do not commit private receipts, credentials, personal records or employer material. A successful local demo is not production readiness, customer adoption or measured savings. This guide reduces drift when agents follow it; it does not enforce truth by itself.
+Keep credentials, private receipts, personal records and employer material out of public files. Live model calls and external writes require task authorisation. Personal communication and model preferences belong outside this public repository.

@@ -1,6 +1,45 @@
 # Capability evidence map
 
-Start with [AGENTS.md](../AGENTS.md) for repository orientation, investigation steps and public/private boundaries. Use [capabilities.json](../capabilities.json) to trace a claim to code, entry point, fixture, test, recorded result and known gap. The read-only checker validates file and Python-symbol references. It never dispatches a model, opens account logs or accesses connected Notion.
+Start with the [Meridian Labs Repo Guide](../AGENTS.md) for repository orientation, source locations and public/private boundaries. This guide owns the detailed capability-review procedure. Use it for questions about what Meridian supports, how a feature works and what a visitor can actually use.
+
+The codebase is the source of truth for implementation. [capabilities.json](../capabilities.json) is an index of claims, entry points, fixtures, tests, recorded results and known gaps, not an exhaustive inventory. The read-only checker validates file and Python-symbol references. It never dispatches a model, opens account logs or accesses connected Notion.
+
+## Reviewing a capability
+
+1. **Identify the evidence.** Record the repository, branch/commit or archive identity, local changes and intended user. Treat modified files as provisional. Read applicable repository instructions, the current README and relevant domain guide.
+2. **Name the surface and action.** Distinguish the public hosted site, demo ZIP, full source checkout, separate private app and future plan. Find the button, URL, command or tool the intended user can reach. For downloads, follow the documented startup path too.
+3. **Search the likely area.** Inspect its actual files, local instructions and entry points. Search user labels, symbols and alternate terms. Use the manifest to locate references, then look beyond it for newer or unmapped implementation.
+4. **Trace the complete path.** Follow callers and imports through inputs, source selection, validation, routing, evaluation, approval, persistence and final side effects. Check configuration, permissions and flags. Locate the actual writer and destination, or confirm the result is a simulation. For exports and downloads, trace the allowlist, build, published artifact and reader/importer.
+5. **Inspect the evidence at its own level.** Read corresponding fixtures, tests, dated results and known gaps. Tests describe expected behaviour; only checks run now establish observations from this invocation. A published download needs evidence beyond a locally generated ZIP.
+6. **Verify proportionately.** Run the smallest relevant authorised offline check when needed. Respect a no-testing request. Report the runtime, scope and observed result; a passing reference inventory does not establish the whole feature.
+7. **Resolve gaps with a bounded search.** If scoped inspection is inconclusive, make one bounded repository-wide search using alternate terminology. Refine capped searches and disclose limited coverage. Missing evidence is not proof of absence.
+8. **State availability and its boundary.** Use the verdicts and answer format below. For future scope, inspect accessible roadmap records and label plans explicitly. If code cannot be read, say **Not verified in code** and limit the answer to documentation.
+
+## Availability verdicts
+
+Use **Available**, **Available with conditions**, **Not supported in the inspected scope**, or **Not verified**. Give separate verdicts for essential parts of a multi-step request.
+
+Related code or help text is insufficient: the intended user must be able to reach the implementation with the required configuration, permissions and flag state. Unknown configuration means conditional or unverified availability, not a blanket claim that flagged code is unavailable.
+
+A local demo does not establish hosted access. A recorded answer does not establish a fresh model call. Approval in a simulation does not establish an external CRM, issue-board, messaging or publishing write. Dated tests, current deployment, model identity, semantic quality and measured cost savings each require their own evidence. Fictional portfolio data does not establish employer production experience or customer adoption.
+
+## Capability answer format
+
+Keep these five sections, scaled to the question:
+
+1. **Short answer:** answer the actual question in one plain sentence, including verdict and scope.
+2. **Justification:** give 2–10 useful bullets explaining the implementation, conditions, verified user steps and gaps. Explain unfamiliar terms.
+3. **Safe to tell the customer:** give one external-ready sentence. Add **Don't promise:** where a limit applies, keeping private details out of the customer wording.
+4. **Confidence:** use **certain**, **fairly sure**, or **guess - verify with engineering**, with the reason for uncertainty. Confidence does not replace the availability verdict.
+5. **Receipts:** cite precise files/functions and verified line locations, inspected commit/archive, entry point, checks actually run and dated results. Prefer public links bound to the inspected commit. Label local changes separately; never invent line numbers or passing results.
+
+## Action boundaries
+
+A capability question authorises read-only investigation and appropriate offline verification. It does not authorise enabling flags, changing code/settings, new model calls, deployment, publication, mirror writes, business-data changes, another person's login or contacting anyone. Apply separately authorised implementation work within its scope.
+
+Keep private receipts, credentials and personal data out of shared answers. If code access or a runtime is missing, state the specific limit and preserve dated evidence as history. Do not silently fall back to live calls or treat an unavailable test as a feature failure.
+
+## Checker commands
 
 ```sh
 python3 scripts/capability_check.py
@@ -24,12 +63,9 @@ Inventory and verification also work from a downloaded source archive: commit an
 | `observed_passing_this_run` | The mapped offline commands were actually run successfully using `--verify` |
 | `recorded_evidence` | Dated local execution observations; not a fresh live call or provider attestation |
 | `status: planned` | Roadmap documentation only; code/test presence stays unset |
+| `status: implemented` | Manifest classification, not an availability verdict or proof of current user access |
 | `commit`, `working_tree_clean` | The checkout inspected, including whether local changes are present |
 
 The [recorded model summaries](../examples/showcase/verified-runs.json) retain accepted requested routes, source/input bindings, pass/hold assessments and explicit identity limits. Raw account receipts stay private. The [verification record](verification-2026-10-26.md) states the dates, scope and remaining gaps.
-
-## Reviewing a claim
-
-Start with repository instructions and checkout state. Find the capability ID, inspect the cited function and original fixture, then inspect the relevant test. Run its mapped offline checks when verification is needed. Treat live execution as a separate claim requiring a matching dated receipt. Report unsupported behavior as a gap. Do not infer semantic quality, production readiness or cost savings from source presence, passing unit tests or a README statement.
 
 This repository supplies the repeatable map and local search tool. It does not install or alter anyone's Notion skills or automatically intercept future assistant requests.
