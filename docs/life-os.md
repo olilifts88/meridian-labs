@@ -1,6 +1,80 @@
 # Life OS
 
-Life OS is a private Meridian web app for daily tasks, waiting items, personal dates and one saved daily lesson. It replaces the Notion dashboard page while keeping the existing Notion tracker and original records behind it. The interface uses the approved Meridian dark palette and works in a desktop or mobile browser.
+## Illustrated UI refresh · 2 November 2026
+
+Implementation review edition. Saved source/build is distinct from production publication. Every screenshot uses fictional sample data; counts and dates illustrate the controls, not current account facts. The yellow QA banner belongs only to the development fixture route.
+
+| Coverage | UI refresh edition | Publication |
+| --- | --- | --- |
+| life | 2 November 2026 source | Pending separate decision |
+
+Follow this short route from the first step. Light and Dark retain the same actions and data.
+
+### Step 1 · Read Today and set appearance
+
+Open Life OS and Today. Read Tracker checked before relying on the list. Choose Light or Dark in the compact header; use Tasks, Waiting and What’s On for the complete views.
+
+**Expected result and background:** The app reads its saved projection. Opening it does not run a sweep. Theme changes display only and shares the Performance preference.
+
+![Annotated screenshot: Read Today and set appearance](../assets/ui-refresh/life-today-annotated.jpg)
+
+### Step 2 · Open the saved daily lesson
+
+Expand Daily lesson and source context below the header on any tab. Read the saved date, exact question and summary; open the original lesson link if useful.
+
+**Expected result and background:** This reuses the existing saved daily entry. It does not generate a new lesson or alter the sweep schedule.
+
+![Annotated screenshot: Open the saved daily lesson](../assets/ui-refresh/life-lesson-annotated.jpg)
+
+### Step 3 · Understand a task before deciding
+
+In Tasks, use the status filter and search, then open a task. Read its exact factual question and source context. Choose Done, Not doing or Pause, add the appropriate note/return date, then Save decision.
+
+**Expected result and background:** A saved choice is separate from the source state and sync receipt. Done does not confirm a disputed fact or approve a suggested fix. Original deadlines and decision history are retained.
+
+![Annotated screenshot: Understand a task before deciding](../assets/ui-refresh/life-task-annotated.jpg)
+
+### Step 4 · Check whose move comes next
+
+Open Waiting and select the original item for its source and decision history. Use Open original tracker card when the saved context needs checking.
+
+**Expected result and background:** Waiting remains a source state. The refresh adds no automatic reply task or completion reconciliation. Those functional changes remain in the existing feedback backlog.
+
+![Annotated screenshot: Check whose move comes next](../assets/ui-refresh/life-waiting-annotated.jpg)
+
+### Step 5 · Distinguish the saved and requested range
+
+Open What’s On. Read Saved range first, then enter Requested from and Requested through. Choose Request updated agenda only when you want that bounded source update.
+
+**Expected result and background:** The previous saved agenda remains visible while a request waits. Personal Calendar and tracker are read for the requested range; opening the tab does not regenerate it or change events.
+
+![Annotated screenshot: Distinguish the saved and requested range](../assets/ui-refresh/life-agenda-annotated.jpg)
+
+### Step 6 · Choose a bounded refresh
+
+Choose Refresh view. This tab starts selected. Choose the tabs and agenda range, review shared-source effects, then Confirm refresh. Reload saved data only rereads the snapshot; Cancel or Escape queues nothing.
+
+**Expected result and background:** The existing updater handles confirmed requests. Today, Tasks and Waiting share tracker data. Lesson and sweep summaries retain their normal cadence; no new mail sweep is started.
+
+![Annotated screenshot: Choose a bounded refresh](../assets/ui-refresh/life-refresh-annotated.jpg)
+
+### If something looks wrong
+
+- No matching records: clear search and status filters. A selected detail can remain visible while its queue is filtered.
+- Old source date or failed update: retain the last dated result and inspect the specific failure; do not interpret it as an empty successful read.
+- Saved choice still pending: read its sync state before repeating it. A saved decision is not proof its source was updated.
+- Theme does not persist: storage may be unavailable. The current page remains usable; choose the mode again after reopening.
+- On a phone: use Back to return from selected detail, or Close/Escape for a dialog. Physical-device delivery remains a separate check.
+
+### Terms
+
+**Snapshot:** the last saved source read. **Source check:** a fixed rule checked against supplied evidence. **Exact scope:** the change a named choice refers to. **Sync pending:** saved here, not yet verified in the source. **Prepared scenario:** a deterministic replay, not a new AI call.
+
+
+## Retained operating reference and earlier release context
+
+
+Life OS is a private Meridian web app for daily tasks, waiting items, personal dates and one saved daily lesson. It replaces the Notion dashboard page while keeping the existing Notion tracker and original records behind it. The interface offers saved Light and Dark modes and works in a desktop or mobile browser.
 
 The four tabs are Today, Tasks, Waiting and What’s On. AI evaluations, maintenance proposals and suggested fixes stay in the separate [AI performance dashboard](ai-performance-dashboard.md) Review inbox.
 
@@ -30,7 +104,7 @@ A natural 13:00 London run on 30 October 2026 completed in the existing cloud ch
 What you see:
 
 - The current London date and last verified tracker check.
-- One expanded Learn something card with the saved question, short explanation and original lesson link.
+- One expandable Daily lesson and source context section with the saved question, short explanation and original lesson link.
 - A short next-actions list, coming dates and waiting items, with links to the complete lists.
 - A route to AI reviews and suggested fixes in the Performance inbox.
 - Source details, update requests and their actual states.

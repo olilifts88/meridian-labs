@@ -1,0 +1,28 @@
+import {add,badge,select} from './workbench-shared.mjs?v=branch-folds-20261102';
+export function inspectSource(target,trigger,title='Source evidence'){
+ if(!target)return false;
+ const dialog=add(document.body,'dialog','',{class:'app-inspector','aria-label':title}),head=add(dialog,'div','',{class:'app-inspector-head'});add(head,'h2',title);const close=add(head,'button','Close ×',{type:'button','aria-label':'Close evidence'});close.onclick=()=>dialog.close();const copy=target.cloneNode(true);copy.removeAttribute('id');copy.removeAttribute('hidden');copy.querySelectorAll('[id]').forEach(n=>n.removeAttribute('id'));if(copy.tagName==='DETAILS')copy.open=true;dialog.append(copy);dialog.addEventListener('close',()=>{dialog.remove();trigger?.focus()});dialog.showModal();return true;
+}
+export function outputViews(deck,panes){
+ const nav=add(deck,'div','',{class:'app-output-tabs','aria-label':'Result views',role:'group'});deck.prepend(nav);let current=Object.keys(panes)[0];const buttons={};
+ const show=name=>{current=name;for(const[k,p]of Object.entries(panes)){p.hidden=k!==name;buttons[k]?.setAttribute('aria-pressed',String(k===name));}};
+ for(const k of Object.keys(panes)){const b=add(nav,'button',k,{type:'button','aria-pressed':String(k===current)});buttons[k]=b;b.onclick=()=>show(k);}
+ show(current);return {show,refresh:()=>show(current)};
+}
+export function recordBrowser(parent,{rows,workflow,renderSource,initialId=null}){
+ const host=add(parent,'section','',{class:'app-record-browser','aria-label':'Record review'}),tools=add(host,'div','',{class:'app-record-tools'}),searchLabel=add(tools,'label','Find a record'),search=add(searchLabel,'input','',{type:'search',placeholder:'Title, owner, status or ID'});let query='',status='All',selected=initialId||rows[0]?.id||rows[0]?.field;
+ const statuses=[...new Set(rows.map(r=>r.status).filter(Boolean))],filter=select(tools,'Source status',[['All','All'],...statuses.map(s=>[s,s])],'All');if(!statuses.length)filter.closest('label').hidden=true;
+ const layout=add(host,'div','',{class:'app-record-layout'}),queue=add(layout,'aside','',{class:'app-record-queue','aria-label':'Records'}),count=add(queue,'p','',{class:'app-record-count','aria-live':'polite'}),list=add(queue,'div','',{class:'app-record-list'}),detail=add(layout,'section','',{class:'app-record-detail','aria-label':'Selected record'});let lastButton;
+ const key=r=>r.id||r.field,title=r=>r.question||r.title||r.field||r.package,subtitle=r=>[r.package,r.environment,r.owner].filter(Boolean).join(' · ');
+ function drawDetail(){const r=rows.find(r=>key(r)===selected);detail.replaceChildren();if(!r){add(detail,'p','Select a record to inspect its evidence.');return}const back=add(detail,'button','← Back to records',{class:'app-record-back',type:'button'});back.onclick=()=>{layout.classList.remove('detail-open');lastButton?.focus()};const head=add(detail,'div','',{class:'app-record-heading'}),text=add(head,'div');add(text,'h3',title(r),{tabindex:'-1'});add(text,'p',[r.id,subtitle(r)].filter(Boolean).join(' · '),{class:'muted'});if(r.status)badge(text,r.status,r.status==='Accepted'||r.status==='Supported'?'good':'neutral');if(r.severity)badge(text,r.severity,r.severity==='Critical'?'warn':'neutral');const source=add(head,'button','Inspect source',{type:'button'});source.onclick=()=>renderSource?.(r,source);
+ const facts=add(detail,'dl','',{class:'app-record-facts'});const f=(k,v)=>{if(v==null)return;const d=add(facts,'div');add(d,'dt',k);add(d,'dd',String(v));};
+ if(workflow==='vulnerabilities'){f('Installed',r.installed);f('Fixed version',r.fixed);f('Owner',r.owner);f('Original deadline',r.due);f('Discovered',r.discovered);f('SLA',r.sla_days==null?null:r.sla_days+' days');for(const[h,v]of [['Decision',r.decision],['Exposure',r.exposure],['Mitigation',r.mitigation],['Closure evidence',r.validation],['Exception request',r.exception]])if(v){add(detail,'h4',h);add(detail,'p',v);}}
+ else if(workflow==='questionnaire'){f('Owner',r.owner);add(detail,'h4','Proposed answer');add(detail,'p',r.answer);add(detail,'h4','Review requirement');add(detail,'p',r.review);}
+ else if(workflow==='soc2'){f('Owner',r.owner);f('Required period',r.expected_period);f('Evidence period',r.period);f('Reviewed',r.reviewed);f('Reference',r.reference);f('Requested by',r.due);for(const[h,v]of [['Evidence',r.evidence],['Review note',r.note],['Next action',r.request]])if(v){add(detail,'h4',h);add(detail,'p',v);}}
+ else{f('Before',r.before);f('Proposed',r.after);if(r.status)add(detail,'p',r.status);}
+ }
+ function drawQueue(){list.replaceChildren();const shown=rows.filter(r=>(status==='All'||r.status===status)&&JSON.stringify(r).toLowerCase().includes(query.toLowerCase()));count.textContent=shown.length+' of '+rows.length+' records';for(const r of shown){const b=add(list,'button','',{type:'button',class:'app-record-row','aria-pressed':String(key(r)===selected)});add(b,'strong',title(r));add(b,'small',subtitle(r)||r.id||r.field);if(r.status)badge(b,r.status);b.onclick=()=>{selected=key(r);lastButton=b;layout.classList.add('detail-open');drawQueue();drawDetail();if(matchMedia('(max-width:700px)').matches)detail.querySelector('h3')?.focus()};if(key(r)===selected)lastButton=b;}
+ if(!shown.length){add(list,'p','No records match these filters.',{class:'muted'});const clear=add(list,'button','Clear filters',{type:'button'});clear.onclick=()=>{query='';status='All';search.value='';filter.value='All';drawQueue()};}
+ }
+ search.oninput=()=>{query=search.value;drawQueue()};filter.onchange=()=>{status=filter.value;drawQueue()};drawQueue();drawDetail();return host;
+}

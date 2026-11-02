@@ -11,7 +11,7 @@ export const money=n=>n==null?'Unavailable':'$'+n.toFixed(5);
 export function renderRoute(parent,workflow,record,card,{savedPlan=null,onApply=()=>{},readonly=false,settingsHost=null,getContext=null,records=[]}={}){
  let plan=savedPlan?structuredClone(savedPlan):makePlan(workflow,record,card),selectedBranch=null;
  const settings=add(settingsHost||parent,'div','',{class:'rw-settings-bar'}),button=add(settings,'button','Adjust route & token budgets',{type:'button',class:'rw-settings-trigger','aria-haspopup':'dialog'});if(readonly)button.hidden=true;if(readonly)add(settings,'span','Saved route',{class:'muted'});
- const route=add(parent,'section','',{class:'rw-route',id:'model-routing'});
+ const routeFold=fold(parent,'Model route & cost'),route=add(routeFold,'section','',{class:'rw-route',id:'model-routing'});routeFold.className='app-route-disclosure';
  attachRouteSettings(parent,button,{getContext:()=>({workflow,record,card,plan,records}),onApply:next=>{plan=next;onApply(structuredClone(plan));draw();}});
  function draw(){route.replaceChildren();const header=add(route,'div','',{class:'row'});add(header,'h2','Model route');badge(header,plan.preset==='custom'?'Custom route':plan.preset==='economy'?'Lower-cost route':plan.preset==='deep'?'Deeper review':plan.preset&&plan.rate_card.models[plan.preset]?plan.rate_card.models[plan.preset].label+' throughout':'Recommended route');renderRouteEvidence(route,records,plan.rate_card.models,{preset:plan.preset});const grid=add(route,'div','',{class:'rw-stage-grid'});
   const branched=workflow==='call-crm'&&getContext&&renderTranscriptRoute(grid,plan,getContext(),selectedBranch,key=>{selectedBranch=key;});if(branched)grid.className='';
