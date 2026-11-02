@@ -14,7 +14,7 @@ MODULES=['__init__.py','domain.py','store.py','service.py','showcase.py','showca
  'showcase.html','call_crm.html','evaluation.html','workflow_home.html','demo_banner.css',
  'run_explorer.html','run_explorer.css','run_explorer.mjs','visitor_results.mjs',
  'routing/__init__.py','routing/router.py','routing/execution.py','routing/local_codex.py']
-FILES=['docs/workflow-stage-routing.md','showcase_demo.py','docs/recorded-workflows.md','docs/showcase-routing-and-costs.md','assets/meridian-labs-banner.svg','assets/meridian-labs-lockup.svg',
+FILES=['docs/customer-recovery.md','docs/workflow-stage-routing.md','showcase_demo.py','docs/recorded-workflows.md','docs/showcase-routing-and-costs.md','assets/meridian-labs-banner.svg','assets/meridian-labs-lockup.svg',
  'examples/recorded-runs/pilot-2026-10-28.json','examples/routing/policy.json','examples/routing/capabilities.json']
 FILES += ['examples/showcase/'+name for name in ['calls.json','knowledge.json','questionnaire.json','soc2.json','vulnerabilities.json','pilot-guidance.json']]
 FILES += ['docs/workflow-guidance/pilot-'+flow+'.md' for flow in ['release-notes','vulnerabilities','questionnaire','soc2','call-crm']]
