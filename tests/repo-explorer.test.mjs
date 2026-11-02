@@ -1,0 +1,4 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {rankEntries,sourceURL} from '../repo-explorer/core.mjs';
+const entries=[{id:'route',title:'Models and token costs',files:['pricing.mjs'],gaps:[]},{id:'crm',title:'Transcript CRM updates',files:['transcript.mjs'],gaps:[]}];
+test('Repo Explorer returns relevant evidence and no invented match',()=>{assert.equal(rankEntries(entries,'How are token costs calculated?')[0].id,'route');assert.deepEqual(rankEntries(entries,'quantum teleportation'),[]);assert.equal(rankEntries(entries,'').length,2);});
+test('Repo Explorer source links bind to a revision and reject traversal',()=>{const ref='a'.repeat(40);assert.equal(sourceURL('oli/repo',ref,'src/a b.mjs'),'https://github.com/oli/repo/blob/'+ref+'/src/a%20b.mjs');assert.throws(()=>sourceURL('oli/repo','main','src/a.mjs'));assert.throws(()=>sourceURL('oli/repo',ref,'../secret'));});

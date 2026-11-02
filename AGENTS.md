@@ -4,6 +4,7 @@ Applies across this repository. Follow the user's task and any more specific rep
 
 ## Where to work
 
+- `repo-explorer/` is the GitHub Pages source map and DeepWiki handoff. Its build binds source links to the deployed commit.
 - `demo-web/` is the current visitor interface, including workflow outputs, quality reviews, routing and cost controls. Keep shared behaviour in shared modules.
 - `showcase_demo.py` serves that interface through `src/workflow_portfolio/web_demo.py`.
 - `src/workflow_portfolio/` also contains the Python workflow engines and original recorded-run tooling. Trace the relevant entry point before choosing what to change.
@@ -24,7 +25,7 @@ Run checks appropriate to the change. Start with focused tests; use download che
 
 ## Working rules
 
-Follow nearby code and keep changes within the task. Use `docs/capability-check.md` for the capability-review method, availability verdicts and five-part answer format. Inspect the reachable code path; `capabilities.json` is an index, not proof of implementation. Update affected claims, tests and guides when behaviour changes.
+Follow nearby code and keep changes within the task. Use `docs/repo-explorer.md` for the capability-review method, availability verdicts and five-part answer format. Inspect the reachable code path; `capabilities.json` is an index, not proof of implementation. Update affected claims, tests and guides when behaviour changes.
 
 Keep recorded-answer identities and source-bound evaluations intact. Separate planned costs from measured usage and source checks from model comparisons. Dated verification records do not establish a fresh run.
 

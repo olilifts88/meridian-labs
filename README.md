@@ -8,10 +8,11 @@ This repository contains a runnable AI workflow demo, the code behind its evalua
 
 | Goal | Go to |
 | --- | --- |
+| Ask about the repository | [Open Repo Explorer](https://olilifts88.github.io/meridian-labs/) · [Code Q&A on DeepWiki](https://deepwiki.com/olilifts88/meridian-labs) |
 | Try the demo online | [Open AI Workflows](https://meridian-ai-workflows-oli.misty-moon-5776.chatgpt.site/) |
 | Run it on your computer | [Download and setup](#download-and-run-locally) |
 | Understand the implementation | [Code and evidence](#inspect-the-code-and-evidence) |
-| Check what a capability actually supports | [Capability evidence guide](docs/capability-check.md) |
+| Check what a capability actually supports | [Repo Explorer](docs/repo-explorer.md) |
 | Understand the private dashboard | [Dashboard guide](docs/ai-performance-dashboard.md) |
 | Understand the private Life OS app | [Life OS guide](docs/life-os.md) |
 | Work on the repository with an agent | [AGENTS.md](AGENTS.md) |
@@ -110,6 +111,8 @@ The original checks passed 31/40 answers; a versioned checker correction passed 
 
 </details>
 
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/olilifts88/meridian-labs)
+
 ## Inspect the code and evidence
 
 Start with the files behind the current hosted and downloadable demo:
@@ -151,7 +154,7 @@ To rebuild the ZIP, run `python3 scripts/build-workflow-showcase.py`. The [relea
 - **[Evaluation and source checks](docs/evaluation-framework.md):** criteria, matched source cases and the boundary between automated checks and reviewer judgment. [Current verification](docs/verification-quality-review-2026-11-02.md) records the UI and artefact checks.
 - **[Workflow routing and costs](docs/workflow-stage-routing.md):** model choices, effort, token budgets, comparison estimates and pricing refresh.
 - **[Online and local delivery](docs/showcase-release.md):** the public site, download build, asset alignment and release checks. [Setup help](docs/showcase-quickstart.md#setup-help) covers local startup problems.
-- **[Capability evidence guide](docs/capability-check.md):** how to trace a claim to its entry point, implementation, tests and known limits.
+- **[Repo Explorer](docs/repo-explorer.md):** how to trace a claim to its entry point, implementation, tests and known limits.
 
 <details>
 <summary>Other projects and additional implementation references</summary>
@@ -188,7 +191,7 @@ The [GitHub checks](.github/workflows/ci.yml) run the automated suites on pushes
 
 `python3 demo.py evaluate` runs the original shared workflow scenarios and deliberately corrupted outputs. `python3 demo.py benchmark` compares saved reference and corrupted outputs on matched cases. These check the original evaluators; they do not generate a live model leaderboard.
 
-For a broader offline capability check, use the capability checker's `--verify` option as described in the [guide](docs/capability-check.md).
+For a broader offline capability check, use the capability checker's `--verify` option as described in the [guide](docs/repo-explorer.md).
 
 </details>
 

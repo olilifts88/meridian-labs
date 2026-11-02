@@ -25,3 +25,5 @@ state_*.sqlite-*
 *.sqlite-*
 auth.json
 *.pem
+
+/repo-explorer/data/

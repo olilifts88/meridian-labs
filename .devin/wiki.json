@@ -1,0 +1,11 @@
+{
+  "repo_notes":[{"author":"Meridian Labs","content":"Start with AGENTS.md and README.md. The current visitor interface is demo-web/, served locally by showcase_demo.py via src/workflow_portfolio/web_demo.py. Earlier Python engines and benchmarks remain separate. Distinguish prepared browser outputs from original recorded model comparisons. Public guides describe separate private apps; their code and personal data are absent. Follow docs/repo-explorer.md for evidence boundaries."}],
+  "pages":[
+    {"title":"Start here","purpose":"Explain public site, local download, source checkout and boundaries.","parent":null},
+    {"title":"Workflow inputs and outputs","purpose":"Trace all five current browser workflows through source data, checks, approvals and completed artefacts. Include all Transcript to action destinations.","parent":null},
+    {"title":"Quality and evidence","purpose":"Explain quality tabs, comparisons and change probes. Keep prepared outputs and original model benchmarks separate.","parent":null},
+    {"title":"Model routes and costs","purpose":"Trace stage models, efforts, presets, budgets and pricing checks. Separate planned cost from measured usage and performance.","parent":null},
+    {"title":"Engineering and checks","purpose":"Map server, download allowlist, tests and n8n source/export path. Link exact code.","parent":null},
+    {"title":"Original engines and private app guides","purpose":"Explain original Python engines separately from current browser code, and private app documentation versus public implementations.","parent":null}
+  ]
+}

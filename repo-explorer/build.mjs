@@ -1,0 +1,11 @@
+import {readFile,writeFile,mkdir} from 'node:fs/promises';
+import {execFileSync} from 'node:child_process';
+const root=new URL('../',import.meta.url);
+const manifest=JSON.parse(await readFile(new URL('capabilities.json',root)));
+const revision=process.env.GITHUB_SHA||execFileSync('git',['rev-parse','HEAD'],{cwd:root,encoding:'utf8'}).trim();
+if(!/^[a-f0-9]{40}$/.test(revision))throw Error('A source revision is required');
+const names={'repo-explorer':'Repo Explorer','ai-workflows-browser':'AI workflows','workflow-stage-routing-and-costs':'Model routes and token costs','integrated-release-agent':'Release drafting agent','release-notes':'Release notes','vulnerabilities':'Vulnerability review','questionnaire':'Security questionnaires','soc2':'SOC 2 evidence review','output-evaluation':'Output evaluation','model-routing':'Subscription model routing','usage-and-costs':'Usage and cost accounting','n8n-exports':'n8n workflows','ai-performance-dashboard':'AI Performance Dashboard guide','call-notion-crm':'Call to CRM','shared-workflow-evaluation':'Recorded output benchmarks','life-os-guide':'Life OS guide'};
+const entries=manifest.capabilities.map(c=>({id:c.id,name:names[c.id]||c.id,title:c.claim,files:c.files,tests:c.tests,gaps:c.known_gaps||[],planned:c.status==='planned'}));
+await mkdir(new URL('data/',import.meta.url),{recursive:true});
+await writeFile(new URL('data/repository.json',import.meta.url),JSON.stringify({repository:'olilifts88/meridian-labs',revision,entries},null,2)+'\n');
+console.log('Repo Explorer: '+entries.length+' entries at '+revision.slice(0,7));
