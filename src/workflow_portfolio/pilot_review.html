@@ -124,7 +124,7 @@ function render(preferredId){
  const row=rows[index],c=data.cases.find(c=>c.id===row.case_id);dirty=false;
  $('position').textContent=`${index+1} of ${rows.length} in this view`;$('previous').disabled=index===0;$('next').disabled=index===rows.length-1;
  $('workflow-label').textContent=names[flow(row)];$('case-title').textContent=c.title;
- $('setup').textContent=`${row.configuration.startsWith('luna')?'GPT-6 Luna':'GPT-6.1 Sol'} · ${row.configuration.endsWith('guided')?'workflow guide':'basic instructions'} · recorded medium reasoning setting`;
+ $('setup').textContent=`${row.configuration.startsWith('luna')?'GPT-6 Luna':'GPT-6.1 Sol'} · ${row.configuration.endsWith('guided')?'What to produce + how to do it':'What to produce'} · recorded medium reasoning setting`;
  $('review-state').textContent=row.human_review?.human_label?'Reviewed: '+labelNames[row.human_review.human_label]:'Not reviewed';
  $('expected').textContent=row.source.good_answer;showEvidence(row);showAnswer(row);showChecks(row);
  $('answer-json').textContent=row.answer;

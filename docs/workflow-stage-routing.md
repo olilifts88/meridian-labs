@@ -29,3 +29,13 @@ Official references: [pricing](https://developers.openai.com/api/docs/pricing), 
 ## Visitor path
 
 Open Workflows and choose a scenario. The recommended route appears before the approval choice. Open a step for its reason and quality check; open Customise & compare for model comparisons and pricing options. Saved scenarios retain the selected route. Evaluation provides the same route explorer alongside the recorded benchmark. Real AI runs continue to show original recorded evidence.
+
+## Quality review in each workflow
+
+After Run workflow, the source-check summary and finished artefact remain visible. Quality and evidence adds four tabs: Compare answers, What changed, Check a change and Step detail. The same component serves all five workflows and saved results. Approval still opens the existing release-note or business-output pages.
+
+Instruction choices now read **What to produce** and **What to produce + how to do it**. Both use the same task and source evidence; the latter adds the workflow method and checks. Existing configuration IDs and recorded-answer hashes are preserved.
+
+Original model comparisons remain tied to their exact source case. Expanded business scenarios show their current checks above, with an explicitly selected recorded comparison source case below. Prepared outputs do not inherit model scores. Differences and change probes for those scenarios use their own source pack. A probe works on a separate copy and cannot approve or mutate a saved result. Step detail uses the selected plan, relevant source excerpts, required checks and destination records. It does not claim measured intermediate model calls.
+
+GitHub’s JavaScript checks include fixed scenario regression probes for every business scenario, release claim probes, comparison-source identity, output immutability and label compatibility. See [rollout verification](verification-quality-review-2026-11-02.md).

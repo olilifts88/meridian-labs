@@ -1,8 +1,8 @@
-import {renderBusinessWorkbench} from './business-workbench.mjs?v=cleanup-20261102';
-import {renderPlanner,compactRoute,requestPrices,calculatePlan} from './workflow-routing.mjs?v=cleanup-20261102';
+import {renderBusinessWorkbench} from './business-workbench.mjs?v=quality-rollout-20261102';
+import {renderPlanner,compactRoute,requestPrices,calculatePlan} from './workflow-routing.mjs?v=quality-rollout-20261102';
 import {validateCard} from './pricing.mjs';
 import {readResults,saveResult,removeResult} from './visitor-results.mjs';
-import {renderReleaseWorkbench} from './release-workbench.mjs?v=cleanup-20261102';
+import {renderReleaseWorkbench} from './release-workbench.mjs?v=quality-rollout-20261102';
 import {validatePublication,publicationUrl} from './release-publication.mjs';
 const app=document.getElementById('app'),message=document.getElementById('message');
 const names={'release-notes':'Release notes',vulnerabilities:'Vulnerability review',questionnaire:'Security questionnaires',soc2:'SOC 2 evidence','call-crm':'Transcript to action'};
@@ -17,7 +17,7 @@ function link(parent,label,url,primary=false){return add(parent,'a',label,{href:
 function say(text,error=false){message.textContent=text;message.className=error?'error':'muted';}
 function checkSet(r){return r.revised_checks||r.original_checks;}
 function title(r){return catalog.cases.find(c=>c.id===r.case_id);}
-function setup(r){return `${r.requested_model==='gpt-6-luna'?'GPT-6 Luna':'GPT-6.1 Sol'} · ${r.configuration.endsWith('guided')?'With workflow guide':'Task instructions only'}`;}
+function setup(r){return `${r.requested_model==='gpt-6-luna'?'GPT-6 Luna':'GPT-6.1 Sol'} · ${r.configuration.endsWith('guided')?'What to produce + how to do it':'What to produce'}`;}
 function readableOutcome(session){if(session.publication){try{validatePublication(session);return 'The approved release note is ready on its Meridian demo page.';}catch{}}return session.outcome.summary.replace('CRM changes and issue links are simulated. Your choice applies only to pending approvals; supported automatic stage changes follow the workflow rules.','CRM changes and linked issues follow the workflow rules. Your review choice applies to pending actions.');}
 function time(v){return new Date(v).toLocaleString('en-GB');}
 function tokens(r){return r.usage==null?null:r.usage.input_tokens+r.usage.output_tokens;}
@@ -58,18 +58,18 @@ function library(){
 }
 function scenario(){
  const request=new URLSearchParams(location.search),source=catalog.records.find(r=>r.id===request.get('record'));
- if((source?title(source).workflow:request.get('workflow')||'release-notes')==='release-notes'){renderReleaseWorkbench(app,catalog,pricing,{say,records:catalog.records});return;}
- renderBusinessWorkbench(app,source?title(source).workflow:request.get('workflow')||'call-crm',pricing,{say,records:catalog.records});
+ if((source?title(source).workflow:request.get('workflow')||'release-notes')==='release-notes'){renderReleaseWorkbench(app,catalog,pricing,{say,records:catalog.records,cases:catalog.cases});return;}
+ renderBusinessWorkbench(app,source?title(source).workflow:request.get('workflow')||'call-crm',pricing,{say,records:catalog.records,cases:catalog.cases});
 }
 
 function comparison(parent,record){
- add(parent,'h2','Compare the same example');add(parent,'p','Task instructions only gives the model the request and source material. With workflow guide also supplies the workflow rules and checks.',{class:'muted'});add(parent,'p','These are the four recorded generations on the same input. Your replay does not add another model sample.',{class:'muted'});
+ add(parent,'h2','Compare the same example');add(parent,'p','What to produce gives the model the request and source material. What to produce + how to do it also supplies the workflow rules and checks.',{class:'muted'});add(parent,'p','These are the four recorded generations on the same input. Your replay does not add another model sample.',{class:'muted'});
  const wrap=add(parent,'div','',{class:'table-wrap'}),table=add(wrap,'table'),head=add(table,'thead'),hr=add(head,'tr');for(const text of ['Setup','Original checks','Recheck','Owner review','Recorded time','Recorded tokens','Estimated API cost'])add(hr,'th',text);
  const body=add(table,'tbody');for(const r of catalog.records.filter(r=>r.case_id===record.case_id)){const row=add(body,'tr');const cell=add(row,'td');add(cell,'a',setup(r),{href:'/results.html?run='+encodeURIComponent(r.id)});for(const v of [r.original_checks.outcome==='Pass'?'Passed':'Flagged',checkSet(r).outcome==='Pass'?'Passed':'Flagged',ownerLabels[r.owner_review]||'Not reviewed',(r.generation_duration_ms/1000).toFixed(1)+'s',tokens(r)?.toLocaleString()??'Unavailable',cost(r)])add(row,'td',v);}
 }
 function resultView(session){
- if(session?.record.kind==='prepared_business_output'){renderBusinessWorkbench(app,session.case.workflow,pricing,{say,saved:session,records:catalog.records});return;}
- if(session?.case.workflow==='release-notes'){renderReleaseWorkbench(app,catalog,pricing,{say,saved:session,records:catalog.records});return;}
+ if(session?.record.kind==='prepared_business_output'){renderBusinessWorkbench(app,session.case.workflow,pricing,{say,saved:session,records:catalog.records,cases:catalog.cases});return;}
+ if(session?.case.workflow==='release-notes'){renderReleaseWorkbench(app,catalog,pricing,{say,saved:session,records:catalog.records,cases:catalog.cases});return;}
  const params=new URLSearchParams(location.search),record=session?.record||catalog.records.find(r=>r.id===params.get('run'));if(!record){heading('Result unavailable','This result could not be found.','Visitor results live in the browser that saved them.');link(app,'Open saved scenarios','/saved-results.html');return;}
  if(!record.routing_preview){const current=catalog.records.find(r=>r.id===record.id);if(current)Object.assign(record,{estimated_cost:current.estimated_cost,routing_preview:current.routing_preview,recorded_route:current.recorded_route});}
  const c=session?.case||title(record),visitor=!!session;
@@ -83,7 +83,7 @@ function resultView(session){
  const routing=add(app,'section','',{class:'card'});add(routing,'h2','Model choice and recorded usage');add(routing,'p',setup(record)+' · requested '+record.requested_effort+' reasoning.');details(routing,'Source and route details',catalog.routing_note);const metrics=add(routing,'div','',{class:'metrics'});stat(metrics,'original generation time',(record.generation_duration_ms/1000).toFixed(1)+'s');stat(metrics,'original processed tokens',tokens(record)?.toLocaleString()??'Unknown');stat(metrics,'estimated API cost',cost(record));if(visitor)stat(metrics,'exported Python check time',session.execution.local_duration_ms.toFixed(1)+'ms');add(routing,'p','Cached input is included in input; reasoning is included in output. Open the calculation for rates and source details.',{class:'muted'});details(routing,'Estimate calculation and dated rates',record.estimated_cost);details(routing,'Full routing trace',{recorded:record.recorded_route,preview:record.routing_preview});details(routing,'Usage categories and provenance',{requested_model:record.requested_model,requested_effort:record.requested_effort,actual_model:record.actual_model??null,actual_effort:record.actual_effort??null,identity_note:'Requested settings recorded; independent backend identity not exposed.',usage:record.usage,provenance:record.provenance,answer_sha256:record.answer_sha256,scenario_execution:session?.execution||null});
  const checked=add(app,'section','',{class:'card'});add(checked,'h2','Evaluation findings');add(checked,'p',`Recorded original: ${record.original_checks.outcome==='Pass'?'passed':'flagged'} · Recorded recheck: ${checkSet(record).outcome==='Pass'?'passed':'flagged'} · Owner review: ${ownerLabels[record.owner_review]||'not reviewed'}.`);
  const assessment=session?.fresh_checks||checkSet(record);add(checked,'h3',visitor?'Checks computed at export':'Recorded check details');listChecks(checked,assessment.criteria);if(visitor){add(checked,'h3','Scenario safeguards checked at export');listChecks(checked,session.scenario_checks);}add(checked,'p','Passing automated checks does not establish general accuracy. Owner feedback judges answer quality; your simulated approval is a separate decision.',{class:'muted'});details(checked,'Original and revised check records',{original:record.original_checks,revised:record.revised_checks,scenario_recheck:session?.fresh_checks||null});
- const routeDetails=add(app,'div');renderPlanner(routeDetails,c.workflow,record,pricing,{savedPlan:session?.routing_plan||null,readonly:!!session?.routing_plan,records:catalog.records});
+ const routeDetails=add(app,'div');renderPlanner(routeDetails,c.workflow,record,pricing,{savedPlan:session?.routing_plan||null,readonly:!!session?.routing_plan,records:catalog.records,cases:catalog.cases});
  const outcome=add(app,'section','',{class:'card'});add(outcome,'h2','Approval and workflow outcome');if(visitor){add(outcome,'strong',states[session.outcome.state]);add(outcome,'p',readableOutcome(session));for(const a of session.outcome.actions){add(outcome,'p',`${String(a.field).replaceAll('_',' ')}: ${a.state}${a.after!=null?' → '+String(a.after):''}`);}if(session.outcome.details?.length)details(outcome,'Workflow findings and linked records',session.outcome.details);details(outcome,'Full workflow outcome',session.outcome);}else{add(outcome,'p','This is the original model answer and evaluation evidence. Try the scenario to choose a simulated approval and see its workflow outcome.');link(outcome,'Try the scenario','/scenarios.html?record='+encodeURIComponent(record.id),true);}
  const compare=add(app,'section','',{class:'card'});comparison(compare,record);const overview=add(app,'section','',{class:'card result-overview'});add(overview,'div','Source → decision',{class:'eyebrow'});add(overview,'h2',visitor?states[session.outcome.state]:checkSet(record).outcome==='Pass'?'Checks passed':'Flagged for review');add(overview,'p',visitor?readableOutcome(session):c.success);const m=add(overview,'div','',{class:'metrics'});stat(m,'recorded generation',(record.generation_duration_ms/1000).toFixed(1)+'s');stat(m,'estimated API cost',cost(record));overview.append(routeDetails,outcome);Object.assign(panes,{overview,evidence:grid,checks:checked,usage:routing,compare});for(const [key,n] of Object.entries(panes))n.hidden=key!=='overview';
 }

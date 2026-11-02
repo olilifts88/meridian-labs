@@ -54,7 +54,7 @@ If Python is not installed, install it from [python.org](https://www.python.org/
 
 ## What to explore
 
-Choose a workflow, inspect its sources and route, then click **Run workflow**. The output evaluation and artefact appear automatically beneath the run controls. Review the source-linked checks and approve the output pages. **Request changes** offers a supported revision or lets you save a reviewer note. **Saved results** keeps the route, evidence and decision together.
+Choose a workflow, inspect its sources and route, then click **Run workflow**. The output evaluation and artefact appear automatically beneath the run controls. **Quality and evidence** lets you compare answers, inspect changes, test a source conflict and follow each step to its output records. Review the source-linked checks and approve the output pages. **Request changes** offers a supported revision or lets you save a reviewer note. **Saved results** keeps the route, evidence and decision together.
 
 The release workflow includes four scenarios and a branded release-note page. Transcript to action includes BD, customer-success and internal-meeting scenarios; its output hub opens CRM updates, engineering signals, pricing follow-ups, a company post and a searchable call library. Vulnerability review covers 40 asset findings, the security questionnaire has 20 questions, and SOC 2 covers 16 controls.
 
@@ -84,7 +84,7 @@ The supporting model evidence connects those answers to measured tokens, generat
 
 The new routing rules choose a smaller or stronger model, use ordinary code, or hold for missing evidence. They can select a matching recorded answer. These rules were written after the fixed-setup pilot, so their replay is an exploratory comparison, not a fresh routing experiment or proof of savings.
 
-**[See the evaluation method](docs/evaluation-framework.md)** · **[Inspect routing rules and cost calculations](docs/showcase-routing-and-costs.md)** · **[Read the latest verification](docs/verification-maintenance-2026-11-02.md)**
+**[See the evaluation method](docs/evaluation-framework.md)** · **[Inspect routing rules and cost calculations](docs/showcase-routing-and-costs.md)** · **[Read the latest verification](docs/verification-quality-review-2026-11-02.md)**
 
 ## Inspect the code and evidence
 

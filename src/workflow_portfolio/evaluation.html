@@ -77,7 +77,7 @@ $('run').onclick=load;
 $('download').onclick=()=>{if(!saved)return;const url=URL.createObjectURL(new Blob([JSON.stringify(saved,null,2)],{type:'application/json'}));const a=document.createElement('a');a.href=url;a.download='meridian-workflow-evaluation.json';a.click();URL.revokeObjectURL(url);};
 load();
 let pilot=null;
-const setupName=c=>`${c.model==='gpt-6-luna'?'GPT-6 Luna':'GPT-6.1 Sol'} · ${c.style==='guided'?'With workflow guide':'Task instructions only'}`;
+const setupName=c=>`${c.model==='gpt-6-luna'?'GPT-6 Luna':'GPT-6.1 Sol'} · ${c.style==='guided'?'What to produce + how to do it':'What to produce'}`;
 async function loadPilot(){
  $('refresh-pilot').disabled=true;
  try{

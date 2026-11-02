@@ -1,6 +1,6 @@
 import {assessRelease} from '../assets/release-quality.mjs';
 export const modelName = id => ({'gpt-6-luna':'GPT-6 Luna','gpt-6.1-sol':'GPT-6.1 Sol','gpt-6.1-terra':'GPT-6.1 Terra'}[id]||id);
-export const setupName = r => modelName(r.requested_model)+' · '+(r.configuration.endsWith('guided')?'With workflow guide':'Task instructions only');
+export const setupName = r => modelName(r.requested_model)+' · '+(r.configuration.endsWith('guided')?'What to produce + how to do it':'What to produce');
 export const checksOf = r => r.revised_checks||r.original_checks;
 export function parseAnswer(r){try{return JSON.parse(r.answer);}catch{return {body:r.answer};}}
 export function outputText(r){const a=parseAnswer(r);return a.body||(Array.isArray(a.facts)?(a.facts.length?a.facts.map(f=>[f.kind.replaceAll('_',' ')+(f.value!==undefined&&f.value!==''?': '+f.value:''),'Source: “'+f.quote+'”',f.topic?'Topic: '+f.topic:''].filter(Boolean).join('\n')).join('\n\n'):'No facts extracted.'):JSON.stringify(a,null,2));}

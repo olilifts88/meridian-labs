@@ -7,7 +7,7 @@ export function matchedComparisons(records,record){
  // Prepared outputs have different inputs or copy, so never inherit model judgments.
  if(!record||record.kind==='prepared_release_output'||record.kind==='prepared_business_output'||record.editorial_revision)return [];
  const matches=records.filter(r=>r.case_id===record.case_id&&r.evidence&&JSON.stringify(r.evidence)===JSON.stringify(record.evidence));
- return matches.map(r=>{const checks=r.revised_checks||r.original_checks;return {id:r.id,model:r.requested_model,instructions:r.configuration.endsWith('guided')?'With workflow guide':'Task instructions only',passed:checks.criteria.filter(c=>c.verdict==='Pass').length,total:checks.criteria.length,ready:checks.outcome==='Pass',owner_review:r.owner_review||'Not reviewed',recorded_at:r.recorded_at};});
+ return matches.map(r=>{const checks=r.revised_checks||r.original_checks;return {id:r.id,model:r.requested_model,instructions:r.configuration.endsWith('guided')?'What to produce + how to do it':'What to produce',passed:checks.criteria.filter(c=>c.verdict==='Pass').length,total:checks.criteria.length,ready:checks.outcome==='Pass',owner_review:r.owner_review||'Not reviewed',recorded_at:r.recorded_at};});
 }
 function add(p,t,text='',attrs={}){const n=document.createElement(t);n.textContent=text;for(const[k,v]of Object.entries(attrs))n.setAttribute(k,v);p.append(n);return n;}
 export function sourceAnchor(parent,id,label='View source'){
@@ -21,7 +21,7 @@ export function renderOutputEvaluation(parent,{checks,record=null,records=[],mod
  if(summary.failed.length){const next=add(parent,'div','',{class:'oe-next'});add(next,'strong','Resolve before approval');add(next,'p',summary.failed[0].detail);}
  if(revision){const change=add(parent,'div','',{class:'oe-revision'});add(change,'strong','Correction checked');add(change,'p',revision);}
  const human=add(parent,'div','',{class:'oe-human'});add(human,'strong','Clarity & usefulness');add(human,'span','Reviewer decision',{class:'rw-badge'});add(human,'p','Source checks establish fixed rules. Review whether the output is clear and useful before approving it.');
- const matched=matchedComparisons(records,record);if(matched.length){const fold=add(parent,'details','',{class:'oe-comparisons'});add(fold,'summary','Compare model answers · same example');add(fold,'p','Each answer below used this same source case. These are recorded source checks; changing the route does not generate another model answer.');for(const r of matched){const row=add(fold,'div','',{class:'oe-model-row'});add(row,'strong',models[r.model]?.label||r.model);add(row,'span',r.instructions,{class:'oe-scope'});const track=add(row,'div','',{class:'oe-model-track','aria-hidden':'true'});add(track,'span','',{style:'width:'+(r.passed/r.total*100)+'%'});add(row,'span',r.passed+'/'+r.total+' checks · '+(r.ready?'all required checks passed':'flagged'));add(row,'span','Owner review: '+r.owner_review,{class:'oe-scope'});add(row,'a','Inspect recorded answer',{href:'/results.html?run='+encodeURIComponent(r.id),class:'rw-source-link'});}add(fold,'p','The denominator is checks on one recorded output, not a benchmark across multiple tasks.',{class:'oe-scope'});}
+
  return summary;
 }
 export function revealResults(deck,{scroll=true}={}){

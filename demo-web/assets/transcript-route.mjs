@@ -1,5 +1,5 @@
 import {checksFor} from './business-engine.mjs';
-import {calculatePlan} from './workflow-routing.mjs?v=cleanup-20261102';
+import {calculatePlan} from './workflow-routing.mjs?v=quality-rollout-20261102';
 
 const PATHS=[
  ['crm','Account updates','CRM','Separate agreed changes from tentative interest.'],

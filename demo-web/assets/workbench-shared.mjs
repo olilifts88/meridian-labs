@@ -1,7 +1,7 @@
-import {attachRouteSettings} from './route-settings.mjs?v=cleanup-20261102';
-import {renderRouteEvidence} from './route-evidence.mjs?v=cleanup-20261102';
-import {renderTranscriptRoute} from './transcript-route.mjs?v=cleanup-20261102';
-import {makePlan,calculatePlan} from './workflow-routing.mjs?v=cleanup-20261102';
+import {attachRouteSettings} from './route-settings.mjs?v=quality-rollout-20261102';
+import {renderRouteEvidence} from './route-evidence.mjs?v=quality-rollout-20261102';
+import {renderTranscriptRoute} from './transcript-route.mjs?v=quality-rollout-20261102';
+import {makePlan,calculatePlan} from './workflow-routing.mjs?v=quality-rollout-20261102';
 export function add(p,t,text='',attrs={}){const n=document.createElement(t);n.textContent=text;for(const[k,v]of Object.entries(attrs))n.setAttribute(k,v);p.append(n);return n;}
 export function badge(p,text,tone='neutral'){return add(p,'span',text,{class:'rw-badge '+tone});}
 export function fold(p,title){const d=add(p,'details');add(d,'summary',title);return d;}
