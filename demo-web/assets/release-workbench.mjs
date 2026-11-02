@@ -1,5 +1,6 @@
+import {renderRouteEvidence} from './route-evidence.mjs?v=route-cleanup-20261102';
 import {renderOutputEvaluation,revealResults} from './output-evaluation.mjs';
-import {renderPlanner,makePlan,calculatePlan,requestPrices} from './workflow-routing.mjs?v=transcript-branches-20261102';
+import {renderPlanner,makePlan,calculatePlan,requestPrices} from './workflow-routing.mjs?v=route-cleanup-20261102';
 import {saveResult,readResults} from './visitor-results.mjs';
 import {approvePublication,validatePublication,findPublication,publicationUrl,releasePRContext,releaseTitle} from './release-publication.mjs';
 import {assessRelease,releaseEvidence,releaseDecisions} from './release-quality.mjs';
@@ -27,10 +28,11 @@ export function renderReleaseWorkbench(app,catalog,card,{say=()=>{},saved=null}=
  const cases=select(choices,'Scenario',allCases.filter(c=>c.workflow==='release-notes').map(c=>[c.id,c.title]),initial?.case_id||'release-notes:2');
  const run=add(bar,'button','Run workflow',{type:'button',class:'primary rw-run'});
  const resultDeck=add(app,'section','',{class:'rw-result-deck','aria-label':'Workflow result'}),evaluation=add(resultDeck,'section','',{class:'rw-panel rw-evaluation','aria-label':'Output evaluation'});resultDeck.hidden=true;
- const settingsBar=add(app,'div','',{class:'rw-settings-bar'}),openSettings=add(settingsBar,'button','Adjust route & token budgets',{type:'button',class:'rw-settings-trigger','aria-haspopup':'dialog','aria-controls':'route-settings-dialog'});add(settingsBar,'span','Recommended route selected. Customise before running.',{class:'muted'});
+ const settingsBar=add(app,'div','',{class:'rw-settings-bar'}),openSettings=add(settingsBar,'button','Adjust route & token budgets',{type:'button',class:'rw-settings-trigger','aria-haspopup':'dialog','aria-controls':'route-settings-dialog'});
  bar.after(settingsBar);
  const route=add(app,'section','',{class:'rw-route',id:'model-routing','aria-labelledby':'rw-route-title'}),routeHeader=add(route,'div','',{class:'row'});add(routeHeader,'h2','Model route',{id:'rw-route-title'});const routeType=badge(routeHeader,'Recommended route');
  settingsBar.after(route);
+ const routeEvidenceHost=add(route,'div');
  const stageCards=add(route,'div','',{class:'rw-stage-grid'}),routeStats=add(route,'dl','',{class:'rw-costs'});
  const adjust=add(app,'dialog','',{id:'route-settings-dialog',class:'rw-settings-dialog','aria-labelledby':'route-settings-title','aria-describedby':'route-settings-description'}),modalHeader=add(adjust,'div','',{class:'rw-dialog-header'});add(modalHeader,'h2','Route & token budgets',{id:'route-settings-title'});const closeSettings=add(modalHeader,'button','×',{type:'button','aria-label':'Close route settings'});const modalBody=add(adjust,'div','',{class:'rw-dialog-body'});add(modalBody,'p','Choose a route, then open a step to edit its model, effort and token estimates.',{id:'route-settings-description',class:'muted'});const plannerHost=add(modalBody,'div'),settingsError=add(modalBody,'p','',{class:'error',role:'alert'}),modalFooter=add(adjust,'div','',{class:'rw-dialog-footer'}),cancelSettings=add(modalFooter,'button','Cancel',{type:'button'}),applySettings=add(modalFooter,'button','Use this route',{type:'button',class:'primary'});
  const costDifference=add(route,'div','',{class:'rw-cost-difference','aria-live':'polite'}),explain=fold(route,'What do these estimates mean?');add(explain,'p','Selected route: the estimated API token cost of all enabled steps using their chosen models.');add(explain,'p','One-model comparison: the same token amounts, priced with the comparison model at every step. Change that model in the route settings to compare another option.');add(explain,'p','Planned tokens: input plus output across all enabled steps. Instructions, source documents and earlier answers may be read more than once. These amounts are planning assumptions, not measured usage or enforced limits. Changing them updates the calculator, not the saved draft.');const pricingStatus=add(explain,'p','',{class:'muted','aria-live':'polite'});
@@ -48,6 +50,7 @@ export function renderReleaseWorkbench(app,catalog,card,{say=()=>{},saved=null}=
  function invalidate(){session=null;revision++;showPlaceholder();}
  function showPlaceholder(){resultDeck.hidden=true;evaluation.replaceChildren();sourceFold.open=true;output.replaceChildren();add(output,'h2','Release draft',{id:'rw-output-title'});badge(output,'Ready to run');const empty=add(output,'div','',{class:'rw-empty'});add(empty,'div','↗',{class:'rw-empty-mark','aria-hidden':'true'});add(empty,'h3','Your draft will appear here');add(empty,'p','Run the workflow to see the announcement, source decisions and quality checks.');}
  function drawRoute(){
+  routeEvidenceHost.replaceChildren();renderRouteEvidence(routeEvidenceHost,catalog.records,card.models,{preset:plan.preset});
   const estimate=calculatePlan(plan);stageCards.replaceChildren();routeStats.replaceChildren();routeType.textContent=plan.preset==='custom'?'Custom route':plan.preset==='economy'?'Lower-cost route':plan.preset==='deep'?'Deeper review':!plan.preset||plan.preset==='routed'?'Recommended route':card.models[plan.preset]?.label+' throughout';
   const missing=inputMode.value==='missing';if(missing)routeType.textContent='Held for evidence';routeType.className='rw-badge '+(missing?'warn':'neutral');
   const a=assessRelease(record),contributions=[['Scope & audience',a.pilot?'Keep the confirmed audience restriction attached to the change.':'Confirm general availability before drafting.'],['Customer-facing draft','Explain the change and the next action in a short announcement.'],['Claim review','Match the audience, change and action to the release specification.'],['Review copy','Keep the approved facts intact in the final format.']];
@@ -57,7 +60,7 @@ export function renderReleaseWorkbench(app,catalog,card,{say=()=>{},saved=null}=
   }
   const baselineName=plan.rate_card.models[plan.baseline_model]?.label||plan.baseline_model;
   fact(routeStats,'Selected route estimate',missing?'On hold':money(estimate.amount));fact(routeStats,'All steps: '+baselineName,missing?'—':money(estimate.baseline));fact(routeStats,'Planned tokens',missing?'0 · on hold':plan.stages.filter(s=>s.enabled).reduce((n,s)=>n+s.input_tokens+s.output_tokens,0).toLocaleString());fact(routeStats,'Rates',plan.rate_card.verified_on+' · USD');
-  costDifference.replaceChildren();if(!missing&&estimate.difference!=null){const difference=estimate.amount-estimate.baseline;badge(costDifference,(difference<0?'−':difference>0?'+':'')+money(Math.abs(difference))+' · '+(difference<0?'lower estimated cost':difference>0?'higher estimated cost':'same estimated cost'),difference<0?'good':difference>0?'warn':'neutral');add(costDifference,'span','Compared with '+baselineName+' at every step, using the same token estimates.',{class:'muted'});}settingsBar.querySelector('span').textContent=routeType.textContent+'. Customise before running.';
+  costDifference.replaceChildren();if(!missing&&estimate.difference!=null){const difference=estimate.amount-estimate.baseline;badge(costDifference,(difference<0?'−':difference>0?'+':'')+money(Math.abs(difference))+' · '+(difference<0?'lower estimated cost':difference>0?'higher estimated cost':'same estimated cost'),difference<0?'good':difference>0?'warn':'neutral');add(costDifference,'span','Compared with '+baselineName+' at every step, using the same token estimates.',{class:'muted'});}
 
  }
  function drawEvidence(){

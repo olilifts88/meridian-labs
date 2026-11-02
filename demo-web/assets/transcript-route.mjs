@@ -1,5 +1,5 @@
 import {checksFor} from './business-engine.mjs';
-import {calculatePlan} from './workflow-routing.mjs?v=transcript-branches-20261102';
+import {calculatePlan} from './workflow-routing.mjs?v=route-cleanup-20261102';
 
 const PATHS=[
  ['crm','Account updates','CRM','Separate agreed changes from tentative interest.'],
@@ -16,7 +16,7 @@ export function transcriptBranches(draft){
   const relevant=checks.filter(c=>c.label==='Sources retained'||key==='crm'&&/Commitment|Commercial/.test(c.label)||key==='engineering'&&/Engineering/.test(c.label)||key==='revenue'&&/Commercial/.test(c.label)||key==='report'&&/Actions/.test(c.label));
   if(key==='crm'){
    ids=[...new Set(draft.rows.map(r=>r.source))];records=draft.rows.map(r=>({label:r.field,value:String(r.before)+' → '+String(r.after),status:r.status}));
-   action=t.stage?'Review the proposed account fields. Record a budget indication separately from approved annual value.':'This internal meeting changes no account fields. Keep its decisions in the issue board and team report.';
+   action=!t.stage?'This internal meeting changes no account fields. Keep its decisions in the issue board and team report.':t.budget?'Review the proposed account fields. Record a budget indication separately from approved annual value.':t.stage[0]===t.stage[1]?'Keep the current opportunity stage. The speaker has not agreed a change. Review any seat request separately.':'Review the account changes against the speaker’s explicit agreement.';
    if(!draft.rows.length)status='No account change';else if(t.budget)status='Budget confirmation needed';
   }else if(key==='engineering'){
    const issue=draft.issueRecord;ids=issue?[issue.source]:draft.sources.filter(s=>/no product issues/i.test(s.text)).map(s=>s.id);
@@ -40,7 +40,7 @@ const add=(p,t,text='',attrs={})=>{const n=document.createElement(t);n.textConte
 const money=n=>n==null?'Unavailable':'$'+n.toFixed(5);
 function labels(parent,stage,plan){const tags=add(parent,'div','',{class:'rw-labels'});add(tags,'span',plan.rate_card.models[stage.model].label,{class:'rw-badge model'});add(tags,'span',stage.effort+' effort',{class:'rw-badge neutral'});if(!stage.enabled)add(tags,'span','Budget excluded',{class:'rw-badge warn'});}
 function node(parent,stage,plan){const d=add(parent,'details','',{class:'tr-node tr-center'}),s=add(d,'summary',stage.name);labels(s,stage,plan);add(d,'p',stage.reason);return d;}
-export function renderTranscriptRoute(parent,plan,{draft,result=null},selected='crm',onSelect=()=>{}){
+export function renderTranscriptRoute(parent,plan,{draft,result=null},selected=null,onSelect=()=>{}){
  const parts=new Map(plan.stages.filter(s=>s.role!=='retry').map(s=>[s.route_part,s]));
  if(!['read','crm','engineering','revenue','report','library','review','format'].every(k=>parts.has(k)))return false;
  const branches=transcriptBranches(draft),estimates=calculatePlan(plan).rows,root=add(parent,'div','',{class:'transcript-route'});
@@ -49,13 +49,12 @@ export function renderTranscriptRoute(parent,plan,{draft,result=null},selected='
  for(const branch of branches){const s=parts.get(branch.key),button=add(lanes,'button','',{type:'button',class:'tr-branch','aria-pressed':String(selected===branch.key),'aria-controls':'transcript-branch-detail'});buttons.push(button);
   add(button,'span',branch.destination,{class:'tr-destination'});add(button,'strong',branch.title);add(button,'span',branch.description,{class:'tr-description'});labels(button,s,plan);
   const bottom=add(button,'span','',{class:'tr-branch-bottom'});add(bottom,'span',branch.status,{class:'tr-state'+(branch.status==='Needs correction'?' tr-flag':'')});add(bottom,'span',money(estimates.find(r=>r.id===s.id)?.estimate.amount),{class:'tr-price'});
-  button.onclick=()=>{selected=branch.key;buttons.forEach((b,i)=>b.setAttribute('aria-pressed',String(branches[i].key===selected)));drawDetail();onSelect(selected);};
+  button.onclick=()=>{selected=selected===branch.key?null:branch.key;buttons.forEach((b,i)=>b.setAttribute('aria-pressed',String(branches[i].key===selected)));drawDetail();onSelect(selected);};
  }
  add(root,'div','',{class:'tr-trunk','aria-hidden':'true'});node(root,parts.get('review'),plan);add(root,'div','',{class:'tr-trunk','aria-hidden':'true'});node(root,parts.get('format'),plan);
  for(const stage of plan.stages.filter(s=>s.role==='retry')){add(root,'div','',{class:'tr-trunk','aria-hidden':'true'});node(root,stage,plan);}
  const detail=add(root,'section','',{id:'transcript-branch-detail',class:'tr-detail','aria-live':'polite','aria-label':'Selected destination detail'});
- function drawDetail(){const branch=branches.find(b=>b.key===selected)||branches[0],stage=parts.get(branch.key);detail.replaceChildren();add(detail,'span',branch.destination,{class:'tr-destination'});add(detail,'h3',branch.title);add(detail,'span',branch.status,{class:'rw-badge '+(branch.status==='Needs correction'?'warn':'neutral')});add(detail,'p',branch.action);
-  for(const r of branch.records){const line=add(detail,'div','',{class:'tr-record'});add(line,'strong',r.label);add(line,'span',r.value);add(line,'span',r.status,{class:'muted'});}
+ function drawDetail(){detail.hidden=!selected;detail.replaceChildren();if(!selected)return;const branch=branches.find(b=>b.key===selected),stage=parts.get(branch.key);add(detail,'span',branch.destination,{class:'tr-destination'});add(detail,'h3',branch.title);add(detail,'span',branch.status,{class:'rw-badge '+(branch.status==='Needs correction'?'warn':'neutral')});add(detail,'p',branch.action);
   const sources=add(detail,'details');add(sources,'summary','Supporting excerpts · '+branch.sources.length);
   for(const source of branch.sources){add(sources,'blockquote',source.text);add(sources,'p',source.at+' · '+source.speaker,{class:'muted'});const link=add(sources,'a','View in transcript',{href:'#source-'+source.id,class:'rw-source-link'});link.onclick=()=>{let n=document.getElementById('source-'+source.id);while(n){if(n.tagName==='DETAILS')n.open=true;n=n.parentElement;}};}
   if(!branch.sources.length)add(sources,'p','No relevant request was identified. Review the full transcript before adding an action.');

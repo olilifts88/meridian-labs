@@ -1,8 +1,8 @@
-import {renderBusinessWorkbench} from './business-workbench.mjs?v=transcript-branches-20261102';
-import {renderPlanner,compactRoute,requestPrices,calculatePlan} from './workflow-routing.mjs?v=transcript-branches-20261102';
+import {renderBusinessWorkbench} from './business-workbench.mjs?v=route-cleanup-20261102';
+import {renderPlanner,compactRoute,requestPrices,calculatePlan} from './workflow-routing.mjs?v=route-cleanup-20261102';
 import {validateCard} from './pricing.mjs';
 import {readResults,saveResult,removeResult} from './visitor-results.mjs';
-import {renderReleaseWorkbench} from './release-workbench.mjs?v=transcript-branches-20261102';
+import {renderReleaseWorkbench} from './release-workbench.mjs?v=route-cleanup-20261102';
 import {validatePublication,publicationUrl} from './release-publication.mjs';
 const app=document.getElementById('app'),message=document.getElementById('message');
 const names={'release-notes':'Release notes',vulnerabilities:'Vulnerability review',questionnaire:'Security questionnaires',soc2:'SOC 2 evidence','call-crm':'Transcript to action'};
@@ -58,8 +58,8 @@ function library(){
 }
 function scenario(){
  const request=new URLSearchParams(location.search),source=catalog.records.find(r=>r.id===request.get('record'));
- if((source?title(source).workflow:request.get('workflow')||'release-notes')==='release-notes'){renderReleaseWorkbench(app,catalog,pricing,{say});return;}
- renderBusinessWorkbench(app,source?title(source).workflow:request.get('workflow')||'call-crm',pricing,{say});
+ if((source?title(source).workflow:request.get('workflow')||'release-notes')==='release-notes'){renderReleaseWorkbench(app,catalog,pricing,{say,records:catalog.records});return;}
+ renderBusinessWorkbench(app,source?title(source).workflow:request.get('workflow')||'call-crm',pricing,{say,records:catalog.records});
 }
 
 function comparison(parent,record){
@@ -68,8 +68,8 @@ function comparison(parent,record){
  const body=add(table,'tbody');for(const r of catalog.records.filter(r=>r.case_id===record.case_id)){const row=add(body,'tr');const cell=add(row,'td');add(cell,'a',setup(r),{href:'/results.html?run='+encodeURIComponent(r.id)});for(const v of [r.original_checks.outcome==='Pass'?'Passed':'Flagged',checkSet(r).outcome==='Pass'?'Passed':'Flagged',ownerLabels[r.owner_review]||'Not reviewed',(r.generation_duration_ms/1000).toFixed(1)+'s',tokens(r)?.toLocaleString()??'Unavailable',cost(r)])add(row,'td',v);}
 }
 function resultView(session){
- if(session?.record.kind==='prepared_business_output'){renderBusinessWorkbench(app,session.case.workflow,pricing,{say,saved:session});return;}
- if(session?.case.workflow==='release-notes'){renderReleaseWorkbench(app,catalog,pricing,{say,saved:session});return;}
+ if(session?.record.kind==='prepared_business_output'){renderBusinessWorkbench(app,session.case.workflow,pricing,{say,saved:session,records:catalog.records});return;}
+ if(session?.case.workflow==='release-notes'){renderReleaseWorkbench(app,catalog,pricing,{say,saved:session,records:catalog.records});return;}
  const params=new URLSearchParams(location.search),record=session?.record||catalog.records.find(r=>r.id===params.get('run'));if(!record){heading('Result unavailable','This result could not be found.','Visitor results live in the browser that saved them.');link(app,'Open saved scenarios','/saved-results.html');return;}
  if(!record.routing_preview){const current=catalog.records.find(r=>r.id===record.id);if(current)Object.assign(record,{estimated_cost:current.estimated_cost,routing_preview:current.routing_preview,recorded_route:current.recorded_route});}
  const c=session?.case||title(record),visitor=!!session;
