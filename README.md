@@ -8,7 +8,8 @@ This repository contains a runnable AI workflow demo, the code behind its evalua
 
 | Goal | Go to |
 | --- | --- |
-| Run the public demo | [Setup and download](#start-the-demo) |
+| Try the demo online | [Open AI Workflows](https://meridian-ai-workflows-oli.misty-moon-5776.chatgpt.site/) |
+| Run it on your computer | [Download and setup](#download-and-run-locally) |
 | Understand the implementation | [Code and evidence](#inspect-the-code-and-evidence) |
 | Check what a capability actually supports | [Capability evidence guide](docs/capability-check.md) |
 | Understand the private dashboard | [Dashboard guide](docs/ai-performance-dashboard.md) |
@@ -20,17 +21,26 @@ This repository contains a runnable AI workflow demo, the code behind its evalua
 Explore AI workflows from source evidence to finished outputs. Review a release announcement, a remediation plan, a security response, a SOC 2 evidence pack or the records created from a transcript. Each workflow includes model routes, editable cost estimates, source checks and a review decision.
 
 <p>
+  <a href="https://meridian-ai-workflows-oli.misty-moon-5776.chatgpt.site/"><img src="assets/open-ai-workflows.svg" alt="Open AI Workflows online" width="214" height="48"></a>
   <a href="https://github.com/olilifts88/meridian-labs/releases/download/ai-workflows-v1.2.1/meridian-ai-workflows.zip"><img src="assets/download-ai-workflows.svg" alt="Download AI Workflows ZIP" width="282" height="48"></a>
-  <a href="#start-the-demo"><img src="assets/setup-instructions.svg" alt="Setup instructions" width="214" height="48"></a>
+  <a href="#download-and-run-locally"><img src="assets/setup-instructions.svg" alt="Setup instructions" width="214" height="48"></a>
 </p>
 
 [Explore the code and evidence](#inspect-the-code-and-evidence)
 
-The download contains just the demo. **Python 3.9+ and a desktop browser are all you need.** No package installation, AI account or API key. The scenarios use recorded answers and prepared business outputs; trying them makes no new AI calls.
+**Online:** open the public site in your browser. No download, Python or installation is needed.
+
+**Local download:** the ZIP contains just the demo. **Python 3.9+ and a desktop browser are all you need.** No package installation, AI account or API key. The scenarios use recorded answers and prepared business outputs; trying them makes no new AI calls.
 
 ![The Meridian Labs AI Workflows, using the Studio interface](assets/studio-applied-home.png)
 
 ## Start the demo
+
+### Open online
+
+[Open Meridian Labs AI Workflows](https://meridian-ai-workflows-oli.misty-moon-5776.chatgpt.site/), choose a workflow and click **Run workflow**. You can review the outputs and approved artefact pages in your browser.
+
+### Download and run locally
 
 1. **Download** `meridian-ai-workflows.zip` using the link above. On the release page, choose that file under **Assets**, not GitHub's automatic “Source code” downloads.
 2. **Extract the ZIP** and open the `meridian-workflow-showcase` folder.
@@ -70,7 +80,7 @@ The main navigation focuses on workflows and saved results. The review-method pa
 | **[SOC 2 evidence review](docs/workflow-guidance/pilot-soc2.md)** | Check evidence dates, ownership and approval; identify follow-up work. |
 | **[Transcript to action](docs/call-crm.md)** | Turn a transcript into CRM updates, issue records, commercial follow-ups, team posts and searchable call knowledge. |
 
-All data is fictional. Approvals affect the local simulation; they do not send messages or update external services. Your saved scenarios stay in this browser and are separate from the original benchmark.
+All data is fictional. Approvals affect the local simulation; they do not send messages or update external services. Saved results stay in the browser and address you used. The public site, a local copy, another browser and private browsing each have separate histories. They do not sync with one another or add results to the original benchmark.
 
 ## Model routing and costs
 

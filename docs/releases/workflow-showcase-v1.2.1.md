@@ -1,5 +1,14 @@
 # AI Workflows v1.2.1
 
+## Choose how to try it
+
+- **[Open online](https://meridian-ai-workflows-oli.misty-moon-5776.chatgpt.site/):** use the public site in your browser, with no download or Python installation.
+- **[Download & run locally](https://github.com/olilifts88/meridian-labs/releases/download/ai-workflows-v1.2.1/meridian-ai-workflows.zip):** keep a local copy and use the setup steps below.
+
+Saved results stay in the browser and address you use. Online and local histories do not sync. Private-browser results may be cleared when the session closes.
+
+## What is included
+
 Output evaluations now appear automatically beside the artefact after Run workflow.
 
 - Visible source-check results, failed criteria and correction receipts for each example.

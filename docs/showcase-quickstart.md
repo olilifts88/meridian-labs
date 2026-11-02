@@ -2,7 +2,15 @@
 
 Explore the workflow routes, compare model choices and review saved answers. This is AI Workflows v1.2.1, with the same routes and interface as the hosted demo. This package is a small runnable part of the [full GitHub repository](https://github.com/olilifts88/meridian-labs).
 
-## Start here
+## Choose how to use it
+
+### Open online
+
+[Open Meridian Labs AI Workflows](https://meridian-ai-workflows-oli.misty-moon-5776.chatgpt.site/) in your browser, choose a workflow and click **Run workflow**. No download, Python or installation is needed for the public site.
+
+### Run the download locally
+
+The download remains available if you prefer a local copy.
 
 1. Unzip `meridian-ai-workflows.zip`.
 2. Open the extracted `meridian-workflow-showcase` folder, then open a terminal in that folder. See [Setup help](#setup-help) below if this is new to you.
@@ -51,7 +59,7 @@ Workflow decisions operate on sample business data. Approval does not update an 
 
 ## Where your results are saved
 
-Visitor results use this browser's local storage for this localhost address. They are not uploaded or written to the repo's model results. Another browser or port has a separate history. Clearing browser data removes them, so download JSON results you want to keep. Up to 50 results are retained; nothing is silently evicted. If saving is unavailable or storage is full, you can still download the completed result.
+Visitor results use the browser's local storage for the address you opened. The public site and a localhost copy have separate histories, as do different browsers or ports. Private-browser results belong to that private session and may be removed when it closes. They are not uploaded or written to the repo's model results. Clearing browser data removes them, so download JSON results you want to keep. Up to 50 results are retained; nothing is silently evicted. If saving is unavailable or storage is full, you can still download the completed result.
 
 The launcher serves only the bundled public demo and the pricing check. It has no owner-review write endpoint. Owner review labels shown in the recorded library are a snapshot; private review comments and raw execution receipts are not included.
 
@@ -67,7 +75,7 @@ The launcher serves only the bundled public demo and the pricing check. It has n
 - [Experiment and checker revisions](../src/workflow_portfolio/ai_pilot.py): frozen cases, original checks and separate recheck. Its model adapter is included for code inspection; this launcher does not use it to generate answers.
 - [Recorded-versus-scenario guide](recorded-workflows.md): scope, safeguards and current limits.
 
-The full repository contains the wider implementation, tests and supporting guides. This ZIP includes only the demo's required source, examples, browser assets and instructions. The hosted demo is available separately; no hosting account is needed to use this download.
+The full repository contains the wider implementation, tests and supporting guides. This ZIP includes only the demo's required source, examples, browser assets and instructions. The [public hosted demo](https://meridian-ai-workflows-oli.misty-moon-5776.chatgpt.site/) is available as an alternative; no hosting account is needed to use this download.
 
 
 ## Setup help

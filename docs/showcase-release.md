@@ -1,6 +1,13 @@
 # AI Workflows download and release
 
-## Placement
+## Online and local access
+
+- **Open online:** [Meridian Labs AI Workflows](https://meridian-ai-workflows-oli.misty-moon-5776.chatgpt.site/). The site is public and needs no download or local Python installation.
+- **Run locally:** download the named ZIP below and follow the bundled setup instructions.
+
+Both use the same browser assets and prepared workflow data. Saved results are browser-local and do not sync between the hosted address, local addresses or browsers.
+
+## Download placement
 
 The small demo ZIP belongs in **GitHub Releases**, not in Git's source history and not behind a hosted app. The first release uses `ai-workflows-v1.2.1`.
 
@@ -9,13 +16,15 @@ The small demo ZIP belongs in **GitHub Releases**, not in Git's source history a
 - Direct download: https://github.com/olilifts88/meridian-labs/releases/download/ai-workflows-v1.2.1/meridian-ai-workflows.zip
 - Checksum asset: `meridian-ai-workflows.zip.sha256`
 
-The README's primary link uses the versioned asset. That avoids silently switching the demo link to a later release for a different project in this repository. Update the link when a new demo release is published. [GitHub's release-link documentation](https://docs.github.com/en/repositories/releasing-projects-on-github/linking-to-releases) describes direct asset links.
+The README's download link uses the versioned asset. That avoids silently switching the demo link to a later release for a different project in this repository. Update the link when a new demo release is published. [GitHub's release-link documentation](https://docs.github.com/en/repositories/releasing-projects-on-github/linking-to-releases) describes direct asset links.
 
 The named ZIP and checksum are attached to the versioned release above. Release verification checks the public download against the locally built artifact and repeats setup from the downloaded ZIP.
 
 ## Visitor journey
 
-README introduction → Download AI Workflows ZIP → extract → open a terminal in the extracted folder → `python3 showcase_demo.py` (Windows: `py showcase_demo.py`) → open the printed localhost address.
+**Online:** README → Open online → choose a workflow → Run workflow → review and open the artefact.
+
+**Local:** README → Download AI Workflows ZIP → extract → open a terminal in the extracted folder → `python3 showcase_demo.py` (Windows: `py showcase_demo.py`) → open the printed localhost address.
 
 GitHub also generates “Source code” archives. Those contain the full repository; the named `meridian-ai-workflows.zip` is the small package intended for visitors. It has one README and the required demo code and examples. Python 3.9+ must already be installed; there are no extra packages or model credentials to configure.
 
