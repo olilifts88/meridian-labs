@@ -23,6 +23,7 @@ GitHub also generates “Source code” archives. Those contain the full reposit
 
 ```sh
 python3 scripts/build-workflow-showcase.py
+python3 scripts/verify-showcase-download.py --archive dist/meridian-ai-workflows.zip
 ```
 
 Outputs:
@@ -48,3 +49,9 @@ No new schedule or automatic publishing job is introduced. Publishing is an expl
 Source code remains available in GitHub. Publishing the ZIP does not host a model endpoint or give visitors access to Oli's AI allowance. GitHub profile and CV-library updates remain a later, separate sharing step.
 
 The v1.2.1 package serves the same assets and prepared data as the hosted workbench from `demo-web/`. The public directory is added explicitly by the package builder; source-repository hosting configuration and runtime credentials are not included. The launcher uses `web_demo.py`; the original developer server remains available separately.
+
+## Keep hosted and downloaded assets aligned
+
+`demo-web/` is the canonical source for browser pages, prepared data and shared controls. Edit it here first. The hosted checkout exports this directory with `python3 sync_public.py --source /absolute/path/to/meridian-labs/demo-web`; run the same command with `--check` before packaging the Site. Its Worker and pricing endpoint remain hosted-specific source. Do not hand-edit the exported hosted `public/` files.
+
+GitHub checks run `npm run test:web` and `npm run test:download` on pushes and pull requests. These checks do not publish releases or make model calls.

@@ -84,7 +84,7 @@ The supporting model evidence connects those answers to measured tokens, generat
 
 The new routing rules choose a smaller or stronger model, use ordinary code, or hold for missing evidence. They can select a matching recorded answer. These rules were written after the fixed-setup pilot, so their replay is an exploratory comparison, not a fresh routing experiment or proof of savings.
 
-**[See the evaluation method](docs/evaluation-framework.md)** · **[Inspect routing rules and cost calculations](docs/showcase-routing-and-costs.md)** · **[Read the latest verification](docs/verification-workflow-hub-2026-11-01.md)**
+**[See the evaluation method](docs/evaluation-framework.md)** · **[Inspect routing rules and cost calculations](docs/showcase-routing-and-costs.md)** · **[Read the latest verification](docs/verification-maintenance-2026-11-02.md)**
 
 ## Inspect the code and evidence
 
@@ -94,9 +94,9 @@ The ZIP includes the source needed to run the demo. The full repository contains
 | --- | --- |
 | Recorded answers and local scenario execution | [recorded_showcase.py](src/workflow_portfolio/recorded_showcase.py) |
 | Routing rules and estimated costs | [showcase_measurement.py](src/workflow_portfolio/showcase_measurement.py), reusing the [router](src/workflow_portfolio/routing/router.py) and [token calculator](src/workflow_portfolio/usage/token_cost.py) |
-| Current workflow UI and output pages | [demo-web/assets/](demo-web/assets/) |
+| Current workflow UI and output pages | [demo-web/](demo-web/), with shared [route settings](demo-web/assets/route-settings.mjs) and [run-button state](demo-web/assets/run-button.mjs) |
 | Local browser server | [web_demo.py](src/workflow_portfolio/web_demo.py) |
-| Original results and browser-owned history | [run_explorer.mjs](src/workflow_portfolio/run_explorer.mjs) and [visitor_results.mjs](src/workflow_portfolio/visitor_results.mjs) |
+| Current saved results and supporting original answers | [visitor-results.mjs](demo-web/assets/visitor-results.mjs) and [run-explorer.mjs](demo-web/assets/run-explorer.mjs) |
 | Workflow checks and CRM simulation | [showcase_assurance.py](src/workflow_portfolio/showcase_assurance.py) and [call_crm.py](src/workflow_portfolio/call_crm.py) |
 | Frozen experiment and versioned rechecks | [ai_pilot.py](src/workflow_portfolio/ai_pilot.py) and the [recorded answers](examples/recorded-runs/pilot-2026-10-28.json) |
 | Tests | [Python and JavaScript tests](tests/) |
@@ -125,6 +125,13 @@ To rebuild the small ZIP, run `python3 scripts/build-workflow-showcase.py`. The 
 
 ## Repeat the checks
 
+The repository checks include the browser logic and a fresh build of the downloadable demo. The download check verifies file hashes and asset parity, starts the extracted server offline on a free port, checks its pages and pricing fallback, and confirms server-side writes remain blocked.
+
+```sh
+npm run test:web
+npm run test:download
+```
+
 ```sh
 python3 demo.py evaluate
 python3 demo.py benchmark
@@ -143,6 +150,7 @@ The [portfolio map](docs/portfolio-map.md) and [implementation plan](docs/rebuil
 | [`tests/`](tests/) | Python and JavaScript checks, including failure and duplicate-run cases |
 | [`examples/`](examples/) | Fictional inputs, example policies and dated model-review summaries |
 | [`docs/`](docs/) | Setup, architecture, verification and operating guidance; `workflow-guidance/` holds the two scoped guides |
+| [`demo-web/`](demo-web/) | Canonical browser pages, workflow data and shared controls used by the download and hosted export |
 | [`assets/`](assets/) | Meridian Labs banner and dashboard preview image |
 | [`.n8n/`](.n8n/) | Editable n8n workflow sources with separate Code-node files |
 | [`exports/n8n/`](exports/n8n/) | Generated workflows for import; change `.n8n/` sources first |

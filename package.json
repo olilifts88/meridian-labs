@@ -12,6 +12,8 @@
     "candidates:preview": "node scripts/preview-candidates.mjs",
     "candidate-review:preview": "node scripts/preview-review-action.mjs",
     "test:n8n": "node --test tests/n8n.test.mjs tests/n8n-deploy.test.mjs tests/n8n-mirror.test.mjs",
-    "test:eval": "node --test tests/calibration-feedback.test.cjs"
+    "test:eval": "node --test tests/calibration-feedback.test.cjs",
+    "test:web": "node --test tests/*.test.mjs",
+    "test:download": "python3 scripts/verify-showcase-download.py"
   }
 }

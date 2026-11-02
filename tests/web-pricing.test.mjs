@@ -32,7 +32,7 @@ test('deduplicated full-task costs include retries and preserve coverage',()=>{
 });
 test('all five workflows have predetermined stages and five-model comparisons',()=>{
  validateCard(card);assert.equal(Object.keys(card.models).length,5);
- for(const id of Object.keys(WORKFLOWS)){const plan=makePlan(id,null,card);assert.equal(plan.stages.length,4);assert.ok(calculatePlan(plan).amount>0);for(const m of Object.keys(card.models))assert.ok(calculatePlan({...plan,baseline_model:m}).baseline>0);}
+ for(const id of Object.keys(WORKFLOWS)){const plan=makePlan(id,null,card);assert.equal(plan.stages.length,id==='call-crm'?8:4);assert.ok(calculatePlan(plan).amount>0);for(const m of Object.keys(card.models))assert.ok(calculatePlan({...plan,baseline_model:m}).baseline>0);}
 });
 test('missing evidence and code-only cases preserve gates and avoid model budgets',()=>{
  const hold=makePlan('questionnaire',{routing_preview:{action:'hold'}},card);assert.equal(hold.gate_state,'hold');assert.equal(hold.stages.filter(s=>s.enabled).length,1);

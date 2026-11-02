@@ -1,18 +1,15 @@
-import {attachRunButton} from './run-button.mjs?v=run-complete-20261102';
-import {renderRouteEvidence} from './route-evidence.mjs?v=run-complete-20261102';
+import {attachRouteSettings} from './route-settings.mjs?v=cleanup-20261102';
+import {add,badge,fold,select,money} from './workbench-shared.mjs?v=cleanup-20261102';
+import {attachRunButton} from './run-button.mjs?v=cleanup-20261102';
+import {renderRouteEvidence} from './route-evidence.mjs?v=cleanup-20261102';
 import {renderOutputEvaluation,revealResults} from './output-evaluation.mjs';
-import {renderPlanner,makePlan,calculatePlan,requestPrices} from './workflow-routing.mjs?v=run-complete-20261102';
+import {makePlan,calculatePlan,requestPrices} from './workflow-routing.mjs?v=cleanup-20261102';
 import {saveResult,readResults} from './visitor-results.mjs';
 import {approvePublication,validatePublication,findPublication,publicationUrl,releasePRContext,releaseTitle} from './release-publication.mjs';
 import {assessRelease,releaseEvidence,releaseDecisions} from './release-quality.mjs';
 
 import {releaseCopy,copyText,renderCopy} from './release-copy.mjs';
 import {EXTRA_RELEASE_CASES,EXTRA_RELEASE_RECORDS,preparedReleaseResult} from './release-examples.mjs';
-const money=n=>n==null?'Unavailable':'$'+n.toFixed(5);
-function add(p,tag,text='',attrs={}){const n=document.createElement(tag);n.textContent=text;for(const [k,v] of Object.entries(attrs))n.setAttribute(k,v);p.append(n);return n;}
-function badge(p,text,tone='neutral'){return add(p,'span',text,{class:'rw-badge '+tone});}
-function fold(p,title){const d=add(p,'details');add(d,'summary',title);return d;}
-function select(p,label,options,value){const l=add(p,'label',label),s=add(l,'select','',{'aria-label':label});for(const [v,t] of options){const o=add(s,'option',t,{value:v});o.selected=v===value;}return s;}
 function fact(p,label,text,id){const d=add(p,'div','',{class:'rw-fact',...(id?{id}:{})});add(d,'dt',label);add(d,'dd',text);}
 function sourceLink(p,id,label='View source'){if(id){const a=add(p,'a',label,{href:'#'+id,class:'rw-source-link'});a.onclick=()=>{let n=document.getElementById(id);while(n){if(n.tagName==='DETAILS')n.open=true;n=n.parentElement;}};}}
 function json(p,label,value){add(fold(p,label),'pre',JSON.stringify(value,null,2));}
@@ -22,7 +19,7 @@ export function renderReleaseWorkbench(app,catalog,card,{say=()=>{},saved=null}=
  app.classList.add('release-workbench');
  const allRecords=[...catalog.records,...EXTRA_RELEASE_RECORDS],allCases=[...catalog.cases,...EXTRA_RELEASE_CASES];
  const params=new URLSearchParams(location.search),initial=saved?.record||allRecords.find(r=>r.id===params.get('record')&&r.case_id.startsWith('release-notes:'));
- let record,plan,settingsPlanner,session=null,busy=false,revision=0,previousDraft=null;
+ let record,plan,session=null,busy=false,revision=0,previousDraft=null;
  const header=add(app,'div','',{class:'rw-heading'});add(header,'div','Release notes',{class:'eyebrow'});add(header,'h1','Prepare a release announcement');add(header,'p','Check what shipped, keep the rollout conditions clear and review the finished draft.',{class:'lead'});
  const bar=add(app,'section','',{class:'rw-commandbar','aria-label':'Workflow controls'}),choices=add(bar,'div','',{class:'rw-choices'});
  const workflow=select(choices,'Workflow',[['release-notes','Release notes'],['call-crm','Transcript to action'],['questionnaire','Security questionnaires'],['vulnerabilities','Vulnerability review'],['soc2','SOC 2 evidence']],'release-notes');
@@ -36,11 +33,8 @@ export function renderReleaseWorkbench(app,catalog,card,{say=()=>{},saved=null}=
  settingsBar.after(route);
  const routeEvidenceHost=add(route,'div');
  const stageCards=add(route,'div','',{class:'rw-stage-grid'}),routeStats=add(route,'dl','',{class:'rw-costs'});
- const adjust=add(app,'dialog','',{id:'route-settings-dialog',class:'rw-settings-dialog','aria-labelledby':'route-settings-title','aria-describedby':'route-settings-description'}),modalHeader=add(adjust,'div','',{class:'rw-dialog-header'});add(modalHeader,'h2','Route & token budgets',{id:'route-settings-title'});const closeSettings=add(modalHeader,'button','×',{type:'button','aria-label':'Close route settings'});const modalBody=add(adjust,'div','',{class:'rw-dialog-body'});add(modalBody,'p','Choose a route, then open a step to edit its model, effort and token estimates.',{id:'route-settings-description',class:'muted'});const plannerHost=add(modalBody,'div'),settingsError=add(modalBody,'p','',{class:'error',role:'alert'}),modalFooter=add(adjust,'div','',{class:'rw-dialog-footer'}),cancelSettings=add(modalFooter,'button','Cancel',{type:'button'}),applySettings=add(modalFooter,'button','Use this route',{type:'button',class:'primary'});
+ attachRouteSettings(app,openSettings,{getContext:()=>({workflow:'release-notes',record,card,plan,records:catalog.records}),onApply:next=>{plan=next;invalidate();drawRoute();}});
  const costDifference=add(route,'div','',{class:'rw-cost-difference','aria-live':'polite'}),explain=fold(route,'What do these estimates mean?');add(explain,'p','Selected route: the estimated API token cost of all enabled steps using their chosen models.');add(explain,'p','One-model comparison: the same token amounts, priced with the comparison model at every step. Change that model in the route settings to compare another option.');add(explain,'p','Planned tokens: input plus output across all enabled steps. Instructions, source documents and earlier answers may be read more than once. These amounts are planning assumptions, not measured usage or enforced limits. Changing them updates the calculator, not the saved draft.');const pricingStatus=add(explain,'p','',{class:'muted','aria-live':'polite'});
- function expandBudgets(){for(const d of plannerHost.querySelectorAll('.route-stage-content>details'))d.open=true;if(!settingsPlanner)return;const draft=settingsPlanner.snapshot(),estimate=calculatePlan(draft),cells=plannerHost.querySelectorAll('.routing-summary>div');plannerHost.querySelectorAll('.route-stage-head>strong').forEach((n,i)=>{n.textContent=money(estimate.rows[i]?.estimate.amount);});if(cells.length===3){cells[0].querySelector('strong').textContent=money(estimate.amount);cells[1].querySelector('strong').textContent=money(estimate.baseline);cells[0].querySelector('span').textContent='Selected route estimate';cells[1].querySelector('span').textContent='All steps: '+draft.rate_card.models[draft.baseline_model].label;const difference=estimate.amount==null||estimate.baseline==null?null:estimate.amount-estimate.baseline;cells[2].querySelector('strong').textContent=difference==null?'Unavailable':(difference<0?'−':difference>0?'+':'')+money(Math.abs(difference));cells[2].querySelector('span').textContent='Estimated difference';}}
- openSettings.onclick=()=>{plannerHost.replaceChildren();settingsError.textContent='';settingsPlanner=renderPlanner(plannerHost,'release-notes',record,card,{savedPlan:plan,records:catalog.records,onChange:expandBudgets});settingsPlanner.element.id='release-route-settings';expandBudgets();adjust.showModal();};
- closeSettings.onclick=cancelSettings.onclick=()=>adjust.close();adjust.onclose=()=>openSettings.focus();applySettings.onclick=()=>{const next=settingsPlanner.snapshot();if(calculatePlan(next).amount==null){settingsError.textContent='Check the token values and processing options before applying this route.';return;}plan=next;invalidate();drawRoute();adjust.close();};
 
  const sourceFold=add(app,'details','',{class:'rw-source-fold'});add(sourceFold,'summary','Release evidence');sourceFold.open=true;const workspace=add(sourceFold,'div','',{class:'rw-workspace rw-source-workspace'}),evidence=add(workspace,'section','',{class:'rw-panel rw-evidence','aria-labelledby':'rw-evidence-title'}),output=add(resultDeck,'section','',{class:'rw-panel rw-output','aria-labelledby':'rw-output-title','aria-live':'polite'});
  const compare=add(app,'section','',{class:'rw-panel rw-comparison'});

@@ -22,7 +22,8 @@ jobs:
       - run: python -m workflow_portfolio journey examples/release_journey.json
       - run: python -m workflow_portfolio candidate-review-demo
       - run: npm run n8n:check
-      - run: npm run test:n8n
+      - run: npm run test:web
+      - run: npm run test:download
       - run: node scripts/preview-candidates.mjs examples/release_journey.json
       - run: node scripts/preview-review-action.mjs examples/candidate_review_action.json
       - run: node --test tests/calibration-feedback.test.cjs
