@@ -1,11 +1,11 @@
-import {renderQualityReview} from './quality-review.mjs?v=quality-rollout-20261102';
-import {attachRunButton} from './run-button.mjs?v=quality-rollout-20261102';
-import {renderOutputEvaluation,revealResults} from './output-evaluation.mjs?v=quality-rollout-20261102';
+import {renderQualityReview} from './quality-review.mjs?v=branch-folds-20261102';
+import {attachRunButton} from './run-button.mjs?v=branch-folds-20261102';
+import {renderOutputEvaluation,revealResults} from './output-evaluation.mjs?v=branch-folds-20261102';
 import {NAMES,SCENARIOS,sourceRows,POLICIES,TRANSCRIPTS,SLA} from './business-data.mjs';
 import {draftFor,checksFor,newBusinessResult,approveBusiness,findBusinessPublication,outputURL} from './business-engine.mjs';
 import {saveResult,readResults} from './visitor-results.mjs';
-import {requestPrices,calculatePlan} from './workflow-routing.mjs?v=quality-rollout-20261102';
-import {add,badge,fold,select,link,renderRoute} from './workbench-shared.mjs?v=quality-rollout-20261102';
+import {requestPrices,calculatePlan} from './workflow-routing.mjs?v=branch-folds-20261102';
+import {add,badge,fold,select,link,renderRoute} from './workbench-shared.mjs?v=branch-folds-20261102';
 export function renderBusinessWorkbench(app,workflow,card,{say=()=>{},saved=null,records=[],cases=[]}={}){
  document.body.classList.add('release-page');app.classList.add('release-workbench');let session=saved,busy=false,route,revised=false,issue=false;
  const heading=add(app,'div','',{class:'rw-heading'});add(heading,'div',NAMES[workflow],{class:'eyebrow'});add(heading,'h1',{'call-crm':'Turn a transcript into useful work',vulnerabilities:'Review findings and plan the fixes',questionnaire:'Prepare a security response',soc2:'Review the evidence for each control'}[workflow]);add(heading,'p',{'call-crm':'Review what was said, decide what should change and open the records it creates.',vulnerabilities:'Check the installed versions, apply the remediation policy and review each owner’s next action.',questionnaire:'Answer from approved policies. Keep qualifications and missing evidence visible.',soc2:'Match the evidence to the control, period and owner before accepting it.'}[workflow],{class:'lead'});

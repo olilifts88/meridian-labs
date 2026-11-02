@@ -1,7 +1,7 @@
-import {INSTRUCTION_LABELS,instructionLabel,INSTRUCTION_CONTEXT} from './instruction-labels.mjs?v=quality-rollout-20261102';
-import {recordChecks,matchingAnswers,answerText,businessText,changeProbe,supportedBusiness,diffWords} from './quality-core.mjs?v=quality-rollout-20261102';
+import {INSTRUCTION_LABELS,instructionLabel,INSTRUCTION_CONTEXT} from './instruction-labels.mjs?v=branch-folds-20261102';
+import {recordChecks,matchingAnswers,answerText,businessText,changeProbe,supportedBusiness,diffWords} from './quality-core.mjs?v=branch-folds-20261102';
 import {checksFor} from './business-engine.mjs';
-import {transcriptBranches} from './transcript-route.mjs?v=quality-rollout-20261102';
+import {transcriptBranches} from './transcript-route.mjs?v=branch-folds-20261102';
 import {releaseEvidence} from './release-quality.mjs';
 const add=(p,t,text='',attrs={})=>{const n=document.createElement(t);n.textContent=text;for(const[k,v]of Object.entries(attrs))n.setAttribute(k,v);p.append(n);return n;};
 const checkName=s=>({extraction_quotes:'Exact source quotes',extraction_coverage:'Required facts extracted',expected_crm_state:'Expected CRM state',expected_issue_links:'Correct issue links',valid_generation_format:'Required output format',confirmed_availability_in_answer:'Confirmed availability retained',no_unsupported_general_availability:'No wider rollout claimed',review_boundary:'Review boundary retained',citation_provenance:'Source references retained',release_scope:'Release scope preserved',release_references:'Release references preserved',release_overclaim_gate:'Unsupported claims held'}[s]||s.replaceAll('_',' '));

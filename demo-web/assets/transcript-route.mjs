@@ -1,5 +1,5 @@
 import {checksFor} from './business-engine.mjs';
-import {calculatePlan} from './workflow-routing.mjs?v=quality-rollout-20261102';
+import {calculatePlan} from './workflow-routing.mjs?v=branch-folds-20261102';
 
 const PATHS=[
  ['crm','Account updates','CRM','Separate agreed changes from tentative interest.'],
@@ -45,21 +45,27 @@ export function renderTranscriptRoute(parent,plan,{draft,result=null},selected=n
  if(!['read','crm','engineering','revenue','report','library','review','format'].every(k=>parts.has(k)))return false;
  const branches=transcriptBranches(draft),estimates=calculatePlan(plan).rows,root=add(parent,'div','',{class:'transcript-route'});
  node(root,parts.get('read'),plan);add(root,'div','',{class:'tr-trunk','aria-hidden':'true'});
- const lanes=add(root,'div','',{class:'tr-branches','aria-label':'Destination paths'}),buttons=[];
- for(const branch of branches){const s=parts.get(branch.key),button=add(lanes,'button','',{type:'button',class:'tr-branch','aria-pressed':String(selected===branch.key),'aria-controls':'transcript-branch-detail'});buttons.push(button);
-  add(button,'span',branch.destination,{class:'tr-destination'});add(button,'strong',branch.title);add(button,'span',branch.description,{class:'tr-description'});labels(button,s,plan);
-  const bottom=add(button,'span','',{class:'tr-branch-bottom'});add(bottom,'span',branch.status,{class:'tr-state'+(branch.status==='Needs correction'?' tr-flag':'')});add(bottom,'span',money(estimates.find(r=>r.id===s.id)?.estimate.amount),{class:'tr-price'});
-  button.onclick=()=>{selected=selected===branch.key?null:branch.key;buttons.forEach((b,i)=>b.setAttribute('aria-pressed',String(branches[i].key===selected)));drawDetail();onSelect(selected);};
- }
- add(root,'div','',{class:'tr-trunk','aria-hidden':'true'});node(root,parts.get('review'),plan);add(root,'div','',{class:'tr-trunk','aria-hidden':'true'});node(root,parts.get('format'),plan);
- for(const stage of plan.stages.filter(s=>s.role==='retry')){add(root,'div','',{class:'tr-trunk','aria-hidden':'true'});node(root,stage,plan);}
- const detail=add(root,'section','',{id:'transcript-branch-detail',class:'tr-detail','aria-live':'polite','aria-label':'Selected destination detail'});
- function drawDetail(){detail.hidden=!selected;detail.replaceChildren();if(!selected)return;const branch=branches.find(b=>b.key===selected),stage=parts.get(branch.key);add(detail,'span',branch.destination,{class:'tr-destination'});add(detail,'h3',branch.title);add(detail,'span',branch.status,{class:'rw-badge '+(branch.status==='Needs correction'?'warn':'neutral')});add(detail,'p',branch.action);
+ const lanes=add(root,'div','',{class:'tr-branches','aria-label':'Destination paths'});
+ for(const branch of branches){
+  const stage=parts.get(branch.key),card=add(lanes,'details','',{class:'tr-branch'}),summary=add(card,'summary');
+  card.open=selected===branch.key;
+  add(summary,'span',branch.destination,{class:'tr-destination'});
+  add(summary,'strong',branch.title);
+  labels(summary,stage,plan);
+  const detail=add(card,'div','',{class:'tr-branch-content'});
+  add(detail,'p',branch.description,{class:'tr-description'});
+  const bottom=add(detail,'div','',{class:'tr-branch-bottom'});
+  add(bottom,'span',branch.status,{class:'tr-state'+(branch.status==='Needs correction'?' tr-flag':'')});
+  add(bottom,'span',money(estimates.find(r=>r.id===stage.id)?.estimate.amount),{class:'tr-price'});
+  add(detail,'p',branch.action);
   const sources=add(detail,'details');add(sources,'summary','Supporting excerpts · '+branch.sources.length);
   for(const source of branch.sources){add(sources,'blockquote',source.text);add(sources,'p',source.at+' · '+source.speaker,{class:'muted'});const link=add(sources,'a','View in transcript',{href:'#source-'+source.id,class:'rw-source-link'});link.onclick=()=>{let n=document.getElementById('source-'+source.id);while(n){if(n.tagName==='DETAILS')n.open=true;n=n.parentElement;}};}
   if(!branch.sources.length)add(sources,'p','No relevant request was identified. Review the full transcript before adding an action.');
   const review=add(detail,'details');add(review,'summary','Checks and route budget');for(const c of branch.checks)add(review,'p',(c.pass?'Passed: ':'Flagged: ')+c.label+'. '+c.detail);add(review,'p',stage.reason);add(review,'p','Estimated tokens: '+stage.input_tokens.toLocaleString()+' input + '+stage.output_tokens.toLocaleString()+' output. Checking a destination can use a budget even when the outcome is no action.',{class:'muted'});
   if(result?.business_publication)add(detail,'a','Open '+branch.title.toLowerCase(),{href:'/workspace.html?session='+encodeURIComponent(result.id)+'&view='+branch.key,class:'button'});
+  card.ontoggle=()=>onSelect(card.open?branch.key:null);
  }
- drawDetail();return true;
+ add(root,'div','',{class:'tr-trunk','aria-hidden':'true'});node(root,parts.get('review'),plan);add(root,'div','',{class:'tr-trunk','aria-hidden':'true'});node(root,parts.get('format'),plan);
+ for(const stage of plan.stages.filter(s=>s.role==='retry')){add(root,'div','',{class:'tr-trunk','aria-hidden':'true'});node(root,stage,plan);}
+ return true;
 }

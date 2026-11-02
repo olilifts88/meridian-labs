@@ -13,3 +13,9 @@ Instruction labels are What to produce and What to produce + how to do it. Confi
 - Browser: release approval opened its release-note page; questionnaire opened its response pack; vulnerability and SOC 2 opened their output hubs; Transcript to action opened its CRM artefact. Probe interactions left the approval paths intact.
 
 Local test artefacts are browser-owned. No live model calls, external CRM writes, messages or new services are introduced. Langfuse and Promptfoo patterns are implemented in the existing app, without installing either SDK. Runtime timings remain the original recorded measurements; route costs remain estimates.
+
+## Transcript branch dropdowns
+
+The five destination cards now use native details/summary controls, matching the expandable route steps. All start collapsed. Destination, step title, model and effort remain visible; purpose, status, cost, source excerpts and checks expand inside the same card. The separate selected-branch detail panel is removed. The split/join diagram and approved destination links are retained.
+
+Twelve focused branch/quality tests passed. Browser checks confirmed the engineering card expands in place, supporting excerpts open, and collapsing the card hides the detail again.

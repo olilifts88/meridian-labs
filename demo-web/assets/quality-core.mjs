@@ -1,6 +1,6 @@
 import {draftFor,checksFor} from './business-engine.mjs';
 import {assessRelease} from './release-quality.mjs';
-export {diffWords} from './word-diff.mjs?v=quality-rollout-20261102';
+export {diffWords} from './word-diff.mjs?v=branch-folds-20261102';
 export const recordChecks=record=>record.revised_checks||record.original_checks;
 export function matchingAnswers(records,record){
  if(!record||record.kind?.startsWith('prepared_')||record.editorial_revision)return [];
