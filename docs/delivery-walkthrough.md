@@ -2,6 +2,8 @@
 
 This is a fictional internal-workflow sandbox. It extends the existing transcript demo with source-linked proposals, explicit persona/action checks, exact-proposal approvals, persisted destination records, commit receipts and safe retry. It does not call a model or write to a real CRM, Finance system or issue tracker.
 
+This is an inspection view of the workflow running in the background. In normal use, a person submits a conversation, reviews proposals where needed and sees the result. Persona switching, fault simulations and infrastructure inspection are demonstration controls, not steps an end user would perform.
+
 ## Run it
 
 **Server sandbox (recommended for the infrastructure walkthrough):** Node.js 24+ is required. From the repository or extracted showcase folder:
