@@ -10,15 +10,15 @@ export function renderRecoveryWorkbench(app,card,{say=()=>{},saved=null}={}){
  try{state=readonly?validateRecovery(clone(saved.recovery_snapshot)):readRecovery(localStorage);}catch(e){state=blankRecovery();loadError=e;}
  const css=document.createElement('link');css.rel='stylesheet';css.href='/assets/recovery.css';document.head.append(css);
  app.classList.add('bounceback');
- const head=add(app,'section','',{class:'bb-heading'}),intro=add(head,'div');add(intro,'div','CUSTOMER RECOVERY',{class:'bb-kicker'});add(intro,'h1','Bounceback');add(intro,'p','Resolve the problem. Check they can work. Learn for next time.');
+ const head=add(app,'section','',{class:'bb-heading'}),intro=add(head,'div');add(intro,'div','CUSTOMER RECOVERY',{class:'bb-kicker'});add(intro,'h1','Bounceback');
  const tools=add(head,'div','',{class:'controls'});link(tools,'Quick guide','/bounceback-guide.html');link(tools,'Saved results','/saved-results.html');
  const restart=add(tools,'button','Reset demo',{type:'button'});restart.hidden=readonly;
- const scope=add(app,'p',readonly?'Saved snapshot · Changes here cannot affect the working demo.':'Interactive demo · Fictional cases and prepared responses. No live AI calls or customer changes.',{class:'bb-scope'});
- const notice=add(app,'p','',{class:'bb-notice',role:'status','aria-live':'polite'});notice.hidden=true;
+ if(readonly)add(app,'p','Saved snapshot · Changes here cannot affect the working demo.',{class:'bb-scope'});
+ const notice=add(app,'p','',{class:'bb-notice',role:'status','aria-live':'polite'});notice.hidden=true;let noticeTimer;
  const stages=add(app,'nav','',{class:'bb-stages','aria-label':'Recovery journey'});
  const layout=add(app,'div','',{class:'bb-layout'}),queue=add(layout,'aside','',{class:'bb-queue','aria-label':'Customer cases'}),main=add(layout,'section','',{class:'bb-case','aria-label':'Selected case'}),insights=add(layout,'aside','',{class:'bb-insights','aria-label':'Evidence and learning'});
  const routing=add(app,'section','',{class:'bb-routing'});
- function notify(text,error=false){notice.textContent=text;notice.hidden=!text;notice.classList.toggle('bb-error',error);say('');}
+ function notify(text,error=false){clearTimeout(noticeTimer);notice.textContent=text;notice.hidden=!text;notice.classList.toggle('bb-error',error);say('');if(text&&!error)noticeTimer=setTimeout(()=>{notice.hidden=true;notice.textContent='';},4000);}
  function persist(next){if(readonly||loadError)return;try{writeRecovery(localStorage,next);state=next;notify('Progress saved in this browser.');draw();}catch(e){notify('Could not save: '+e.message+' Your previous progress is unchanged.',true);}}
  function change(action){try{persist(action());}catch(e){notify(e.message,true);}}
  function inspect(trigger,title,build){const content=document.createElement('section');build(content);inspectSource(content,trigger,title);}
