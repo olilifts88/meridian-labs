@@ -71,6 +71,8 @@ The release workflow includes four scenarios and a branded release-note page. Tr
 
 The main navigation focuses on workflows and saved results. The review-method page links to the original forty model answers as supporting evidence.
 
+The [delivery walkthrough](docs/delivery-walkthrough.md) adds a focused transcript-to-action sandbox: source-linked proposals, persona/action boundaries, a persisted account update, commit/readback and safe retry. It supports a portable browser mode and an optional local Node.js writer. The local enhancements do not establish a hosted release; no model calls or external business writes are made.
+
 ## The six workflows
 
 | Workflow | What it demonstrates |
