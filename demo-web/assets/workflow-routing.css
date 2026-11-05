@@ -5,3 +5,12 @@
 .route-tools{margin:10px 0 18px;font-size:13px}.route-tools summary{cursor:pointer}.route-tools>.controls{margin-top:12px}.quality-rationale{margin:16px 0}.quality-rationale summary{font-size:14px;cursor:pointer}.quality-rationale p{font-size:13px}.stage-quality{font-size:13px;border-left:2px solid #c9c0b2;padding-left:10px}@media(min-width:460px) and (max-width:700px){.routing-summary{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.routing-summary>div{padding:12px 9px}.routing-summary strong{font-size:20px}.routing-summary span{font-size:11px}}
 
 .route-chips{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0}.route-chip{display:inline-flex;font:11px/1.5 ui-monospace,monospace;padding:3px 7px;border:1px solid #d8d2c8;border-radius:4px;background:#f7f3ec;color:#5b554e}
+
+/* Configuration and execution evidence are sibling views. */
+.run-view-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
+.run-view-tabs button[aria-selected="true"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.run-breakdown table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+.run-breakdown th,.run-breakdown td{padding:12px 10px;text-align:left;border-bottom:1px solid var(--line)}
+.run-breakdown pre{white-space:pre-wrap;overflow-wrap:anywhere;max-width:100%}
+.run-breakdown .notice{margin:12px 0}
+[role="tabpanel"][hidden]{display:none!important}

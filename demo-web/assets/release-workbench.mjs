@@ -1,11 +1,12 @@
+import {attachRunViews} from './run-breakdown.mjs?v=run-breakdown-20261105';
 import {inspectSource,outputViews} from './app-ui.mjs';
-import {renderQualityReview} from './quality-review.mjs?v=branch-folds-20261102';
-import {attachRouteSettings} from './route-settings.mjs?v=branch-folds-20261102';
-import {add,badge,fold,select,money} from './workbench-shared.mjs?v=branch-folds-20261102';
-import {attachRunButton} from './run-button.mjs?v=branch-folds-20261102';
-import {renderRouteEvidence} from './route-evidence.mjs?v=branch-folds-20261102';
-import {renderOutputEvaluation,revealResults} from './output-evaluation.mjs?v=branch-folds-20261102';
-import {makePlan,calculatePlan,requestPrices} from './workflow-routing.mjs?v=branch-folds-20261102';
+import {renderQualityReview} from './quality-review.mjs?v=run-breakdown-20261105';
+import {attachRouteSettings} from './route-settings.mjs?v=run-breakdown-20261105';
+import {add,badge,fold,select,money} from './workbench-shared.mjs?v=run-breakdown-20261105';
+import {attachRunButton} from './run-button.mjs?v=run-breakdown-20261105';
+import {renderRouteEvidence} from './route-evidence.mjs?v=run-breakdown-20261105';
+import {renderOutputEvaluation,revealResults} from './output-evaluation.mjs?v=run-breakdown-20261105';
+import {makePlan,calculatePlan,requestPrices} from './workflow-routing.mjs?v=run-breakdown-20261105';
 import {saveResult,readResults} from './visitor-results.mjs';
 import {approvePublication,validatePublication,findPublication,publicationUrl,releasePRContext,releaseTitle} from './release-publication.mjs';
 import {assessRelease,releaseEvidence,releaseDecisions} from './release-quality.mjs';
@@ -33,9 +34,10 @@ export function renderReleaseWorkbench(app,catalog,card,{say=()=>{},saved=null}=
  bar.after(settingsBar);
  const route=add(app,'section','',{class:'rw-route',id:'model-routing','aria-labelledby':'rw-route-title'}),routeHeader=add(route,'div','',{class:'row'});add(routeHeader,'h2','Model route',{id:'rw-route-title'});const routeType=badge(routeHeader,'Recommended route');
  const routeFold=fold(app,'Model route & cost');routeFold.className='app-route-disclosure';settingsBar.after(routeFold);routeFold.append(route);
+ const costViews=attachRunViews(routeFold,route,{getContext:()=>({workflow:'release-notes',record,session}),defaultView:saved?'run':'route'});
  const routeEvidenceHost=add(route,'div');
  const stageCards=add(route,'div','',{class:'rw-stage-grid'}),routeStats=add(route,'dl','',{class:'rw-costs'});
- attachRouteSettings(app,openSettings,{getContext:()=>({workflow:'release-notes',record,card,plan,records:catalog.records}),onApply:next=>{plan=next;invalidate();drawRoute();}});
+ attachRouteSettings(app,openSettings,{getContext:()=>({workflow:'release-notes',record,card,plan,records:catalog.records,session}),onApply:next=>{plan=next;invalidate();drawRoute();}});
  const costDifference=add(route,'div','',{class:'rw-cost-difference','aria-live':'polite'}),explain=fold(route,'What do these estimates mean?');add(explain,'p','Selected route: the estimated API token cost of all enabled steps using their chosen models.');add(explain,'p','One-model comparison: the same token amounts, priced with the comparison model at every step. Change that model in the route settings to compare another option.');add(explain,'p','Planned tokens: input plus output across all enabled steps. Instructions, source documents and earlier answers may be read more than once. These amounts are planning assumptions, not measured usage or enforced limits. Changing them updates the calculator, not the saved draft.');const pricingStatus=add(explain,'p','',{class:'muted','aria-live':'polite'});
 
  const sourceFold=add(app,'details','',{class:'rw-source-fold'});add(sourceFold,'summary','Release evidence');sourceFold.open=true;const workspace=add(sourceFold,'div','',{class:'rw-workspace rw-source-workspace'}),evidence=add(workspace,'section','',{class:'rw-panel rw-evidence','aria-labelledby':'rw-evidence-title'}),output=add(resultDeck,'section','',{class:'rw-panel rw-output','aria-labelledby':'rw-output-title','aria-live':'polite'});
@@ -49,6 +51,7 @@ export function renderReleaseWorkbench(app,catalog,card,{say=()=>{},saved=null}=
  function invalidate(){session=null;revision++;showPlaceholder();}
  function showPlaceholder(){completion.reset();resultDeck.hidden=true;evaluation.replaceChildren();sourceFold.open=true;output.replaceChildren();add(output,'h2','Release draft',{id:'rw-output-title'});badge(output,'Ready to run');const empty=add(output,'div','',{class:'rw-empty'});add(empty,'div','↗',{class:'rw-empty-mark','aria-hidden':'true'});add(empty,'h3','Your draft will appear here');add(empty,'p','Run the workflow to see the announcement, source decisions and quality checks.');}
  function drawRoute(){
+  costViews.refresh();
   routeEvidenceHost.replaceChildren();renderRouteEvidence(routeEvidenceHost,catalog.records,card.models,{preset:plan.preset});
   const estimate=calculatePlan(plan);stageCards.replaceChildren();routeStats.replaceChildren();routeType.textContent=plan.preset==='custom'?'Custom route':plan.preset==='economy'?'Lower-cost route':plan.preset==='deep'?'Deeper review':!plan.preset||plan.preset==='routed'?'Recommended route':card.models[plan.preset]?.label+' throughout';
   const missing=inputMode.value==='missing';if(missing)routeType.textContent='Held for evidence';routeType.className='rw-badge '+(missing?'warn':'neutral');
@@ -107,10 +110,10 @@ export function renderReleaseWorkbench(app,catalog,card,{say=()=>{},saved=null}=
    const savedPlan=reviewChoice!=='pending'&&session?.routing_plan?structuredClone(session.routing_plan):structuredClone(plan);try{if(reviewChoice==='pending')savedPlan.rate_card=await requestPrices(savedPlan.rate_card);if(reviewChoice==='pending')savedPlan.pricing_check={status:'verified',checked_at:savedPlan.rate_card.checked_at};}catch{savedPlan.pricing_check={status:'saved_rates',attempted_at:new Date().toISOString(),reason:'Using the dated saved rate card; fresh prices could not be verified.'};}
    savedPlan.estimate=calculatePlan(savedPlan);value.routing_plan=savedPlan;if(reviewChoice==='approve')value=approvePublication(value);
    if(previousDraft)value.previous_draft=previousDraft;let storageError=null;try{saveResult(localStorage,value);if(value.publication)validatePublication(readResults(localStorage).find(r=>r.id===value.id));}catch(error){storageError=error.message;}
-   if(runRevision!==revision)return;session=value;drawOutput(value,{storageError,animate:reviewChoice!=='approve'});pricingStatus.textContent=savedPlan.pricing_check?.status==='saved_rates'?'Latest prices could not be verified. The calculator uses the saved '+savedPlan.rate_card.verified_on+' rate card.':'';say(storageError?'Result ready. Browser saving is unavailable.':'Result ready · saved in this browser.');if(value.publication&&!storageError)location.assign(publicationUrl(value));
+   if(runRevision!==revision)return;session=value;costViews.show('run');drawOutput(value,{storageError,animate:reviewChoice!=='approve'});pricingStatus.textContent=savedPlan.pricing_check?.status==='saved_rates'?'Latest prices could not be verified. The calculator uses the saved '+savedPlan.rate_card.verified_on+' rate card.':'';say(storageError?'Result ready. Browser saving is unavailable.':'Result ready · saved in this browser.');if(value.publication&&!storageError)location.assign(publicationUrl(value));
   }catch(error){completion.fail(runTicket);say(error.message,true);}finally{disable(false);if(session)for(const b of output.querySelectorAll('.rw-review button'))b.disabled=(b.textContent==='Request changes'&&session.review_choice==='reject');}
  }
  workflow.onchange=()=>location.assign('/scenarios.html?workflow='+workflow.value);cases.onchange=change;
- inputMode.onchange=()=>{invalidate();drawEvidence();drawRoute();if(inputMode.value==='missing')drawOutput(null);say('');};change();if(saved){session=saved;record=structuredClone(saved.record);previousDraft=saved.previous_draft||null;plan=saved.routing_plan||makePlan('release-notes',record,card);drawEvidence();drawRoute();drawOutput(saved);}
+ inputMode.onchange=()=>{invalidate();drawEvidence();drawRoute();if(inputMode.value==='missing')drawOutput(null);say('');};change();if(saved){session=saved;record=structuredClone(saved.record);previousDraft=saved.previous_draft||null;plan=saved.routing_plan||makePlan('release-notes',record,card);drawEvidence();drawRoute();drawOutput(saved);costViews.refresh();}
  return {element:app};
 }
