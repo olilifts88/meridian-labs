@@ -14,3 +14,5 @@
 .run-breakdown pre{white-space:pre-wrap;overflow-wrap:anywhere;max-width:100%}
 .run-breakdown .notice{margin:12px 0}
 [role="tabpanel"][hidden]{display:none!important}
+
+.illustrative-call-list{list-style:none;margin:20px 0;padding:0}.illustrative-call-list li{padding:16px 0;border-bottom:1px solid var(--app-line)}.illustrative-call-head{display:flex;align-items:center;gap:12px;flex-wrap:wrap}.illustrative-call-head>strong:first-of-type{flex:1;min-width:160px}.illustrative-call-list details{margin-top:8px}

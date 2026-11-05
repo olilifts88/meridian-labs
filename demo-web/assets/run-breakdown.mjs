@@ -1,3 +1,4 @@
+import {calculatePlan} from './workflow-routing.mjs?v=illustrative-breakdown-20261105';
 // Source-bound recorded usage. Route plans and comparison trials are never execution receipts.
 export function summariseRun(record){
  const empty={available:false,amount:null,tokens:null,model:null,coverage:'Unavailable',reason:'No measured model call is attached to this output.'};
@@ -12,26 +13,30 @@ export function summariseRun(record){
 const add=(p,t,value='',attrs={})=>{const n=document.createElement(t);n.textContent=value;for(const[k,v]of Object.entries(attrs))n.setAttribute(k,v);p.append(n);return n;};
 const money=n=>n==null?'Unavailable':'$'+n.toFixed(5);
 const number=n=>n==null?'Unavailable':n.toLocaleString('en-GB');
-export function renderRunBreakdown(parent,{record=null,session=null,workflow=null}={}){
- parent.replaceChildren();parent.classList.add('run-breakdown');add(parent,'h2','Run breakdown');
- const measured=summariseRun(record);
- if(session)add(parent,'p','This saved scenario is a prepared replay. Its selected model route is a plan; replaying it does not create new AI usage.',{class:'notice'});
- if(!measured.available){add(parent,'p',measured.reason,{class:'notice'});add(parent,'p','A route estimate cannot fill this gap. Measured calls will appear here when they are linked to this output.',{class:'muted'});}
- else{
-  add(parent,'p',session?'Original source generation · separate from this scenario replay':'Original recorded generation',{class:'eyebrow'});
-  const stats=add(parent,'dl','',{class:'rw-costs'});for(const[label,value]of [['Captured run cost',money(measured.amount)],['Recorded tokens',number(measured.tokens)],['Model calls','1'],['Task coverage','Partial']]){const cell=add(stats,'div');add(cell,'dt',label);add(cell,'dd',value);}
-  add(parent,'p','The captured amount prices this recorded generation only. Whole-task cost is unavailable: a complete coordinator, worker, retry and verification inventory is not established.',{class:'muted'});
-  const wrap=add(parent,'div','',{class:'table-wrap'}),table=add(wrap,'table'),head=add(add(table,'thead'),'tr');for(const label of ['Model','Calls','Uncached input','Cached input','Output','Estimated cost'])add(head,'th',label);
-  const row=add(add(table,'tbody'),'tr');for(const value of [measured.model,'1',number(measured.input),number(measured.cached),number(measured.output),money(measured.amount)])add(row,'td',value);
-  add(parent,'p',measured.modelBasis+'. Reasoning tokens are included in output; cached tokens are included in total input.',{class:'muted'});
-  const detail=add(parent,'details');add(detail,'summary','Token cost and source');
-  if(measured.components)for(const[key,label]of [['input','Uncached input'],['cached_input','Cached input'],['output','Output']])add(detail,'p',label+': '+money(measured.components[key]));
-  add(detail,'p','Rate snapshot: '+(measured.rateDate||'Unavailable')+' · USD. Estimated token value, not a billed charge.');
-  add(detail,'a','Open original recorded run',{href:'/results.html?run='+encodeURIComponent(record.id)});add(detail,'pre',JSON.stringify({run:record.id,recorded_at:record.recorded_at,requested_model:record.requested_model,actual_model:record.actual_model??null,usage:record.usage,estimated_cost:record.estimated_cost},null,2));
+export function illustrateRun(plan){
+ if(!plan?.rate_card||!Array.isArray(plan.stages))return null;
+ const priced=calculatePlan(plan),calls=priced.rows.filter(r=>r.enabled),models=new Map();
+ for(const call of calls){
+  const group=models.get(call.model)||{model:call.model,label:plan.rate_card.models[call.model]?.label||call.model,calls:0,input:0,cached:0,output:0,tokens:0,amount:0};
+  group.calls++;group.input+=call.input_tokens;group.cached+=call.cached_input_tokens;group.output+=call.output_tokens;group.tokens+=call.input_tokens+call.output_tokens;
+  group.amount=group.amount===null||call.estimate.amount===null?null:group.amount+call.estimate.amount;models.set(call.model,group);
  }
- if(workflow)add(parent,'a','View separate recorded model trials',{href:'/runs.html?workflow='+encodeURIComponent(workflow)});
- add(parent,'p','Alternative model trials are separate runs. They are not added together as steps of this task.',{class:'muted'});
- return measured;
+ return {schema:'illustrative-workflow-run-v1',illustrative:true,amount:priced.amount,tokens:calls.reduce((n,c)=>n+c.input_tokens+c.output_tokens,0),calls,models:[...models.values()],rateDate:plan.rate_card.verified_on,rateCard:plan.rate_card.id,processing:plan.processing_tier,region:plan.region};
+}
+export function renderRunBreakdown(parent,{plan=null,workflow=null}={}){
+ parent.replaceChildren();parent.classList.add('run-breakdown');add(parent,'h2','Run breakdown');
+ add(parent,'span','Illustrative execution',{class:'rw-badge'});
+ const run=illustrateRun(plan);
+ if(!run){add(parent,'p','Choose a model route to see its illustrative execution.');return null;}
+ const stats=add(parent,'dl','',{class:'rw-costs'});for(const[label,value]of [['Workflow cost estimate',money(run.amount)],['Illustrative tokens',number(run.tokens)],['Model calls',number(run.calls.length)],['Models used',number(run.models.length)]]){const cell=add(stats,'div');add(cell,'dt',label);add(cell,'dd',value);}
+ const journey=add(parent,'ol','',{class:'illustrative-call-list','aria-label':'Illustrative model calls'});
+ run.calls.forEach((call,i)=>{const item=add(journey,'li'),head=add(item,'div','',{class:'illustrative-call-head'});add(head,'span',String(i+1).padStart(2,'0'),{class:'rw-stage-number'});add(head,'strong',call.name);add(head,'span',plan.rate_card.models[call.model]?.label||call.model,{class:'rw-badge model'});add(head,'strong',money(call.estimate.amount));const detail=add(item,'details');add(detail,'summary',number(call.input_tokens+call.output_tokens)+' tokens · '+call.effort+' effort');add(detail,'p',call.reason);add(detail,'p','Input: '+number(call.input_tokens)+' · cached input: '+number(call.cached_input_tokens)+' · output: '+number(call.output_tokens));if(call.estimate.reason)add(detail,'p',call.estimate.reason,{class:'error'});if(call.estimate.components)add(detail,'pre',JSON.stringify(call.estimate.components,null,2));});
+ if(!run.calls.length)add(parent,'p','This route uses ordinary code only; no model calls are included.');
+ add(parent,'h3','Cost by model');const wrap=add(parent,'div','',{class:'table-wrap'}),table=add(wrap,'table'),head=add(add(table,'thead'),'tr');for(const label of ['Model','Calls','Input','Cached input','Output','Estimated cost'])add(head,'th',label);
+ const body=add(table,'tbody');for(const model of run.models){const row=add(body,'tr');for(const value of [model.label,number(model.calls),number(model.input),number(model.cached),number(model.output),money(model.amount)])add(row,'td',value);}
+ const method=add(parent,'details');add(method,'summary','How this is calculated');add(method,'p','This demonstrates the selected model route using the existing scenario and token budgets. No new AI calls are made. Every included step and retry is counted once. Displayed amounts are rounded; the total uses unrounded values.');add(method,'p','The shared calculator prices input, cache and output using the saved model rates. These are illustrative token amounts and estimated costs, not measured execution.');add(method,'p','Rate snapshot: '+run.rateDate+' · USD · '+run.processing+' · '+run.region+'. Reasoning is included in output; cached input is a subset of input.');
+ if(workflow)add(method,'a','Inspect the original model experiments',{href:'/runs.html?workflow='+encodeURIComponent(workflow)});
+ return run;
 }
 let nextId=0;
 export function attachRunViews(container,modelPane,{getContext,defaultView='route'}={}){

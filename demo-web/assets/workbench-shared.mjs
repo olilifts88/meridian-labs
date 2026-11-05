@@ -1,8 +1,8 @@
-import {attachRunViews} from './run-breakdown.mjs?v=run-breakdown-20261105';
-import {attachRouteSettings} from './route-settings.mjs?v=run-breakdown-20261105';
-import {renderRouteEvidence} from './route-evidence.mjs?v=run-breakdown-20261105';
-import {renderTranscriptRoute} from './transcript-route.mjs?v=run-breakdown-20261105';
-import {makePlan,calculatePlan} from './workflow-routing.mjs?v=run-breakdown-20261105';
+import {attachRunViews} from './run-breakdown.mjs?v=illustrative-breakdown-20261105';
+import {attachRouteSettings} from './route-settings.mjs?v=illustrative-breakdown-20261105';
+import {renderRouteEvidence} from './route-evidence.mjs?v=illustrative-breakdown-20261105';
+import {renderTranscriptRoute} from './transcript-route.mjs?v=illustrative-breakdown-20261105';
+import {makePlan,calculatePlan} from './workflow-routing.mjs?v=illustrative-breakdown-20261105';
 export function add(p,t,text='',attrs={}){const n=document.createElement(t);n.textContent=text;for(const[k,v]of Object.entries(attrs))n.setAttribute(k,v);p.append(n);return n;}
 export function badge(p,text,tone='neutral'){return add(p,'span',text,{class:'rw-badge '+tone});}
 export function fold(p,title){const d=add(p,'details');add(d,'summary',title);return d;}
@@ -14,8 +14,8 @@ export function renderRoute(parent,workflow,record,card,{savedPlan=null,onApply=
  const settings=add(settingsHost||parent,'div','',{class:'rw-settings-bar'}),button=add(settings,'button','Adjust route & token budgets',{type:'button',class:'rw-settings-trigger','aria-haspopup':'dialog'});if(readonly)button.hidden=true;if(readonly)add(settings,'span','Saved route',{class:'muted'});
  const routeFold=fold(parent,'Model route & cost'),route=add(routeFold,'section','',{class:'rw-route',id:'model-routing'});routeFold.className='app-route-disclosure';
  attachRouteSettings(parent,button,{getContext:()=>({workflow,record,card,plan,records,session:getContext?.()?.result||null}),onApply:next=>{plan=next;onApply(structuredClone(plan));draw();}});
- const views=attachRunViews(routeFold,route,{getContext:()=>({workflow,record,session:getContext?.()?.result||null}),defaultView:readonly?'run':'route'});
- function draw(){route.replaceChildren();const header=add(route,'div','',{class:'row'});add(header,'h2','Model route');badge(header,plan.preset==='custom'?'Custom route':plan.preset==='economy'?'Lower-cost route':plan.preset==='deep'?'Deeper review':plan.preset&&plan.rate_card.models[plan.preset]?plan.rate_card.models[plan.preset].label+' throughout':'Recommended route');renderRouteEvidence(route,records,plan.rate_card.models,{preset:plan.preset});const grid=add(route,'div','',{class:'rw-stage-grid'});
+ const views=attachRunViews(routeFold,route,{getContext:()=>({workflow,record,plan,session:getContext?.()?.result||null}),defaultView:readonly?'run':'route'});
+ function draw(){views.refresh();route.replaceChildren();const header=add(route,'div','',{class:'row'});add(header,'h2','Model route');badge(header,plan.preset==='custom'?'Custom route':plan.preset==='economy'?'Lower-cost route':plan.preset==='deep'?'Deeper review':plan.preset&&plan.rate_card.models[plan.preset]?plan.rate_card.models[plan.preset].label+' throughout':'Recommended route');renderRouteEvidence(route,records,plan.rate_card.models,{preset:plan.preset});const grid=add(route,'div','',{class:'rw-stage-grid'});
   const branched=workflow==='call-crm'&&getContext&&renderTranscriptRoute(grid,plan,getContext(),selectedBranch,key=>{selectedBranch=key;});if(branched)grid.className='';
   if(!branched)plan.stages.forEach((s,i)=>{const d=fold(grid,''),summary=d.querySelector('summary');add(summary,'span',String(i+1).padStart(2,'0'),{class:'rw-stage-number'});add(summary,'strong',s.name);const tags=add(summary,'span','',{class:'rw-labels'});badge(tags,plan.rate_card.models[s.model].label,'model');badge(tags,s.effort+' effort');if(!s.enabled)badge(tags,'Excluded');add(d,'p',s.reason);add(d,'p',s.quality_check,{class:'muted'});});
   const e=calculatePlan(plan),stats=add(route,'dl','',{class:'rw-costs'}),baseline=plan.rate_card.models[plan.baseline_model].label;for(const[label,value]of [['Selected route estimate',money(e.amount)],['All steps: '+baseline,money(e.baseline)],['Planned tokens',plan.stages.filter(s=>s.enabled).reduce((n,s)=>n+s.input_tokens+s.output_tokens,0).toLocaleString()],['Rates',plan.rate_card.verified_on+' · USD']]){const div=add(stats,'div');add(div,'dt',label);add(div,'dd',value);}

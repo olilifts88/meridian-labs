@@ -1,12 +1,12 @@
 import {inspectSource,recordBrowser,outputViews} from './app-ui.mjs';
-import {renderQualityReview} from './quality-review.mjs?v=run-breakdown-20261105';
-import {attachRunButton} from './run-button.mjs?v=run-breakdown-20261105';
-import {renderOutputEvaluation,revealResults} from './output-evaluation.mjs?v=run-breakdown-20261105';
+import {renderQualityReview} from './quality-review.mjs?v=illustrative-breakdown-20261105';
+import {attachRunButton} from './run-button.mjs?v=illustrative-breakdown-20261105';
+import {renderOutputEvaluation,revealResults} from './output-evaluation.mjs?v=illustrative-breakdown-20261105';
 import {NAMES,SCENARIOS,sourceRows,POLICIES,TRANSCRIPTS,SLA} from './business-data.mjs';
 import {draftFor,checksFor,newBusinessResult,approveBusiness,findBusinessPublication,outputURL} from './business-engine.mjs';
 import {saveResult,readResults} from './visitor-results.mjs';
-import {requestPrices,calculatePlan} from './workflow-routing.mjs?v=run-breakdown-20261105';
-import {add,badge,fold,select,link,renderRoute} from './workbench-shared.mjs?v=run-breakdown-20261105';
+import {requestPrices,calculatePlan} from './workflow-routing.mjs?v=illustrative-breakdown-20261105';
+import {add,badge,fold,select,link,renderRoute} from './workbench-shared.mjs?v=illustrative-breakdown-20261105';
 export function renderBusinessWorkbench(app,workflow,card,{say=()=>{},saved=null,records=[],cases=[]}={}){
  if(workflow==='call-crm')link(app,'Open delivery walkthrough','/delivery.html');
  document.body.classList.add('release-page');app.classList.add('release-workbench');let session=saved,busy=false,route,revised=false,issue=false;
