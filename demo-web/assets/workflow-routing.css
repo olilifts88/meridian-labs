@@ -8,7 +8,7 @@
 
 /* Configuration and execution evidence are sibling views. */
 .run-view-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
-.run-view-tabs button[aria-selected="true"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.run-view-tabs button[aria-selected="true"]{background:var(--app-accent);color:var(--app-onaccent);border-color:var(--app-accent)}
 .run-breakdown table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
 .run-breakdown th,.run-breakdown td{padding:12px 10px;text-align:left;border-bottom:1px solid var(--line)}
 .run-breakdown pre{white-space:pre-wrap;overflow-wrap:anywhere;max-width:100%}
