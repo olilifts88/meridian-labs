@@ -1,5 +1,5 @@
-import {attachRunViews} from './run-breakdown.mjs?v=run-breakdown-20261105';
-import {calculatePlan, renderPlanner} from './workflow-routing.mjs?v=run-breakdown-20261105';
+import {attachRunViews} from './run-breakdown.mjs?v=illustrative-breakdown-20261105';
+import {calculatePlan, renderPlanner} from './workflow-routing.mjs?v=illustrative-breakdown-20261105';
 
 const money = value => value == null ? 'Unavailable' : '$' + value.toFixed(5);
 
@@ -16,7 +16,7 @@ export function attachRouteSettings(parent, trigger, {getContext, onApply}) {
   const error = dialog.querySelector('[role="alert"]');
   const [close, cancel, apply] = dialog.querySelectorAll('button');
   let planner;
-  dialog.addEventListener('runviewchange',event=>{const run=event.detail.view==='run';apply.hidden=run;cancel.textContent=run?'Close':'Cancel';dialog.querySelector('.rw-dialog-body > p').textContent=run?'Inspect the selected run’s captured usage, token cost and coverage.':'Choose a route, then open a step to edit its model, effort and token estimates.';});
+  dialog.addEventListener('runviewchange',event=>{const run=event.detail.view==='run';apply.hidden=run;cancel.textContent=run?'Close':'Cancel';dialog.querySelector('.rw-dialog-body > p').textContent=run?'Follow the illustrative model calls and their estimated token costs.':'Choose a route, then open a step to edit its model, effort and token estimates.';});
 
   function refreshEstimate() {
     if (!planner) return;
@@ -45,7 +45,7 @@ export function attachRouteSettings(parent, trigger, {getContext, onApply}) {
     planner = renderPlanner(host, workflow, record, card, {savedPlan: plan, records, onChange: refreshEstimate});
     refreshEstimate();
     const pane = host.firstElementChild;
-    attachRunViews(host,pane,{getContext:()=>({workflow,record,session:context.session||null}),defaultView:context.session?'run':'route'});
+    attachRunViews(host,pane,{getContext:()=>({workflow,record,plan:planner.snapshot(),session:context.session||null}),defaultView:context.session?'run':'route'});
     dialog.showModal();
   };
   cancel.onclick = close.onclick = () => dialog.close();
