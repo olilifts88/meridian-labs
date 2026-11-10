@@ -45,7 +45,11 @@
         "Approval opens demo artefacts; no external business-system write.",
         "Saved history is browser-local. The web verification group tests browser modules, not deployed hosting or the published ZIP; verify those separately."
       ],
-      "recorded_evidence": "docs/verification-quality-review-2026-11-02.md"
+      "recorded_evidence": "docs/verification-quality-review-2026-11-02.md",
+      "aliases": [
+        "workflow showcase",
+        "browser workflows"
+      ]
     },
     {
       "id": "integrated-release-agent",
@@ -444,7 +448,12 @@
         "Browser snapshot is separate from connected Notion demo",
         "Linear and Slack simulated; reviews are unauthenticated session state"
       ],
-      "recorded_evidence": "docs/verification-call-crm-2026-10-27.md"
+      "recorded_evidence": "docs/verification-call-crm-2026-10-27.md",
+      "aliases": [
+        "meeting actions",
+        "call crm",
+        "transcript outputs"
+      ]
     },
     {
       "id": "shared-workflow-evaluation",
@@ -546,6 +555,10 @@
       "verification_groups": [
         "python",
         "web"
+      ],
+      "aliases": [
+        "model selection",
+        "token calculator"
       ]
     },
     {
@@ -559,11 +572,13 @@
         ".github/workflows/repo-explorer.yml",
         "docs/repo-explorer.md",
         "repo-explorer/qa.mjs",
-        "repo-explorer/answer-format.mjs"
+        "repo-explorer/answer-format.mjs",
+        "scripts/skill-execution.mjs"
       ],
       "symbols": {},
       "tests": [
-        "tests/repo-explorer.test.mjs"
+        "tests/repo-explorer.test.mjs",
+        "tests/skill-execution.test.mjs"
       ],
       "test_symbols": {},
       "entrypoint": [
@@ -575,9 +590,14 @@
       "known_gaps": [
         "AI answers require the external DeepWiki service and its indexed repository; source-map lookup remains available separately.",
         "The answer may use a different indexed revision from the pinned source map. No availability, quality or current deployment is inferred from a reference check.",
-        "Only the submitted question and public repository identifier go to DeepWiki; no private Notion records or API credentials are sent."
+        "Only the submitted question and public repository identifier go to DeepWiki; no private Notion records or API credentials are sent.",
+        "The optional execution guard enforces only calls routed through it; it does not intercept ChatGPT tools or replace existing permission gates."
       ],
-      "recorded_evidence": "docs/repo-explorer.md"
+      "recorded_evidence": "docs/repo-explorer.md",
+      "aliases": [
+        "repository questions",
+        "code evidence"
+      ]
     }
   ]
 }

@@ -91,3 +91,38 @@ The `web` group runs the same browser-module test files as `npm run test:web`; t
 The [recorded model summaries](../examples/showcase/verified-runs.json) retain accepted requested routes, source/input bindings, pass/hold assessments and explicit identity limits. Raw account receipts stay private. The [verification record](verification-2026-10-26.md) states the dates, scope and remaining gaps.
 
 This repository supplies the repeatable map and local search tool. It does not install or alter anyone's Notion skills or automatically intercept future assistant requests.
+
+## Direct source lookup and bounded execution
+
+The GitHub Pages map accepts explicit `aliases` on capability entries. Aliases identify
+known repository areas; they do not prove that a separately hosted presentation or
+private document is stored here. The Notion method, this browser map and DeepWiki Q&A
+are separate execution paths. Check the artifact's authoritative home before a deep
+repository investigation. For versioned content, read the actual content and variant;
+an empty repository search cannot establish absence from every source or revision.
+
+`scripts/skill-execution.mjs` is an optional, dependency-free helper for connected
+workflow adapters. It resolves caller-supplied source aliases, counts underlying calls,
+reuses task-current reads, preserves verification capacity and blocks duplicate or
+uncertain writes. It prefers structured tool results and distinguishes errors from
+successful empty results. It contains no private source register, no network calls and
+no model calls. Private locations remain in the owner's source register.
+
+An adapter must route each actual call through the helper and invalidate reads when
+source/access/schema state changes. A call that internally performs other requests
+must account for those separately. A new helper instance does not retain a previous
+run's receipts: durable workflows must use their existing journal/readback before
+retry. This is not a universal ChatGPT interceptor or a replacement for approval gates.
+
+The default known-lookup budget targets six task calls, caps at ten and reserves two
+for mutation/readback. After two negative searches, change source or stop discovery.
+Never truncate required pagination or mark partial work complete to satisfy a cap.
+Large work declares source-volume stages and checkpoints remaining scope. Runtime
+adoption, service health, exact version retrieval and measured savings each need their
+own evidence beyond these offline tests.
+
+Run the focused checks with:
+
+```sh
+node --test tests/repo-explorer.test.mjs tests/skill-execution.test.mjs
+```
