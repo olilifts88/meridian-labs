@@ -189,7 +189,15 @@ These commands check the software when someone changes it. Visitors can use the 
 | `npm run test:download` | Builds and extracts the ZIP, verifies its file hashes, starts it offline and checks pages, pricing fallback and blocked server writes |
 | `python3 scripts/capability_check.py` | Confirms that mapped code and test references exist; it does not run the feature tests |
 
-The [GitHub checks](.github/workflows/ci.yml) run the automated suites on pushes and pull requests.
+The [GitHub checks](.github/workflows/ci.yml) run on pushes and pull requests. Three independent groups run in parallel:
+
+| Group | What it checks |
+| --- | --- |
+| Python workflows and evidence | Python tests, capability references and the original evaluation/demo journeys |
+| Browser and workflow checks | n8n export checks, JavaScript tests and candidate/review previews |
+| Offline download verification | Builds and extracts the ZIP, then checks its contents and offline behaviour |
+
+The final `test` job waits for all three groups and passes only when every group succeeds. A failed, cancelled or skipped group cannot produce a passing final gate. This preserves the existing `checks/test` status for required-check rules. Parallel execution is intended to shorten feedback time; no measured speed improvement is claimed.
 
 <details>
 <summary>Original evaluation and benchmark commands</summary>
