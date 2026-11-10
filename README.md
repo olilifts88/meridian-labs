@@ -84,6 +84,8 @@ The [delivery walkthrough](docs/delivery-walkthrough.md) adds a focused transcri
 | **[Bounceback](docs/customer-recovery.md)** | Play through customer recovery, a technical exception and automatic reuse of a checked fix. |
 | **[Transcript to action](docs/call-crm.md)** | Turn a transcript into CRM updates, issue records, commercial follow-ups, team posts and searchable call knowledge. |
 
+[Reusable app components and portability gaps](docs/reusable-components.md) maps shared UI, evaluation and workflow resources.
+
 Bounceback adds three fictional login-support cases with a conversation view, recovery checks and versioned learning. Run it locally at `/scenarios.html?workflow=customer-recovery`; the public site changes only after deployment.
 
 All data is fictional. Approvals affect the local simulation; they do not send messages or update external services. Saved results stay in the browser and address you used. The public site, a local copy, another browser and private browsing each have separate histories. They do not sync with one another or add results to the original benchmark.
