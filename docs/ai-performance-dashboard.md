@@ -63,7 +63,7 @@ These screenshots use the current interface with fictional sample data. The figu
 - **Immediate app writes:** review decisions, task usefulness feedback and workflow receipt imports are durable in the app database after saved-data readback.
 - **While open:** the dashboard rereads saved app data every minute and on reopening. Manual-refresh status is checked every 15 seconds. These reads do not collect source data.
 - **Every 12 hours:** the existing connected reporting job is configured to mirror reviews, task records, saved quality/routing evidence, live label-definition checks and dated exchange rates. The Mac, app and connected source access must be available.
-- **Weekly:** the full retained local-log scan keeps its Monday 09:00 Europe/London due gate and existing overdue catch-up. The lightweight mirror reuses that report.
+- **Local usage:** where the code-only uploader is enabled, the existing 15-minute Mac catch-up checks for changed retained logs and verifies the uploaded aggregates. The Mac must be awake, online and authorised. The Monday 09:00 Europe/London full-workflow gate and the 12-hour connected mirror remain separate; the mirror reuses the latest verified report.
 - **Refresh now:** choose this tab, several tabs or all tabs. A confirmation explains shared sources and other affected tabs. Selecting activity or usage requests a fresh local-log scan. No business workflow or model comparison is replayed.
 
 A durable request queue distinguishes waiting, dispatched, running, completed and failed. An ordinary HTTPS courier checks for explicit requests every 30 seconds and queues the existing connected collector. It does not sync every source at that interval or call a model while idle. Its credential stays in process memory. A Mac restart or expired credential requires the connected reporting job to re-arm it. Requests wait when collection is unavailable.
@@ -123,8 +123,16 @@ Backing data and freshness:
 
 - Original AI Run Metrics rows, projected without replacing their schema or identities. The everyday Notion view shows Run, Run day, Run type, Skill, Execution environment, Strategy, Requested worker model, Outcome and Evidence. A separate Routing & delegation view exposes requested and evidenced actual assignments. Other properties and their data remain stored and hidden.
 - Retained Codex log reports for aggregate response/action inventory; these are separate from task records.
-- Tasks mirror every 12 hours. Local logs are scanned weekly, or explicitly through Refresh now.
+- Tasks mirror every 12 hours. The enabled code-only uploader can update local aggregates through the existing 15-minute catch-up; the full weekly workflow and explicit Refresh now remain separate.
 - Capability labels cover inspected records only. Missing attempts, technical retries, worker lineage, duration and whole-task tokens stay unavailable. A follow-up question is not automatically a retry or correction.
+
+### Run visibility and saved-record recovery
+
+Run visibility shows saved task states, refresh requests, capture deliveries and review choices. Search by task name or run ID, then filter by record type and state. These lists overlap and must not be added together as task totals. Running describes the last saved state; it is not a live agent heartbeat.
+
+For a capture delivery needing attention, **Check saved record** looks up its original source identity and verifies the retained evidence. It does not create a page, overwrite source fields or repeat the business action. Restore the existing connection before checking again after an access failure. Missing, ambiguous or human-edited evidence stays retained for investigation. Verified capture delivery does not establish answer quality or fix execution.
+
+Service-relaunch and rejected-access recovery checks passed on 10 November 2026 using the existing implementation. Isolated persisted requests, decisions and source dates survived the service restart; recovery completed a missing receipt without repeating the applied change. Read-only hosted checks recovered from rejected access, and repeated publisher checks recognised already-saved data. Private receipts remain with the owner. This does not establish a deliberately tested full Mac reboot or natural credential expiry.
 
 ## Usage & cost
 
@@ -140,7 +148,7 @@ Backing data and freshness:
 
 - The existing local token collector and versioned token-cost calculation.
 - Public ECB reference rates for the dated USD-to-GBP conversion, carried forward if unavailable.
-- Local usage updates weekly or on an explicit usage/activity refresh. The 12-hour mirror reuses the latest verified report and can refresh FX.
+- Local usage can update through the enabled 15-minute Mac catch-up or an explicit usage/activity refresh. The weekly full-workflow gate remains in place. The 12-hour mirror reuses the latest verified report and can refresh FX.
 - Cached input is part of input; reasoning is part of output. Neither is added twice. Unpriced tokens are excluded from cost estimates, not valued at zero.
 - Estimates are API-equivalent token values. They are not subscription bills, tool charges, complete account usage or demonstrated savings.
 
