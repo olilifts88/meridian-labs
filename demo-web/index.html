@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en">
-<meta charset="utf-8"><script src="/assets/app-theme.js"></script><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta charset="utf-8"><script src="/assets/app-theme.js?v=no-guide-20261106"></script><meta name="viewport" content="width=device-width,initial-scale=1">
 <script src="/assets/hosted-replay.js"></script><title>Meridian Labs | Explore the workflows</title>
 <style>
 :root{font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#f2efe8;color:#242426;--muted:#69655f;--line:#d8d2c8;--red:#b8212b}*{box-sizing:border-box}body{margin:0}header{background:#111215;color:#f2efe8;border-bottom:3px solid #ed4146;padding:27px max(24px,calc((100vw - 1200px)/2));display:flex;justify-content:space-between;align-items:center;gap:20px}header strong{letter-spacing:3px;font-size:21px}header span{font-size:12px;letter-spacing:2px;color:#c8c4bc}.wrap{max-width:1248px;margin:auto;padding:48px 24px}h1{font-size:46px;line-height:1.12;letter-spacing:-1.8px;margin:12px 0 18px;max-width:850px}h2{font-size:23px;line-height:1.25;letter-spacing:-.5px;margin:12px 0}.eyebrow{font-size:12px;font-weight:700;letter-spacing:1.7px;text-transform:uppercase;color:var(--red)}.lead{max-width:740px;color:var(--muted);margin:0 0 32px}.path-actions{display:flex;gap:12px;flex-wrap:wrap;margin:24px 0 32px}.secondary-link{margin-top:14px;font-size:13px;color:var(--muted)}.directory{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}.workflow{padding:28px;background:#fff;border:1px solid var(--line);border-radius:6px;display:flex;flex-direction:column;align-items:flex-start}.workflow.featured{grid-column:1/-1;display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:32px}.number{font-size:12px;color:var(--red);letter-spacing:1.3px;font-weight:650}.explain{margin:0 0 20px;color:#55524d;max-width:600px}.detail{font-size:13px;margin:0 0 14px;color:var(--muted)}.detail strong{color:#383633;font-weight:600}.status{display:inline-block;font-size:11px;letter-spacing:.3px;background:#eee9df;padding:3px 8px;border-radius:4px;color:#5c554b;margin-bottom:18px}.button{display:inline-flex;align-items:center;gap:16px;min-height:44px;text-decoration:none;padding:9px 15px;background:#242426;color:white;border-radius:5px;font-size:14px;font-weight:600;margin-top:auto}.button:hover{background:var(--red)}a:focus-visible{outline:3px solid #477db5;outline-offset:4px}.shared{display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-top:36px;padding-top:28px;border-top:1px solid var(--line)}.shared h2{font-size:17px;margin-top:0}.shared p{font-size:13px;color:var(--muted);margin:0}footer{margin-top:32px;font-size:12px;color:var(--muted)}@media(max-width:720px){header span{display:none}.wrap{padding:30px 18px}h1{font-size:34px;letter-spacing:-1px}.directory,.shared{grid-template-columns:1fr}.workflow.featured{grid-column:auto;display:flex;gap:0}.workflow{padding:23px}.button{margin-top:8px}}
@@ -10,7 +10,7 @@
 <link rel="stylesheet" href="/assets/demo-banner.css"><link rel="stylesheet" href="/assets/studio.css"><link rel="stylesheet" href="/assets/workflow-routing.css">
 <header class="site-banner studio-header"><a class="banner-home" href="/" aria-label="Meridian Labs home"><img src="/assets/meridian-labs-lockup.svg" alt="Meridian Labs" width="255" height="55"></a><nav class="banner-nav" aria-label="Main navigation"><a href="/">Workflows</a><a href="/saved-results.html">Saved results</a></nav></header>
 <link rel="stylesheet" href="/assets/company-workspace.css">
-<link rel="stylesheet" href="/assets/app-ui.css">
+<link rel="stylesheet" href="/assets/app-ui.css?v=neutral-20261106">
 <main class="wrap">
 <section class="home-intro">
 <h1>AI Workflows</h1>
@@ -63,5 +63,6 @@
 </nav>
 <footer><details><summary>How these workflows are reviewed</summary><p>Each output keeps its source evidence and review decision. Automated checks cover fixed rules; a person judges usefulness and approves reviewed outputs. Bounceback demonstrates automatic troubleshooting and checked recovery, with technical investigation for exceptions. <a href="/evaluation.html">Read the review method</a> · <a href="/runs.html">Supporting model evidence</a></p></details>Meridian Labs · AI workflows. <a href="https://github.com/olilifts88/meridian-labs">View the source</a></footer>
 </main>
+<script type="module" src="/assets/workflow-launcher.mjs"></script>
 
 </html>

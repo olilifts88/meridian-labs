@@ -12,3 +12,71 @@ html[data-theme=dark] body :is(.qr,.qr-answer,.qr-tag,.qr-step-list button,.rout
 html[data-theme=dark] body :is(.rw-dialog-header,.rw-dialog-body,.rw-dialog-footer,.route-stage-head,.route-stage-content,.route-detail,.routing-hint,.routing-notice,.route-custom,.route-settings,.routing-comparison,.qr-track){background:var(--app-raised)!important;color:var(--app-ink)!important;border-color:var(--app-line)!important}
 
 body .rw-source-fold,body .rw-source-fold>summary,body .rw-source-fold .rw-evidence{background:var(--app-panel)!important;color:var(--app-ink)!important;border-color:var(--app-line)!important}body .button:not(.primary){background:var(--app-panel)!important;color:var(--app-ink)!important;border-color:var(--app-line)!important}
+
+/* Approved Meridian combined toolbar: shared across the suite. */
+body .meridian-shell.meridian-shell{display:flex;align-items:center;justify-content:flex-start;flex-wrap:wrap;gap:22px;height:auto;min-height:78px;padding:12px 25px;background:#111215!important;color:#f2efe8!important;border:0;border-top:3px solid #ed4146;border-bottom:1px solid #303137!important}
+body .meridian-shell .ml-suite-home{display:flex;align-items:center;flex:none;width:178px;text-decoration:none;color:#f2efe8!important}
+body .meridian-shell .ml-suite-home img{display:block;width:178px;height:47px;object-fit:contain}
+body .meridian-shell .ml-product{display:flex;align-items:center;gap:10px;min-height:44px;padding-left:22px;border-left:1px solid #454149;color:#f2efe8!important;text-decoration:none;flex:none}
+body .meridian-shell a.ml-product:not(.app-brand){display:block;line-height:1.4}
+body .meridian-shell .ml-product>strong{display:block;font-size:16px;letter-spacing:-.3px}
+body .meridian-shell :is(.ml-product small,.app-breadcrumb){color:#c8c4bc!important;font-size:11px;letter-spacing:0}
+body .meridian-shell .ml-product small{display:block}
+body .meridian-shell :is(.app-name strong,.app-name){color:#f2efe8!important}
+body .meridian-shell nav{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-left:auto}
+body .meridian-shell nav :is(button,a),body .meridian-shell .app-theme-control select{background:#222329!important;color:#f2efe8!important;border:1px solid #55515b!important;border-radius:6px;padding:8px 11px;min-height:36px;text-decoration:none;font-size:12px}
+body .meridian-shell :is(.app-theme-control,.app-theme-status){color:#c8c4bc!important}
+body .meridian-shell :is(.app-preview,.badge){display:inline-block!important;color:#d8d2c8!important;border:1px solid #55515b!important;background:#1b1c21!important;border-radius:5px;font-size:10px;padding:4px 7px}
+body .meridian-shell nav :is(button,a):hover{border-color:#f2a1ad!important;color:#f2a1ad!important}
+body .meridian-shell :is(a,button,select):focus-visible{outline-color:#f2a1ad!important}
+@media(max-width:1100px){body .meridian-shell.meridian-shell{gap:15px}body .meridian-shell .app-breadcrumb{display:none}body .meridian-shell nav{gap:8px}}
+@media(max-width:700px){body .meridian-shell.meridian-shell{padding:10px 16px;gap:12px}body .meridian-shell .ml-suite-home,body .meridian-shell .ml-suite-home img{width:140px;height:37px}body .meridian-shell .ml-product{padding-left:12px;min-width:0}body .meridian-shell nav{margin-left:0;width:100%;justify-content:flex-start}body .meridian-shell nav>a{display:inline-flex!important}body .meridian-shell .app-theme-control{margin:0 0 0 auto}body .meridian-shell .app-theme-control select{font-size:16px!important}body .meridian-shell nav :is(button,a){min-height:44px}}
+
+body .meridian-shell nav.banner-nav{margin-left:auto}
+
+/* Quotes and scripts use the same theme palette as their surrounding panels. */
+body blockquote{background:var(--app-raised)!important;color:var(--app-ink)!important;border-left-color:var(--app-accent)!important}
+body pre:not(.rw-diff){background:var(--app-raised);color:var(--app-ink);border:1px solid var(--app-line)}
+body code{background:var(--app-raised);color:var(--app-ink)}
+body pre code{background:transparent;color:inherit}
+
+body .rw-run.primary.is-complete{background:#285c43!important;border-color:#285c43!important;color:#fff!important}body .rw-run.primary.is-complete:hover{background:#204b37!important;border-color:#204b37!important}body .rw-run.primary.is-held{background:var(--app-warnbg)!important;border-color:var(--app-warn)!important;color:var(--app-warn)!important}
+
+/* Approved AI Workflows: neutral charcoal & red, 6 November 2026. */
+:root{--app-canvas:#F1EFE9;--app-panel:#FAF9F5;--app-raised:#EAECE6;--app-ink:#171819;--app-muted:#626463;--app-line:#B5B8B3;--app-accent:#242728;--app-onaccent:#FAF9F5;--app-selected:#E4E5DF}
+:root[data-theme=dark]{--app-canvas:#111314;--app-panel:#1C1F20;--app-raised:#262B2B;--app-ink:#ECECE5;--app-muted:#B4B9B7;--app-line:#505655;--app-accent:#D9DDD7;--app-onaccent:#111314;--app-selected:#2B3030}
+body .meridian-shell.meridian-shell{background:var(--app-panel)!important;color:var(--app-ink)!important;border-top:2px solid #B62B35;border-bottom:1px solid var(--app-line)!important;min-height:100px}
+body .meridian-shell .ml-suite-home{width:auto;gap:12px;color:var(--app-ink)!important;font-size:19px;font-weight:500;letter-spacing:-.4px}
+body .meridian-shell .ml-suite-home img{width:68px;height:68px;filter:brightness(.78) saturate(1.05)}
+html[data-theme=dark] body .meridian-shell .ml-suite-home img{filter:brightness(1.18) saturate(.86)}
+body .meridian-shell .ml-product{border-color:var(--app-line);color:var(--app-ink)!important}
+body .meridian-shell :is(.app-name strong,.app-name){color:var(--app-ink)!important}
+body .meridian-shell :is(.ml-product small,.app-breadcrumb,.app-theme-control,.app-theme-status){color:var(--app-muted)!important}
+body .meridian-shell nav :is(button,a),body .meridian-shell .app-theme-control select{background:var(--app-panel)!important;color:var(--app-ink)!important;border-color:var(--app-line)!important}
+body .meridian-shell :is(.app-preview,.badge){background:var(--app-raised)!important;color:var(--app-muted)!important;border-color:var(--app-line)!important}
+body .meridian-shell nav :is(button,a):hover{border-color:var(--app-accent)!important;color:var(--app-accent)!important}
+body .meridian-shell :is(a,button,select):focus-visible{outline-color:var(--app-accent)!important}
+body .home-pages{display:flex;margin-top:24px}
+body .workflow .status{background:var(--app-selected)!important;color:var(--app-accent)!important;border-color:transparent!important}
+body .workflow .detail strong{color:var(--app-ink)}
+.brand-guide-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px}
+.brand-swatch{height:65px;border:1px solid var(--app-line);border-radius:6px;margin-bottom:8px;background:var(--swatch)}
+.brand-guide-card{padding:20px;background:var(--app-panel);border:1px solid var(--app-line);border-radius:8px}
+.brand-guide-card code{display:block;margin:8px 0}
+@media(max-width:700px){body .meridian-shell .ml-suite-home{width:auto;height:auto;font-size:16px;gap:8px}body .meridian-shell .ml-suite-home img{width:48px;height:48px}body .meridian-shell.meridian-shell{min-height:80px}body .home-pages{gap:16px}}
+
+/* Keep legacy header-span and secondary-link rules from obscuring brand roles. */
+body .meridian-shell .ml-suite-home span{color:var(--app-ink)!important;font:inherit;letter-spacing:inherit}
+body .workflow a.button{background:var(--app-accent)!important;color:var(--app-onaccent)!important;border:1px solid var(--app-accent)!important}
+
+/* Route controls and summary tiles retain readable paired-theme surfaces. */
+:root{--rw-surface:var(--app-panel);--rw-line:var(--app-line);--rw-ink:var(--app-ink);--rw-muted:var(--app-muted)}
+body :is(.routing-summary>div,.budget-note,.rw-facts>div,.rw-fact,.rw-compare-card,.card,.evaluation-feature){background:var(--app-raised)!important;color:var(--app-ink)!important;border-color:var(--app-line)!important}
+body :is(.routing-planner select,.rw-commandbar select,.route-stage input,.route-stage select){background:var(--app-panel)!important;color:var(--app-ink)!important;border-color:var(--app-line)!important}
+body :is(.route-stage-head .tag,.route-model-label){background:var(--app-selected)!important;color:var(--app-ink)!important;border-color:var(--app-line)!important}
+body :is(.route-stage,.budget-note,.routing-planner){border-left-color:var(--app-accent)!important;border-top-color:var(--app-accent)!important}
+body .route-stage-head:before{color:var(--app-accent)!important}
+
+body .app-route-disclosure,body .app-route-disclosure>summary{background:var(--app-panel)!important;color:var(--app-ink)!important;border-color:var(--app-line)!important}
+
+body .workflow .status{color:var(--app-muted)!important}

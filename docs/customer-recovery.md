@@ -4,7 +4,15 @@ Bounceback is an interactive customer-support story inside AI Workflows. It uses
 
 The demo is self-contained: fictional cases, prepared responses, local browser state, no new model calls and no external writes. It illustrates an operating model; it is not a connected support service or evidence of model accuracy or churn reduction.
 
-[Three-page annotated quick guide](../demo-web/bounceback-guide.html) is available from the app header. It follows a routine fix, a technical exception and learned reuse.
+[Quick guide](../demo-web/bounceback-guide.html) is available from the app header. It covers the example loader, in-place workspace, routine fix, technical exception, learned reuse and evaluation views.
+
+## Start with a worked example
+
+Choose one of seven **Worked example** options and click **Load example**. Routine recovery, unresolved exception, checked-fix reuse, stale evidence, missing confirmation, wrong-account evidence and reopened guidance use the same engine transitions as the story. Replacing working state asks for confirmation and preserves saved snapshots.
+
+Directory workflow cards open an interactive preview with an explicit full-page link. Bounceback case buttons open the live workspace in a dialog. Evidence, checks, guidance, evaluation, saved results and the guide open in place. Close or Escape restores the previous view.
+
+**Inspect evaluation & AI** presents source checks, two prepared evidence variants of the same case, and the stage-level model plan. The variants are authored fixtures, not model generations or an accuracy benchmark. Recorded model examples are explicitly identified as other workflows.
 
 ## Play through the story
 
@@ -37,6 +45,9 @@ The planning route separates small-model classification and knowledge formatting
 - `demo-web/assets/recovery-data.mjs`: authored cases, seed guidance and technical outcome.
 - `recovery-engine.mjs`: pure transitions, checks, scoped retrieval, learning, withdrawal and storage.
 - `recovery-workbench.mjs` and `recovery.css`: interactive workbench.
+- `recovery-examples.mjs`: seven worked states and same-case evidence comparison.
+- `app-dialog.mjs`, `app-dialog.css`, `workflow-launcher.mjs`: shared dialogs and workflow preview launcher.
+- [Reusable component catalogue](reusable-components.md): implemented components and portability gaps.
 - `tests/web-recovery.test.mjs`: recovery, exception, reuse, duplicate, source, storage and history checks.
 
 Existing recorded model answers and review gates for other workflows are unchanged. Hosted deployment and live support/model integration are separate work.

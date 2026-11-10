@@ -83,27 +83,53 @@ export const TRANSCRIPTS=[
  ['02:10','Maya','The budget might be around £32,000 a year, but Finance has not signed that off. Please send a proposal for 40 seats.'],
  ['04:05','Maya','Our CSV exports put Revenue before Customer even though Customer is first in the report. It happened on three exports yesterday.'],
  ['05:31','Alex','I will ask Engineering to investigate the column order and send the proposal by Tuesday.'],
- ['06:12','Maya','Please keep the commercial discussion with me and include Priya from Finance in the follow-up.']
+ ['06:12','Maya','Please keep the commercial discussion with me and include Priya from Finance in the follow-up.'],
+ ["07:05", "Alex", "What would make the pilot useful enough for the London team to keep using it?"],
+ ["07:28", "Maya", "Our operations analysts prepare a weekly revenue pack for the Monday meeting. They currently reorder the exported columns by hand. We want the CSV to match the saved report so that the pack can be checked without that extra step."],
+ ["08:14", "Maya", "Please test a report with Customer, Revenue and Region in that order. Compare the export headings and a sample of rows against the report; we must not move values under the wrong headings."],
+ ["09:02", "Alex", "I will put those reproduction steps on the engineering report. We will need a regression test and your confirmation before calling the export problem resolved."],
+ ["10:16", "Maya", "Priya needs the proposal to show the seat count, annual price, billing terms and any implementation charges separately. The budget is a planning figure; it is not approval to sign."],
+ ["11:08", "Alex", "I will own the proposal and the handover. Sam will help the London team with setup. Let us use the next follow-up to check access, the export issue and the questions Finance still has."],
+ ["12:03", "Maya", "London is the initial scope. Other offices are only a possibility once the pilot proves useful; please do not include them as committed expansion."]
  ],stage:['Technical review','Pilot agreed'],budget:32000,seats:40,issue:'CSV export column order differs from the report',issueQuote:2,committed:true,action:'Send a 40-seat proposal and confirm the London pilot setup.',owner:'Alex Reed',due:'2026-11-03'},
  {id:'bd-interest',title:'Interest without a commitment',type:'Business development',account:'Harbour Systems',date:'2026-10-30',attendees:'Dan Morgan, Product Lead; Alex Reed, Meridian',transcript:[
  ['00:30','Dan','A pilot could be useful, but we need the security team to review it first. We have not committed to a start date.'],
  ['02:04','Dan','Could you send the Enterprise SSO information? We would probably start with 15 seats if the review works out.'],
  ['03:20','Dan','I do not have an approved budget to share yet.'],
  ['04:45','Alex','I will send the security pack and arrange a review with your security lead next week.'],
- ['05:10','Dan','No product issues from us so far. We are still evaluating the fit.']
+ ['05:10','Dan','No product issues from us so far. We are still evaluating the fit.'],
+ ["06:04", "Alex", "What is the security team trying to establish before they would support a pilot?"],
+ ["06:36", "Dan", "They need to understand Enterprise SSO, who can access customer data, where the standard environment is hosted and what happens when data is deleted. Please use the approved policy pack rather than a general assurance."],
+ ["07:22", "Dan", "We use an existing identity provider. I will introduce our security lead, Eva, after I have sent her the information. She has not booked a review slot yet."],
+ ["08:10", "Alex", "I will send the pack, list anything we cannot answer from current evidence and ask you for an introduction. We should not set a pilot date until that review is complete."],
+ ["09:01", "Dan", "The 15 seats are a starting estimate for one team. We have not confirmed procurement, billing or an annual budget."],
+ ["10:18", "Alex", "For the next call, let us confirm the review owner, the open security questions and what a small first evaluation would need to demonstrate."]
  ],stage:['Discovery','Discovery'],budget:null,seats:15,issue:null,issueQuote:null,committed:false,action:'Send the security pack and arrange a security review.',owner:'Alex Reed',due:'2026-11-05'},
  {id:'delivery-review',title:'Delivery review and recurring issue',type:'Customer success',account:'Northstar Analytics',date:'2026-10-31',attendees:'Maya Patel, Operations Director; Sam Chen, Customer Success',transcript:[
  ['00:25','Maya','The pilot is running for the London team. We are not ready to expand to the other offices yet.'],
  ['01:45','Maya','The CSV column order issue is still happening. The same thing was reported in our call on Thursday.'],
  ['03:12','Maya','Please give us a short guide showing how to export a report and check the headings before sharing it.'],
  ['04:08','Sam','I will link this report to the existing export issue and publish the export checklist for the pilot team.'],
- ['05:02','Maya','Keep the existing pilot scope. We will discuss expansion after the export issue is resolved.']
+ ['05:02','Maya','Keep the existing pilot scope. We will discuss expansion after the export issue is resolved.'],
+ ["06:05", "Sam", "Can you describe where the export problem is getting in the way of the London pilot?"],
+ ["06:32", "Maya", "The team is rehearsing the weekly revenue pack with sample reports. We can check the reports in the product, but the exported columns still need a manual comparison before anyone shares the CSV."],
+ ["07:17", "Maya", "The same Customer, Revenue and Region report reproduces it. We have not changed the saved column order since Thursday. Please keep both call references on one engineering issue."],
+ ["08:04", "Sam", "I will add the reproduction details to ENG-142 and ask Engineering for its current status. We do not have a confirmed fix date to give you today."],
+ ["09:10", "Maya", "The checklist should explain how to export the report, compare the first row with the saved headings and stop sharing the file if a value appears under the wrong column."],
+ ["10:03", "Sam", "I will prepare that guide for your review by 4 November and collect your confirmation after the regression evidence is ready."],
+ ["11:16", "Maya", "Before the next call, please bring the engineering update and the guide. The wider rollout is still dependent on a reliable export and our sign-off."]
  ],stage:['Pilot active','Pilot active'],budget:null,seats:null,issue:'Recurring CSV export column-order issue',issueQuote:1,committed:false,action:'Link the repeat report to ENG-142 and prepare an export checklist.',owner:'Sam Chen',due:'2026-11-04'},
  {id:'internal-planning',title:'Internal planning and ownership',type:'Internal meeting',account:'Meridian product team',date:'2026-10-30',attendees:'Jordan Ellis, Product; Sam Chen, Customer Success; Casey Wong, Engineering',transcript:[
  ['00:18','Jordan','The release will stay in the pilot until Customer Success confirms the export workflow with Northstar.'],
  ['01:40','Casey','Engineering owns the column-order fix under ENG-142. We will attach the regression test before asking for release approval.'],
  ['03:05','Sam','I will prepare the customer export checklist and collect confirmation from Maya.'],
- ['04:22','Jordan','Record the pilot exit criteria in the team update. There is no decision to announce general availability today.']
+ ['04:22','Jordan','Record the pilot exit criteria in the team update. There is no decision to announce general availability today.'],
+ ["05:12", "Casey", "The regression needs to use a report whose displayed heading order differs from the row object order. Compare both the headings and the cell values so that a cosmetic fix cannot hide a mapping problem."],
+ ["06:09", "Sam", "Northstar needs a short checklist while Engineering investigates. I will send a draft to Maya, and keep the customer wording clear that the fix is not yet confirmed."],
+ ["07:01", "Jordan", "Our exit criteria are a passing regression, a checked export from the pilot workflow and customer confirmation. Do not convert any of those into completed work until the evidence is attached."],
+ ["08:18", "Casey", "I will attach test evidence to ENG-142. I cannot promise a general release date before that review."],
+ ["09:06", "Jordan", "The next readiness review should show the owner and status of each exit criterion, the remaining customer action and the decision we need to make."],
+ ["10:02", "Sam", "I will bring the guide status and customer feedback to that review. Pricing and broader expansion are outside this internal decision."]
  ],stage:null,budget:null,seats:null,issue:'ENG-142 release readiness',issueQuote:1,committed:false,action:'Record pilot exit criteria, attach the regression test and collect customer confirmation.',owner:'Jordan Ellis',due:'2026-11-04'}
 ];
 export const SCENARIOS={
